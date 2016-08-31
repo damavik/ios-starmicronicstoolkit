@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name = 'StarIO'
-  s.version = '5.0.0'
+  s.version = '5.0.1'
   s.summary = 'StarMicronics iOS SDK with mPOP support'
   s.license = { :type => 'BSD', :file => 'README.md' }
   s.authors = {"Unknown"=>"unknown@starmicronics.com"}
