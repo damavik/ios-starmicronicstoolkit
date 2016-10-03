@@ -1,3 +1,8 @@
+## 5.0.2
+2016/08/25
+
+*** Fixed an issue where the connected property and getOnlineStatus method does not work in the mobile printer that is set to StarPRNT emulation ***
+
 ## 5.0.1
 2016/08/11
 
