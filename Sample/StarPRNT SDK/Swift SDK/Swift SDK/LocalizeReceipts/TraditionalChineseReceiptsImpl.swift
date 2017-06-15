@@ -13,18 +13,20 @@ class TraditionalChineseReceiptsImpl: ILocalizeReceipts {
         super.init()
         
         languageCode = "zh-TW"
+        
+        characterCode = StarIoExtCharacterCode.traditionalChinese
     }
     
-    override func append2inchTextReceiptData(builder: ISCBBuilder, utf8: Bool) {
-        let encoding: NSStringEncoding
+    override func append2inchTextReceiptData(_ builder: ISCBBuilder, utf8: Bool) {
+        let encoding: String.Encoding
         
         if utf8 == true {
-            encoding = NSUTF8StringEncoding
+            encoding = String.Encoding.utf8
             
-            builder.appendCodePage(SCBCodePageType.UTF8)
+            builder.append(SCBCodePageType.UTF8)
         }
         else {
-            encoding = CFStringConvertEncodingToNSStringEncoding(CFStringEncoding(CFStringEncodings.Big5.rawValue))
+            encoding = String.Encoding(rawValue: CFStringConvertEncodingToNSStringEncoding(CFStringEncoding(CFStringEncodings.big5.rawValue)))
             
 //          builder.appendCodePage(SCBCodePageType.CP1252)
         }
@@ -33,90 +35,90 @@ class TraditionalChineseReceiptsImpl: ILocalizeReceipts {
         
         builder.appendCharacterSpace(0)
         
-        builder.appendAlignment(SCBAlignmentPosition.Center)
+        builder.appendAlignment(SCBAlignmentPosition.center)
         
         builder.appendEmphasis(true)
         
-        builder.appendDataWithMultipleHeight("Star Micronics\n".dataUsingEncoding(encoding), height: 3)
+        builder.appendData(withMultipleHeight: "Star Micronics\n".data(using: encoding), height: 3)
         
         builder.appendEmphasis(false)
         
-        builder.appendData("--------------------------------\n".dataUsingEncoding(encoding))
+        builder.append("--------------------------------\n".data(using: encoding))
         
-        builder.appendDataWithMultiple((
+        builder.appendData(withMultiple: (
             "電子發票證明聯\n" +
             "103年01-02月\n" +
-            "EV-99999999\n").dataUsingEncoding(encoding), width: 2, height: 2)
+            "EV-99999999\n").data(using: encoding), width: 2, height: 2)
         
-        builder.appendAlignment(SCBAlignmentPosition.Left)
+        builder.appendAlignment(SCBAlignmentPosition.left)
         
-        builder.appendData((
+        builder.append((
             "2014/01/15 13:00\n" +
             "隨機碼 : 9999    總計 : 999\n" +
             "賣方 : 99999999\n" +
-            "\n").dataUsingEncoding(encoding))
+            "\n").data(using: encoding))
         
-        builder.appendAlignment(SCBAlignmentPosition.Center)
+        builder.appendAlignment(SCBAlignmentPosition.center)
         
-//      builder.appendQrCodeData("http://www.star-m.jp/eng/index.html".dataUsingEncoding(encoding),              model: SCBQrCodeModel.No2, level: SCBQrCodeLevel.Q, cell: 5)
-        builder.appendQrCodeData("http://www.star-m.jp/eng/index.html".dataUsingEncoding(NSASCIIStringEncoding), model: SCBQrCodeModel.No2, level: SCBQrCodeLevel.Q, cell: 5)
+//      builder.appendQrCodeData("http://www.star-m.jp/eng/index.html".data(using: encoding),              model: SCBQrCodeModel.No2, level: SCBQrCodeLevel.Q, cell: 5)
+        builder.appendQrCodeData("http://www.star-m.jp/eng/index.html".data(using: String.Encoding.ascii), model: SCBQrCodeModel.no2, level: SCBQrCodeLevel.Q, cell: 5)
         
-        builder.appendAlignment(SCBAlignmentPosition.Left)
+        builder.appendAlignment(SCBAlignmentPosition.left)
         
-        builder.appendData((
+        builder.append((
             "\n" +
             "商品退換請持本聯及銷貨明細表。\n" +
             "9999999-9999999 999999-999999 9999\n" +
-            "\n").dataUsingEncoding(encoding))
+            "\n").data(using: encoding))
         
-        builder.appendDataWithAlignment("銷貨明細表 　(銷售)\n".dataUsingEncoding(encoding), position: SCBAlignmentPosition.Center)
+        builder.appendData(withAlignment: "銷貨明細表 　(銷售)\n".data(using: encoding), position: SCBAlignmentPosition.center)
         
-        builder.appendDataWithAlignment("2014-01-15 13:00:02\n".dataUsingEncoding(encoding), position: SCBAlignmentPosition.Right)
+        builder.appendData(withAlignment: "2014-01-15 13:00:02\n".data(using: encoding), position: SCBAlignmentPosition.right)
         
-        builder.appendData((
+        builder.append((
             "\n" +
             "烏龍袋茶2g20入       55 x2 110TX\n" +
             "茉莉烏龍茶2g20入     55 x2 110TX\n" +
-            "天仁觀音茶2g*20      55 x2 110TX\n").dataUsingEncoding(encoding))
+            "天仁觀音茶2g*20      55 x2 110TX\n").data(using: encoding))
         
-        builder.appendDataWithEmphasis((
+        builder.appendData(withEmphasis: (
             "      小　 計 :              330\n" +
-            "      總   計 :              330\n").dataUsingEncoding(encoding))
+            "      總   計 :              330\n").data(using: encoding))
         
-        builder.appendData((
+        builder.append((
             "--------------------------------\n" +
             "現 金                        400\n" +
-            "      找　 零 :               70\n").dataUsingEncoding(encoding))
+            "      找　 零 :               70\n").data(using: encoding))
         
-        builder.appendDataWithEmphasis(" 101 發票金額 :              330\n".dataUsingEncoding(encoding))
+        builder.appendData(withEmphasis: " 101 發票金額 :              330\n".data(using: encoding))
         
-        builder.appendData((
+        builder.append((
             "2014-01-15 13:00\n" +
-            "\n").dataUsingEncoding(encoding))
+            "\n").data(using: encoding))
         
-        builder.appendAlignment(SCBAlignmentPosition.Center)
+        builder.appendAlignment(SCBAlignmentPosition.center)
         
-//      builder.appendBarcodeData("{BStar.".dataUsingEncoding(encoding),              symbology: SCBBarcodeSymbology.Code128, width: SCBBarcodeWidth.Mode2, height: 40, hri: true)
-        builder.appendBarcodeData("{BStar.".dataUsingEncoding(NSASCIIStringEncoding), symbology: SCBBarcodeSymbology.Code128, width: SCBBarcodeWidth.Mode2, height: 40, hri: true)
+//      builder.appendBarcodeData("{BStar.".data(using: encoding),              symbology: SCBBarcodeSymbology.Code128, width: SCBBarcodeWidth.Mode2, height: 40, hri: true)
+        builder.appendBarcodeData("{BStar.".data(using: String.Encoding.ascii), symbology: SCBBarcodeSymbology.code128, width: SCBBarcodeWidth.mode2, height: 40, hri: true)
         
-        builder.appendAlignment(SCBAlignmentPosition.Left)
+        builder.appendAlignment(SCBAlignmentPosition.left)
         
-        builder.appendData((
+        builder.append((
             "\n" +
             "商品退換、贈品及停車兌換請持本聯。\n" +
-            "9999999-9999999 999999-999999 9999\n").dataUsingEncoding(encoding))
+            "9999999-9999999 999999-999999 9999\n").data(using: encoding))
     }
     
-    override func append3inchTextReceiptData(builder: ISCBBuilder, utf8: Bool) {
-        let encoding: NSStringEncoding
+    override func append3inchTextReceiptData(_ builder: ISCBBuilder, utf8: Bool) {
+        let encoding: String.Encoding
         
         if utf8 == true {
-            encoding = NSUTF8StringEncoding
+            encoding = String.Encoding.utf8
             
-            builder.appendCodePage(SCBCodePageType.UTF8)
+            builder.append(SCBCodePageType.UTF8)
         }
         else {
-            encoding = CFStringConvertEncodingToNSStringEncoding(CFStringEncoding(CFStringEncodings.Big5.rawValue))
+            encoding = String.Encoding(rawValue: CFStringConvertEncodingToNSStringEncoding(CFStringEncoding(CFStringEncodings.big5.rawValue)))
             
 //          builder.appendCodePage(SCBCodePageType.CP1252)
         }
@@ -125,90 +127,90 @@ class TraditionalChineseReceiptsImpl: ILocalizeReceipts {
         
         builder.appendCharacterSpace(0)
         
-        builder.appendAlignment(SCBAlignmentPosition.Center)
+        builder.appendAlignment(SCBAlignmentPosition.center)
         
         builder.appendEmphasis(true)
         
-        builder.appendDataWithMultipleHeight("Star Micronics\n".dataUsingEncoding(encoding), height: 3)
+        builder.appendData(withMultipleHeight: "Star Micronics\n".data(using: encoding), height: 3)
         
         builder.appendEmphasis(false)
         
-        builder.appendData("------------------------------------------------\n".dataUsingEncoding(encoding))
+        builder.append("------------------------------------------------\n".data(using: encoding))
         
-        builder.appendDataWithMultiple((
+        builder.appendData(withMultiple: (
             "電子發票證明聯\n" +
             "103年01-02月\n" +
-            "EV-99999999\n").dataUsingEncoding(encoding), width: 2, height: 2)
+            "EV-99999999\n").data(using: encoding), width: 2, height: 2)
         
-        builder.appendAlignment(SCBAlignmentPosition.Left)
+        builder.appendAlignment(SCBAlignmentPosition.left)
         
-        builder.appendData((
+        builder.append((
             "2014/01/15 13:00\n" +
             "隨機碼 : 9999    總計 : 999\n" +
             "賣方 : 99999999\n" +
-            "\n").dataUsingEncoding(encoding))
+            "\n").data(using: encoding))
         
-        builder.appendAlignment(SCBAlignmentPosition.Center)
+        builder.appendAlignment(SCBAlignmentPosition.center)
         
-//      builder.appendQrCodeData("http://www.star-m.jp/eng/index.html".dataUsingEncoding(encoding),              model: SCBQrCodeModel.No2, level: SCBQrCodeLevel.Q, cell: 5)
-        builder.appendQrCodeData("http://www.star-m.jp/eng/index.html".dataUsingEncoding(NSASCIIStringEncoding), model: SCBQrCodeModel.No2, level: SCBQrCodeLevel.Q, cell: 5)
+//      builder.appendQrCodeData("http://www.star-m.jp/eng/index.html".data(using: encoding),              model: SCBQrCodeModel.No2, level: SCBQrCodeLevel.Q, cell: 5)
+        builder.appendQrCodeData("http://www.star-m.jp/eng/index.html".data(using: String.Encoding.ascii), model: SCBQrCodeModel.no2, level: SCBQrCodeLevel.Q, cell: 5)
         
-        builder.appendAlignment(SCBAlignmentPosition.Left)
+        builder.appendAlignment(SCBAlignmentPosition.left)
         
-        builder.appendData((
+        builder.append((
             "\n" +
             "商品退換請持本聯及銷貨明細表。\n" +
             "9999999-9999999 999999-999999 9999\n" +
-            "\n").dataUsingEncoding(encoding))
+            "\n").data(using: encoding))
         
-        builder.appendDataWithAlignment("銷貨明細表 　(銷售)\n".dataUsingEncoding(encoding), position: SCBAlignmentPosition.Center)
+        builder.appendData(withAlignment: "銷貨明細表 　(銷售)\n".data(using: encoding), position: SCBAlignmentPosition.center)
         
-        builder.appendDataWithAlignment("2014-01-15 13:00:02\n".dataUsingEncoding(encoding), position: SCBAlignmentPosition.Right)
+        builder.appendData(withAlignment: "2014-01-15 13:00:02\n".data(using: encoding), position: SCBAlignmentPosition.right)
         
-        builder.appendData((
+        builder.append((
             "\n" +
             "烏龍袋茶2g20入                55 x2 110TX\n" +
             "茉莉烏龍茶2g20入              55 x2 110TX\n" +
-            "天仁觀音茶2g*20               55 x2 110TX\n").dataUsingEncoding(encoding))
+            "天仁觀音茶2g*20               55 x2 110TX\n").data(using: encoding))
         
-        builder.appendDataWithEmphasis((
+        builder.appendData(withEmphasis: (
             "      小　 計 :                330\n" +
-            "      總   計 :                330\n").dataUsingEncoding(encoding))
+            "      總   計 :                330\n").data(using: encoding))
         
-        builder.appendData((
+        builder.append((
             "------------------------------------------------\n" +
             "現 金                          400\n" +
-            "      找　 零 :                 70\n").dataUsingEncoding(encoding))
+            "      找　 零 :                 70\n").data(using: encoding))
         
-        builder.appendDataWithEmphasis(" 101 發票金額 :                330\n".dataUsingEncoding(encoding))
+        builder.appendData(withEmphasis: " 101 發票金額 :                330\n".data(using: encoding))
         
-        builder.appendData((
+        builder.append((
             "2014-01-15 13:00\n" +
-            "\n").dataUsingEncoding(encoding))
+            "\n").data(using: encoding))
         
-        builder.appendAlignment(SCBAlignmentPosition.Center)
+        builder.appendAlignment(SCBAlignmentPosition.center)
         
-//      builder.appendBarcodeData("{BStar.".dataUsingEncoding(encoding),              symbology: SCBBarcodeSymbology.Code128, width: SCBBarcodeWidth.Mode2, height: 40, hri: true)
-        builder.appendBarcodeData("{BStar.".dataUsingEncoding(NSASCIIStringEncoding), symbology: SCBBarcodeSymbology.Code128, width: SCBBarcodeWidth.Mode2, height: 40, hri: true)
+//      builder.appendBarcodeData("{BStar.".data(using: encoding),              symbology: SCBBarcodeSymbology.Code128, width: SCBBarcodeWidth.Mode2, height: 40, hri: true)
+        builder.appendBarcodeData("{BStar.".data(using: String.Encoding.ascii), symbology: SCBBarcodeSymbology.code128, width: SCBBarcodeWidth.mode2, height: 40, hri: true)
         
-        builder.appendAlignment(SCBAlignmentPosition.Left)
+        builder.appendAlignment(SCBAlignmentPosition.left)
         
-        builder.appendData((
+        builder.append((
             "\n" +
             "商品退換、贈品及停車兌換請持本聯。\n" +
-            "9999999-9999999 999999-999999 9999\n").dataUsingEncoding(encoding))
+            "9999999-9999999 999999-999999 9999\n").data(using: encoding))
     }
     
-    override func append4inchTextReceiptData(builder: ISCBBuilder, utf8: Bool) {
-        let encoding: NSStringEncoding
+    override func append4inchTextReceiptData(_ builder: ISCBBuilder, utf8: Bool) {
+        let encoding: String.Encoding
         
         if utf8 == true {
-            encoding = NSUTF8StringEncoding
+            encoding = String.Encoding.utf8
             
-            builder.appendCodePage(SCBCodePageType.UTF8)
+            builder.append(SCBCodePageType.UTF8)
         }
         else {
-            encoding = CFStringConvertEncodingToNSStringEncoding(CFStringEncoding(CFStringEncodings.Big5.rawValue))
+            encoding = String.Encoding(rawValue: CFStringConvertEncodingToNSStringEncoding(CFStringEncoding(CFStringEncodings.big5.rawValue)))
             
 //          builder.appendCodePage(SCBCodePageType.CP1252)
         }
@@ -217,77 +219,77 @@ class TraditionalChineseReceiptsImpl: ILocalizeReceipts {
         
         builder.appendCharacterSpace(0)
         
-        builder.appendAlignment(SCBAlignmentPosition.Center)
+        builder.appendAlignment(SCBAlignmentPosition.center)
         
         builder.appendEmphasis(true)
         
-        builder.appendDataWithMultipleHeight("Star Micronics\n".dataUsingEncoding(encoding), height: 3)
+        builder.appendData(withMultipleHeight: "Star Micronics\n".data(using: encoding), height: 3)
         
         builder.appendEmphasis(false)
         
-        builder.appendData("---------------------------------------------------------------------\n".dataUsingEncoding(encoding))
+        builder.append("---------------------------------------------------------------------\n".data(using: encoding))
         
-        builder.appendDataWithMultiple((
+        builder.appendData(withMultiple: (
             "電子發票證明聯\n" +
             "103年01-02月\n" +
-            "EV-99999999\n").dataUsingEncoding(encoding), width: 2, height: 2)
+            "EV-99999999\n").data(using: encoding), width: 2, height: 2)
         
-        builder.appendAlignment(SCBAlignmentPosition.Left)
+        builder.appendAlignment(SCBAlignmentPosition.left)
         
-        builder.appendData((
+        builder.append((
             "2014/01/15 13:00\n" +
             "隨機碼 : 9999    總計 : 999\n" +
-            "賣方 : 99999999\n").dataUsingEncoding(encoding))
+            "賣方 : 99999999\n").data(using: encoding))
         
-        builder.appendAlignment(SCBAlignmentPosition.Center)
+        builder.appendAlignment(SCBAlignmentPosition.center)
         
-//      builder.appendQrCodeData("http://www.star-m.jp/eng/index.html".dataUsingEncoding(encoding),              model: SCBQrCodeModel.No2, level: SCBQrCodeLevel.Q, cell: 5)
-        builder.appendQrCodeData("http://www.star-m.jp/eng/index.html".dataUsingEncoding(NSASCIIStringEncoding), model: SCBQrCodeModel.No2, level: SCBQrCodeLevel.Q, cell: 5)
+//      builder.appendQrCodeData("http://www.star-m.jp/eng/index.html".data(using: encoding),              model: SCBQrCodeModel.No2, level: SCBQrCodeLevel.Q, cell: 5)
+        builder.appendQrCodeData("http://www.star-m.jp/eng/index.html".data(using: String.Encoding.ascii), model: SCBQrCodeModel.no2, level: SCBQrCodeLevel.Q, cell: 5)
         
-        builder.appendAlignment(SCBAlignmentPosition.Left)
+        builder.appendAlignment(SCBAlignmentPosition.left)
         
-        builder.appendData((
+        builder.append((
             "\n" +
             "商品退換請持本聯及銷貨明細表。\n" +
             "9999999-9999999 999999-999999 9999\n" +
-            "\n").dataUsingEncoding(encoding))
+            "\n").data(using: encoding))
         
-        builder.appendDataWithAlignment("銷貨明細表 　(銷售)\n".dataUsingEncoding(encoding), position: SCBAlignmentPosition.Center)
+        builder.appendData(withAlignment: "銷貨明細表 　(銷售)\n".data(using: encoding), position: SCBAlignmentPosition.center)
         
-        builder.appendDataWithAlignment("2014-01-15 13:00:02\n".dataUsingEncoding(encoding), position: SCBAlignmentPosition.Right)
+        builder.appendData(withAlignment: "2014-01-15 13:00:02\n".data(using: encoding), position: SCBAlignmentPosition.right)
         
-        builder.appendData((
+        builder.append((
             "\n" +
             "烏龍袋茶2g20入                                    55 x2 110TX\n" +
             "茉莉烏龍茶2g20入                                  55 x2 110TX\n" +
-            "天仁觀音茶2g*20                                   55 x2 110TX\n").dataUsingEncoding(encoding))
+            "天仁觀音茶2g*20                                   55 x2 110TX\n").data(using: encoding))
         
-        builder.appendDataWithEmphasis((
+        builder.appendData(withEmphasis: (
             "      小　 計 :                                    330\n" +
-            "      總   計 :                                    330\n").dataUsingEncoding(encoding))
+            "      總   計 :                                    330\n").data(using: encoding))
         
-        builder.appendData((
+        builder.append((
             "---------------------------------------------------------------------\n" +
             "現 金                                              400\n" +
-            "      找　 零 :                                     70\n").dataUsingEncoding(encoding))
+            "      找　 零 :                                     70\n").data(using: encoding))
         
-        builder.appendDataWithEmphasis(" 101 發票金額 :                                    330\n".dataUsingEncoding(encoding))
+        builder.appendData(withEmphasis: " 101 發票金額 :                                    330\n".data(using: encoding))
         
-        builder.appendData((
+        builder.append((
             "2014-01-15 13:00\n" +
-            "\n").dataUsingEncoding(encoding))
+            "\n").data(using: encoding))
         
-        builder.appendAlignment(SCBAlignmentPosition.Center)
+        builder.appendAlignment(SCBAlignmentPosition.center)
         
-//      builder.appendBarcodeData("{BStar.".dataUsingEncoding(encoding),              symbology: SCBBarcodeSymbology.Code128, width: SCBBarcodeWidth.Mode2, height: 40, hri: true)
-        builder.appendBarcodeData("{BStar.".dataUsingEncoding(NSASCIIStringEncoding), symbology: SCBBarcodeSymbology.Code128, width: SCBBarcodeWidth.Mode2, height: 40, hri: true)
+//      builder.appendBarcodeData("{BStar.".data(using: encoding),              symbology: SCBBarcodeSymbology.Code128, width: SCBBarcodeWidth.Mode2, height: 40, hri: true)
+        builder.appendBarcodeData("{BStar.".data(using: String.Encoding.ascii), symbology: SCBBarcodeSymbology.code128, width: SCBBarcodeWidth.mode2, height: 40, hri: true)
         
-        builder.appendAlignment(SCBAlignmentPosition.Left)
+        builder.appendAlignment(SCBAlignmentPosition.left)
         
-        builder.appendData((
+        builder.append((
             "\n" +
             "商品退換、贈品及停車兌換請持本聯。\n" +
-            "9999999-9999999 999999-999999 9999\n").dataUsingEncoding(encoding))
+            "9999999-9999999 999999-999999 9999\n").data(using: encoding))
     }
     
     override func create2inchRasterReceiptImage() -> UIImage {
@@ -443,16 +445,16 @@ class TraditionalChineseReceiptsImpl: ILocalizeReceipts {
         return ILocalizeReceipts.imageWithString(textToPrint, font: font, width: 512)     // EscPos3inch(512dots)
     }
     
-    override func appendEscPos3inchTextReceiptData(builder: ISCBBuilder, utf8: Bool) {
-        let encoding: NSStringEncoding
+    override func appendEscPos3inchTextReceiptData(_ builder: ISCBBuilder, utf8: Bool) {
+        let encoding: String.Encoding
         
         if utf8 == true {
-            encoding = NSUTF8StringEncoding
+            encoding = String.Encoding.utf8
             
-            builder.appendCodePage(SCBCodePageType.UTF8)
+            builder.append(SCBCodePageType.UTF8)
         }
         else {
-            encoding = CFStringConvertEncodingToNSStringEncoding(CFStringEncoding(CFStringEncodings.Big5.rawValue))
+            encoding = String.Encoding(rawValue: CFStringConvertEncodingToNSStringEncoding(CFStringEncoding(CFStringEncodings.big5.rawValue)))
             
 //          builder.appendCodePage(SCBCodePageType.CP1252)
         }
@@ -461,147 +463,147 @@ class TraditionalChineseReceiptsImpl: ILocalizeReceipts {
         
         builder.appendCharacterSpace(0)
         
-        builder.appendAlignment(SCBAlignmentPosition.Center)
+        builder.appendAlignment(SCBAlignmentPosition.center)
         
         builder.appendEmphasis(true)
         
-        builder.appendDataWithMultipleHeight("Star Micronics\n".dataUsingEncoding(encoding), height: 3)
+        builder.appendData(withMultipleHeight: "Star Micronics\n".data(using: encoding), height: 3)
         
         builder.appendEmphasis(false)
         
-        builder.appendData("------------------------------------------\n".dataUsingEncoding(encoding))
+        builder.append("------------------------------------------\n".data(using: encoding))
         
-        builder.appendDataWithMultiple((
+        builder.appendData(withMultiple: (
             "電子發票證明聯\n" +
             "103年01-02月\n" +
-            "EV-99999999\n").dataUsingEncoding(encoding), width: 2, height: 2)
+            "EV-99999999\n").data(using: encoding), width: 2, height: 2)
         
-        builder.appendAlignment(SCBAlignmentPosition.Left)
+        builder.appendAlignment(SCBAlignmentPosition.left)
         
-        builder.appendData((
+        builder.append((
             "2014/01/15 13:00\n" +
             "隨機碼 : 9999    總計 : 999\n" +
             "賣方 : 99999999\n" +
-            "\n").dataUsingEncoding(encoding))
+            "\n").data(using: encoding))
         
-        builder.appendAlignment(SCBAlignmentPosition.Center)
+        builder.appendAlignment(SCBAlignmentPosition.center)
         
-//      builder.appendQrCodeData("http://www.star-m.jp/eng/index.html".dataUsingEncoding(encoding),              model: SCBQrCodeModel.No2, level: SCBQrCodeLevel.Q, cell: 5)
-        builder.appendQrCodeData("http://www.star-m.jp/eng/index.html".dataUsingEncoding(NSASCIIStringEncoding), model: SCBQrCodeModel.No2, level: SCBQrCodeLevel.Q, cell: 5)
+//      builder.appendQrCodeData("http://www.star-m.jp/eng/index.html".data(using: encoding),              model: SCBQrCodeModel.No2, level: SCBQrCodeLevel.Q, cell: 5)
+        builder.appendQrCodeData("http://www.star-m.jp/eng/index.html".data(using: String.Encoding.ascii), model: SCBQrCodeModel.no2, level: SCBQrCodeLevel.Q, cell: 5)
         
-        builder.appendAlignment(SCBAlignmentPosition.Left)
+        builder.appendAlignment(SCBAlignmentPosition.left)
         
-        builder.appendData((
+        builder.append((
             "\n" +
             "商品退換請持本聯及銷貨明細表。\n" +
             "9999999-9999999 999999-999999 9999\n" +
-            "\n").dataUsingEncoding(encoding))
+            "\n").data(using: encoding))
         
-        builder.appendDataWithAlignment("銷貨明細表 　(銷售)\n".dataUsingEncoding(encoding), position: SCBAlignmentPosition.Center)
+        builder.appendData(withAlignment: "銷貨明細表 　(銷售)\n".data(using: encoding), position: SCBAlignmentPosition.center)
         
-        builder.appendDataWithAlignment("2014-01-15 13:00:02\n".dataUsingEncoding(encoding), position: SCBAlignmentPosition.Right)
+        builder.appendData(withAlignment: "2014-01-15 13:00:02\n".data(using: encoding), position: SCBAlignmentPosition.right)
         
-        builder.appendData((
+        builder.append((
             "\n" +
             "烏龍袋茶2g20入                55 x2 110TX\n" +
             "茉莉烏龍茶2g20入              55 x2 110TX\n" +
-            "天仁觀音茶2g*20               55 x2 110TX\n").dataUsingEncoding(encoding))
+            "天仁觀音茶2g*20               55 x2 110TX\n").data(using: encoding))
         
-        builder.appendDataWithEmphasis((
+        builder.appendData(withEmphasis: (
             "      小　 計 :                330\n" +
-            "      總   計 :                330\n").dataUsingEncoding(encoding))
+            "      總   計 :                330\n").data(using: encoding))
         
-        builder.appendData((
+        builder.append((
             "------------------------------------------\n" +
             "現 金                          400\n" +
-            "      找　 零 :                 70\n").dataUsingEncoding(encoding))
+            "      找　 零 :                 70\n").data(using: encoding))
         
-        builder.appendDataWithEmphasis(" 101 發票金額 :                330\n".dataUsingEncoding(encoding))
+        builder.appendData(withEmphasis: " 101 發票金額 :                330\n".data(using: encoding))
         
-        builder.appendData((
+        builder.append((
             "2014-01-15 13:00\n" +
-            "\n").dataUsingEncoding(encoding))
+            "\n").data(using: encoding))
         
-        builder.appendAlignment(SCBAlignmentPosition.Center)
+        builder.appendAlignment(SCBAlignmentPosition.center)
         
-//      builder.appendBarcodeData("{BStar.".dataUsingEncoding(encoding),              symbology: SCBBarcodeSymbology.Code128, width: SCBBarcodeWidth.Mode2, height: 40, hri: true)
-        builder.appendBarcodeData("{BStar.".dataUsingEncoding(NSASCIIStringEncoding), symbology: SCBBarcodeSymbology.Code128, width: SCBBarcodeWidth.Mode2, height: 40, hri: true)
+//      builder.appendBarcodeData("{BStar.".data(using: encoding),              symbology: SCBBarcodeSymbology.Code128, width: SCBBarcodeWidth.Mode2, height: 40, hri: true)
+        builder.appendBarcodeData("{BStar.".data(using: String.Encoding.ascii), symbology: SCBBarcodeSymbology.code128, width: SCBBarcodeWidth.mode2, height: 40, hri: true)
         
-        builder.appendAlignment(SCBAlignmentPosition.Left)
+        builder.appendAlignment(SCBAlignmentPosition.left)
         
-        builder.appendData((
+        builder.append((
             "\n" +
             "商品退換、贈品及停車兌換請持本聯。\n" +
-            "9999999-9999999 999999-999999 9999\n").dataUsingEncoding(encoding))
+            "9999999-9999999 999999-999999 9999\n").data(using: encoding))
     }
     
-    override func appendDotImpact3inchTextReceiptData(builder: ISCBBuilder, utf8: Bool) {
-        let encoding: NSStringEncoding
+    override func appendDotImpact3inchTextReceiptData(_ builder: ISCBBuilder, utf8: Bool) {
+        let encoding: String.Encoding
         
         if utf8 == true {
-            encoding = NSUTF8StringEncoding
+            encoding = String.Encoding.utf8
             
-            builder.appendCodePage(SCBCodePageType.UTF8)
+            builder.append(SCBCodePageType.UTF8)
         }
         else {
-            encoding = CFStringConvertEncodingToNSStringEncoding(CFStringEncoding(CFStringEncodings.Big5.rawValue))
+            encoding = String.Encoding(rawValue: CFStringConvertEncodingToNSStringEncoding(CFStringEncoding(CFStringEncodings.big5.rawValue)))
             
 //          builder.appendCodePage(SCBCodePageType.CP1252)
         }
         
 //      builder.appendInternational(SCBInternationalType.UK)
         
-        builder.appendAlignment(SCBAlignmentPosition.Center)
+        builder.appendAlignment(SCBAlignmentPosition.center)
         
         builder.appendEmphasis(true)
         
-        builder.appendDataWithMultipleHeight("Star Micronics\n".dataUsingEncoding(encoding), height: 2)
+        builder.appendData(withMultipleHeight: "Star Micronics\n".data(using: encoding), height: 2)
         
         builder.appendEmphasis(false)
         
-        builder.appendData("------------------------------------------\n".dataUsingEncoding(encoding))
+        builder.append("------------------------------------------\n".data(using: encoding))
         
-        builder.appendDataWithMultipleWidth((
+        builder.appendData(withMultipleWidth: (
             "電子發票證明聯\n" +
             "103年01-02月\n" +
-            "EV-99999999\n").dataUsingEncoding(encoding), width: 2)
+            "EV-99999999\n").data(using: encoding), width: 2)
         
-        builder.appendAlignment(SCBAlignmentPosition.Left)
+        builder.appendAlignment(SCBAlignmentPosition.left)
         
-        builder.appendData((
+        builder.append((
             "2014/01/15 13:00\n" +
             "隨機碼 : 9999    總計 : 999\n" +
             "賣方 : 99999999\n" +
             "\n" +
             "商品退換請持本聯及銷貨明細表。\n" +
             "9999999-9999999 999999-999999 9999\n" +
-            "\n").dataUsingEncoding(encoding))
+            "\n").data(using: encoding))
         
-        builder.appendDataWithAlignment("銷貨明細表 　(銷售)\n".dataUsingEncoding(encoding), position: SCBAlignmentPosition.Center)
+        builder.appendData(withAlignment: "銷貨明細表 　(銷售)\n".data(using: encoding), position: SCBAlignmentPosition.center)
         
-        builder.appendDataWithAlignment("2014-01-15 13:00:02\n".dataUsingEncoding(encoding), position: SCBAlignmentPosition.Right)
+        builder.appendData(withAlignment: "2014-01-15 13:00:02\n".data(using: encoding), position: SCBAlignmentPosition.right)
         
-        builder.appendData((
+        builder.append((
             "\n" +
             "烏龍袋茶2g20入             55 x2 110TX\n" +
             "茉莉烏龍茶2g20入           55 x2 110TX\n" +
-            "天仁觀音茶2g*20            55 x2 110TX\n").dataUsingEncoding(encoding))
+            "天仁觀音茶2g*20            55 x2 110TX\n").data(using: encoding))
         
-        builder.appendDataWithEmphasis((
+        builder.appendData(withEmphasis: (
             "      小　 計 :             330\n" +
-            "      總   計 :             330\n").dataUsingEncoding(encoding))
+            "      總   計 :             330\n").data(using: encoding))
         
-        builder.appendData((
+        builder.append((
             "------------------------------------------\n" +
             "現 金                       400\n" +
-            "      找　 零 :              70\n").dataUsingEncoding(encoding))
+            "      找　 零 :              70\n").data(using: encoding))
         
-        builder.appendDataWithEmphasis(" 101 發票金額 :             330\n".dataUsingEncoding(encoding))
+        builder.appendData(withEmphasis: " 101 發票金額 :             330\n".data(using: encoding))
         
-        builder.appendData((
+        builder.append((
             "2014-01-15 13:00\n" +
             "\n" +
             "商品退換、贈品及停車兌換請持本聯。\n" +
-            "9999999-9999999 999999-999999 9999\n").dataUsingEncoding(encoding))
+            "9999999-9999999 999999-999999 9999\n").data(using: encoding))
     }
 }

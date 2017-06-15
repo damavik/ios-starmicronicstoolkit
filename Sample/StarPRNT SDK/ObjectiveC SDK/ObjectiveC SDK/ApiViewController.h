@@ -8,7 +8,7 @@
 
 #import "CommonViewController.h"
 
-@interface ApiViewController : CommonViewController <UITableViewDelegate, UITableViewDataSource>
+@interface ApiViewController : CommonViewController <UITableViewDelegate, UITableViewDataSource, UIAlertViewDelegate>
 
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 

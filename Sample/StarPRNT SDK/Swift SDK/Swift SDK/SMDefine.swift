@@ -8,9 +8,8 @@
 
 import Foundation
 
-// func MakePrettyFunction(filePath: String = __FILE__, line: Int = __LINE__, funcName: String = __FUNCTION__) -> String {
-   func MakePrettyFunction(filePath: String = #file,    line: Int = #line,    funcName: String = #function)    -> String {
-    let fileName: String = filePath.componentsSeparatedByString("/").last!
+   func MakePrettyFunction(_ filePath: String = #file, line: Int = #line, funcName: String = #function) -> String {
+    let fileName: String = filePath.components(separatedBy: "/").last!
     
     return "-[\(fileName)(\(line)) \(funcName):]"
 }

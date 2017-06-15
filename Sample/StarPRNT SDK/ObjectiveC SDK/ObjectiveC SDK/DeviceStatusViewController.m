@@ -212,11 +212,13 @@ typedef NS_ENUM(NSUInteger, CellParamIndex) {
             break;
         }
     }
-    @catch (PortException *exception) {
+    @catch (PortException *exc) {
     }
     @finally {
         if (port != nil) {
             [SMPort releasePort:port];
+            
+            port = nil;
         }
     }
     

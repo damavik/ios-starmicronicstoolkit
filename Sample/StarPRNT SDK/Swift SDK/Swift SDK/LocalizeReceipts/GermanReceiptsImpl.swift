@@ -13,55 +13,57 @@ class GermanReceiptsImpl: ILocalizeReceipts {
         super.init()
         
         languageCode = "De"
+        
+        characterCode = StarIoExtCharacterCode.standard
     }
     
-    override func append2inchTextReceiptData(builder: ISCBBuilder, utf8: Bool) {
-        let encoding: NSStringEncoding
+    override func append2inchTextReceiptData(_ builder: ISCBBuilder, utf8: Bool) {
+        let encoding: String.Encoding
         
         if utf8 == true {
-            encoding = NSUTF8StringEncoding
+            encoding = String.Encoding.utf8
             
-            builder.appendCodePage(SCBCodePageType.UTF8)
+            builder.append(SCBCodePageType.UTF8)
         }
         else {
-            encoding = NSWindowsCP1252StringEncoding
+            encoding = String.Encoding.windowsCP1252
             
-            builder.appendCodePage(SCBCodePageType.CP1252)
+            builder.append(SCBCodePageType.CP1252)
         }
         
-        builder.appendInternational(SCBInternationalType.Germany)
+        builder.append(SCBInternationalType.germany)
         
         builder.appendCharacterSpace(0)
         
-        builder.appendAlignment(SCBAlignmentPosition.Center)
+        builder.appendAlignment(SCBAlignmentPosition.center)
         
-        builder.appendDataWithMultiple((
+        builder.appendData(withMultiple: (
             "STAR\n" +
-            "Supermarkt\n").dataUsingEncoding(encoding), width: 2, height: 2)
+            "Supermarkt\n").data(using: encoding), width: 2, height: 2)
         
-        builder.appendData((
+        builder.append((
             "\n" +
             "Das Internet von seiner\n" +
             "genussvollsten Seite\n" +
-            "\n").dataUsingEncoding(encoding))
+            "\n").data(using: encoding))
         
-        builder.appendDataWithMultipleHeight(("www.Star-EMEM.com\n").dataUsingEncoding(encoding), height: 2)
+        builder.appendData(withMultipleHeight: "www.Star-EMEM.com\n".data(using: encoding), height: 2)
         
-        builder.appendData(("Gebührenfrei Rufnummer:\n").dataUsingEncoding(encoding))
+        builder.append("Gebührenfrei Rufnummer:\n".data(using: encoding))
         
-        builder.appendDataWithEmphasis(("08006646701\n").dataUsingEncoding(encoding))
+        builder.appendData(withEmphasis: "08006646701\n".data(using: encoding))
         
-        builder.appendAlignment(SCBAlignmentPosition.Left)
+        builder.appendAlignment(SCBAlignmentPosition.left)
         
-        builder.appendData(("--------------------------------\n").dataUsingEncoding(encoding))
+        builder.append("--------------------------------\n".data(using: encoding))
         
-        builder.appendAlignment(SCBAlignmentPosition.Right)
+        builder.appendAlignment(SCBAlignmentPosition.right)
         
-        builder.appendDataWithEmphasis(("EUR\n").dataUsingEncoding(encoding))
+        builder.appendData(withEmphasis: "EUR\n".data(using: encoding))
         
-        builder.appendAlignment(SCBAlignmentPosition.Left)
+        builder.appendAlignment(SCBAlignmentPosition.left)
         
-        builder.appendData((
+        builder.append((
             "Schmand 24%                 0.42\n" +
             "Kefir                       0.79\n" +
             "Haarspray                   1.79\n" +
@@ -101,69 +103,69 @@ class GermanReceiptsImpl: ILocalizeReceipts {
             "--------------------------------\n" +
             "Kas: 003/006    Bon  0377 PC01 P\n" +
             "Dat: 30.03.2015 Zeit 18:06:01 43\n" +
-            "\n").dataUsingEncoding(encoding))
+            "\n").data(using: encoding))
         
-        builder.appendAlignment(SCBAlignmentPosition.Center)
+        builder.appendAlignment(SCBAlignmentPosition.center)
         
-        builder.appendData((
+        builder.append((
             "USt–ID:    DE125580123\n" +
-            "\n").dataUsingEncoding(encoding))
+            "\n").data(using: encoding))
         
-        builder.appendDataWithEmphasis((
+        builder.appendData(withEmphasis: (
             "Vielen dank\n" +
             "für Ihren Einkauf!\n" +
-            "\n").dataUsingEncoding(encoding))
+            "\n").data(using: encoding))
         
-//      builder.appendBarcodeData("{BStar.".dataUsingEncoding(encoding),              symbology: SCBBarcodeSymbology.Code128, width: SCBBarcodeWidth.Mode2, height: 40, hri: true)
-        builder.appendBarcodeData("{BStar.".dataUsingEncoding(NSASCIIStringEncoding), symbology: SCBBarcodeSymbology.Code128, width: SCBBarcodeWidth.Mode2, height: 40, hri: true)
+//      builder.appendBarcodeData("{BStar.".data(using: encoding),              symbology: SCBBarcodeSymbology.Code128, width: SCBBarcodeWidth.Mode2, height: 40, hri: true)
+        builder.appendBarcodeData("{BStar.".data(using: String.Encoding.ascii), symbology: SCBBarcodeSymbology.code128, width: SCBBarcodeWidth.mode2, height: 40, hri: true)
     }
     
-    override func append3inchTextReceiptData(builder: ISCBBuilder, utf8: Bool) {
-        let encoding: NSStringEncoding
+    override func append3inchTextReceiptData(_ builder: ISCBBuilder, utf8: Bool) {
+        let encoding: String.Encoding
         
         if utf8 == true {
-            encoding = NSUTF8StringEncoding
+            encoding = String.Encoding.utf8
             
-            builder.appendCodePage(SCBCodePageType.UTF8)
+            builder.append(SCBCodePageType.UTF8)
         }
         else {
-            encoding = NSWindowsCP1252StringEncoding
+            encoding = String.Encoding.windowsCP1252
             
-            builder.appendCodePage(SCBCodePageType.CP1252)
+            builder.append(SCBCodePageType.CP1252)
         }
         
-        builder.appendInternational(SCBInternationalType.Germany)
+        builder.append(SCBInternationalType.germany)
         
         builder.appendCharacterSpace(0)
         
-        builder.appendAlignment(SCBAlignmentPosition.Center)
+        builder.appendAlignment(SCBAlignmentPosition.center)
         
-        builder.appendDataWithMultiple((
+        builder.appendData(withMultiple: (
             "STAR\n" +
-            "Supermarkt\n").dataUsingEncoding(encoding), width: 2, height: 2)
+            "Supermarkt\n").data(using: encoding), width: 2, height: 2)
         
-        builder.appendData((
+        builder.append((
             "\n" +
             "Das Internet von seiner genussvollsten Seite\n" +
-            "\n").dataUsingEncoding(encoding))
+            "\n").data(using: encoding))
         
-        builder.appendDataWithMultipleHeight(("www.Star-EMEM.com\n").dataUsingEncoding(encoding), height: 2)
+        builder.appendData(withMultipleHeight: "www.Star-EMEM.com\n".data(using: encoding), height: 2)
         
-        builder.appendData(("Gebührenfrei Rufnummer:\n").dataUsingEncoding(encoding))
+        builder.append("Gebührenfrei Rufnummer:\n".data(using: encoding))
         
-        builder.appendDataWithEmphasis(("08006646701\n").dataUsingEncoding(encoding))
+        builder.appendData(withEmphasis: "08006646701\n".data(using: encoding))
         
-        builder.appendAlignment(SCBAlignmentPosition.Left)
+        builder.appendAlignment(SCBAlignmentPosition.left)
         
-        builder.appendData(("------------------------------------------------\n").dataUsingEncoding(encoding))
+        builder.append("------------------------------------------------\n".data(using: encoding))
         
-        builder.appendAlignment(SCBAlignmentPosition.Right)
+        builder.appendAlignment(SCBAlignmentPosition.right)
         
-        builder.appendDataWithEmphasis(("EUR\n").dataUsingEncoding(encoding))
+        builder.appendData(withEmphasis: "EUR\n".data(using: encoding))
         
-        builder.appendAlignment(SCBAlignmentPosition.Left)
+        builder.appendAlignment(SCBAlignmentPosition.left)
         
-        builder.appendData((
+        builder.append((
             "Schmand 24%                                 0.42\n" +
             "Kefir                                       0.79\n" +
             "Haarspray                                   1.79\n" +
@@ -203,69 +205,69 @@ class GermanReceiptsImpl: ILocalizeReceipts {
             "------------------------------------------------\n" +
             "Kas: 003/006    Bon  0377 PC01 P\n" +
             "Dat: 30.03.2015 Zeit 18:06:01 43\n" +
-            "\n").dataUsingEncoding(encoding))
+            "\n").data(using: encoding))
         
-        builder.appendAlignment(SCBAlignmentPosition.Center)
+        builder.appendAlignment(SCBAlignmentPosition.center)
         
-        builder.appendData((
+        builder.append((
             "USt–ID:    DE125580123\n" +
-            "\n").dataUsingEncoding(encoding))
+            "\n").data(using: encoding))
         
-        builder.appendDataWithEmphasis((
+        builder.appendData(withEmphasis: (
             "Vielen dank\n" +
             "für Ihren Einkauf!\n" +
-            "\n").dataUsingEncoding(encoding))
+            "\n").data(using: encoding))
         
-//      builder.appendBarcodeData("{BStar.".dataUsingEncoding(encoding),              symbology: SCBBarcodeSymbology.Code128, width: SCBBarcodeWidth.Mode2, height: 40, hri: true)
-        builder.appendBarcodeData("{BStar.".dataUsingEncoding(NSASCIIStringEncoding), symbology: SCBBarcodeSymbology.Code128, width: SCBBarcodeWidth.Mode2, height: 40, hri: true)
+//      builder.appendBarcodeData("{BStar.".data(using: encoding),              symbology: SCBBarcodeSymbology.Code128, width: SCBBarcodeWidth.Mode2, height: 40, hri: true)
+        builder.appendBarcodeData("{BStar.".data(using: String.Encoding.ascii), symbology: SCBBarcodeSymbology.code128, width: SCBBarcodeWidth.mode2, height: 40, hri: true)
     }
     
-    override func append4inchTextReceiptData(builder: ISCBBuilder, utf8: Bool) {
-        let encoding: NSStringEncoding
+    override func append4inchTextReceiptData(_ builder: ISCBBuilder, utf8: Bool) {
+        let encoding: String.Encoding
         
         if utf8 == true {
-            encoding = NSUTF8StringEncoding
+            encoding = String.Encoding.utf8
             
-            builder.appendCodePage(SCBCodePageType.UTF8)
+            builder.append(SCBCodePageType.UTF8)
         }
         else {
-            encoding = NSWindowsCP1252StringEncoding
+            encoding = String.Encoding.windowsCP1252
             
-            builder.appendCodePage(SCBCodePageType.CP1252)
+            builder.append(SCBCodePageType.CP1252)
         }
         
-        builder.appendInternational(SCBInternationalType.Germany)
+        builder.append(SCBInternationalType.germany)
         
         builder.appendCharacterSpace(0)
         
-        builder.appendAlignment(SCBAlignmentPosition.Center)
+        builder.appendAlignment(SCBAlignmentPosition.center)
         
-        builder.appendDataWithMultiple((
+        builder.appendData(withMultiple: (
             "STAR\n" +
-            "Supermarkt\n").dataUsingEncoding(encoding), width: 2, height: 2)
+            "Supermarkt\n").data(using: encoding), width: 2, height: 2)
         
-        builder.appendData((
+        builder.append((
             "\n" +
             "Das Internet von seiner genussvollsten Seite\n" +
-            "\n").dataUsingEncoding(encoding))
+            "\n").data(using: encoding))
         
-        builder.appendDataWithMultipleHeight(("www.Star-EMEM.com\n").dataUsingEncoding(encoding), height: 2)
+        builder.appendData(withMultipleHeight: "www.Star-EMEM.com\n".data(using: encoding), height: 2)
         
-        builder.appendData(("Gebührenfrei Rufnummer:\n").dataUsingEncoding(encoding))
+        builder.append("Gebührenfrei Rufnummer:\n".data(using: encoding))
         
-        builder.appendDataWithEmphasis(("08006646701\n").dataUsingEncoding(encoding))
+        builder.appendData(withEmphasis: "08006646701\n".data(using: encoding))
         
-        builder.appendAlignment(SCBAlignmentPosition.Left)
+        builder.appendAlignment(SCBAlignmentPosition.left)
         
-        builder.appendData(("---------------------------------------------------------------------\n").dataUsingEncoding(encoding))
+        builder.append("---------------------------------------------------------------------\n".data(using: encoding))
         
-        builder.appendAlignment(SCBAlignmentPosition.Right)
+        builder.appendAlignment(SCBAlignmentPosition.right)
         
-        builder.appendDataWithEmphasis(("EUR\n").dataUsingEncoding(encoding))
+        builder.appendData(withEmphasis: "EUR\n".data(using: encoding))
         
-        builder.appendAlignment(SCBAlignmentPosition.Left)
+        builder.appendAlignment(SCBAlignmentPosition.left)
         
-        builder.appendData((
+        builder.append((
             "Schmand 24%                                                      0.42\n" +
             "Kefir                                                            0.79\n" +
             "Haarspray                                                        1.79\n" +
@@ -305,21 +307,21 @@ class GermanReceiptsImpl: ILocalizeReceipts {
             "---------------------------------------------------------------------\n" +
             "Kas: 003/006    Bon  0377 PC01 P\n" +
             "Dat: 30.03.2015 Zeit 18:06:01 43\n" +
-            "\n").dataUsingEncoding(encoding))
+            "\n").data(using: encoding))
         
-        builder.appendAlignment(SCBAlignmentPosition.Center)
+        builder.appendAlignment(SCBAlignmentPosition.center)
         
-        builder.appendData((
+        builder.append((
             "USt–ID:    DE125580123\n" +
-            "\n").dataUsingEncoding(encoding))
+            "\n").data(using: encoding))
         
-        builder.appendDataWithEmphasis((
+        builder.appendData(withEmphasis: (
             "Vielen dank\n" +
             "für Ihren Einkauf!\n" +
-            "\n").dataUsingEncoding(encoding))
+            "\n").data(using: encoding))
         
-//      builder.appendBarcodeData("{BStar.".dataUsingEncoding(encoding),              symbology: SCBBarcodeSymbology.Code128, width: SCBBarcodeWidth.Mode2, height: 40, hri: true)
-        builder.appendBarcodeData("{BStar.".dataUsingEncoding(NSASCIIStringEncoding), symbology: SCBBarcodeSymbology.Code128, width: SCBBarcodeWidth.Mode2, height: 40, hri: true)
+//      builder.appendBarcodeData("{BStar.".data(using: encoding),              symbology: SCBBarcodeSymbology.Code128, width: SCBBarcodeWidth.Mode2, height: 40, hri: true)
+        builder.appendBarcodeData("{BStar.".data(using: String.Encoding.ascii), symbology: SCBBarcodeSymbology.code128, width: SCBBarcodeWidth.mode2, height: 40, hri: true)
     }
     
     override func create2inchRasterReceiptImage() -> UIImage {
@@ -579,49 +581,49 @@ class GermanReceiptsImpl: ILocalizeReceipts {
         return ILocalizeReceipts.imageWithString(textToPrint, font: font, width: 512)     // EscPos3inch(512dots)
     }
     
-    override func appendEscPos3inchTextReceiptData(builder: ISCBBuilder, utf8: Bool) {
-        let encoding: NSStringEncoding
+    override func appendEscPos3inchTextReceiptData(_ builder: ISCBBuilder, utf8: Bool) {
+        let encoding: String.Encoding
         
         if utf8 == true {
-            encoding = NSUTF8StringEncoding
+            encoding = String.Encoding.utf8
             
-            builder.appendCodePage(SCBCodePageType.UTF8)
+            builder.append(SCBCodePageType.UTF8)
         }
         else {
-            encoding = NSWindowsCP1252StringEncoding
+            encoding = String.Encoding.windowsCP1252
             
-            builder.appendCodePage(SCBCodePageType.CP1252)
+            builder.append(SCBCodePageType.CP1252)
         }
         
-        builder.appendInternational(SCBInternationalType.Germany)
+        builder.append(SCBInternationalType.germany)
         
         builder.appendCharacterSpace(0)
         
-        builder.appendAlignment(SCBAlignmentPosition.Center)
+        builder.appendAlignment(SCBAlignmentPosition.center)
         
-        builder.appendDataWithMultiple((
+        builder.appendData(withMultiple: (
             "STAR\n" +
-            "Supermarkt\n").dataUsingEncoding(encoding), width: 2, height: 2)
+            "Supermarkt\n").data(using: encoding), width: 2, height: 2)
         
-        builder.appendData((
+        builder.append((
             "\n" +
             "Das Internet von seiner\n" +
             "genussvollsten Seite\n" +
-            "\n").dataUsingEncoding(encoding))
+            "\n").data(using: encoding))
         
-        builder.appendDataWithMultipleHeight(("www.Star-EMEM.com\n").dataUsingEncoding(encoding), height: 2)
+        builder.appendData(withMultipleHeight: "www.Star-EMEM.com\n".data(using: encoding), height: 2)
         
-        builder.appendData(("Gebührenfrei Rufnummer:\n").dataUsingEncoding(encoding))
+        builder.append("Gebührenfrei Rufnummer:\n".data(using: encoding))
         
-        builder.appendDataWithEmphasis(("08006646701\n").dataUsingEncoding(encoding))
+        builder.appendData(withEmphasis: "08006646701\n".data(using: encoding))
         
-        builder.appendAlignment(SCBAlignmentPosition.Left)
+        builder.appendAlignment(SCBAlignmentPosition.left)
         
-        builder.appendData(("------------------------------------------\n").dataUsingEncoding(encoding))
+        builder.append("------------------------------------------\n".data(using: encoding))
         
-        builder.appendDataWithEmphasis(("                                       EUR\n").dataUsingEncoding(encoding))
+        builder.appendData(withEmphasis: "                                       EUR\n".data(using: encoding))
         
-        builder.appendData((
+        builder.append((
             "Schmand 24%                           0.42\n" +
             "Kefir                                 0.79\n" +
             "Haarspray                             1.79\n" +
@@ -661,68 +663,68 @@ class GermanReceiptsImpl: ILocalizeReceipts {
             "------------------------------------------\n" +
             "Kas: 003/006    Bon  0377 PC01 P\n" +
             "Dat: 30.03.2015 Zeit 18:06:01 43\n" +
-            "\n").dataUsingEncoding(encoding))
+            "\n").data(using: encoding))
         
-        builder.appendAlignment(SCBAlignmentPosition.Center)
+        builder.appendAlignment(SCBAlignmentPosition.center)
         
-        builder.appendData((
+        builder.append((
             "USt–ID:    DE125580123\n" +
-            "\n").dataUsingEncoding(encoding))
+            "\n").data(using: encoding))
         
-        builder.appendDataWithEmphasis((
+        builder.appendData(withEmphasis: (
             "Vielen dank\n" +
             "für Ihren Einkauf!\n" +
-            "\n").dataUsingEncoding(encoding))
+            "\n").data(using: encoding))
         
-//      builder.appendBarcodeData("{BStar.".dataUsingEncoding(encoding),              symbology: SCBBarcodeSymbology.Code128, width: SCBBarcodeWidth.Mode2, height: 40, hri: true)
-        builder.appendBarcodeData("{BStar.".dataUsingEncoding(NSASCIIStringEncoding), symbology: SCBBarcodeSymbology.Code128, width: SCBBarcodeWidth.Mode2, height: 40, hri: true)
+//      builder.appendBarcodeData("{BStar.".data(using: encoding),              symbology: SCBBarcodeSymbology.Code128, width: SCBBarcodeWidth.Mode2, height: 40, hri: true)
+        builder.appendBarcodeData("{BStar.".data(using: String.Encoding.ascii), symbology: SCBBarcodeSymbology.code128, width: SCBBarcodeWidth.mode2, height: 40, hri: true)
     }
     
-    override func appendDotImpact3inchTextReceiptData(builder: ISCBBuilder, utf8: Bool) {
-        let encoding: NSStringEncoding
+    override func appendDotImpact3inchTextReceiptData(_ builder: ISCBBuilder, utf8: Bool) {
+        let encoding: String.Encoding
         
         if utf8 == true {
-            encoding = NSUTF8StringEncoding
+            encoding = String.Encoding.utf8
             
-            builder.appendCodePage(SCBCodePageType.UTF8)
+            builder.append(SCBCodePageType.UTF8)
         }
         else {
-            encoding = NSWindowsCP1252StringEncoding
+            encoding = String.Encoding.windowsCP1252
             
-            builder.appendCodePage(SCBCodePageType.CP1252)
+            builder.append(SCBCodePageType.CP1252)
         }
         
-        builder.appendInternational(SCBInternationalType.Germany)
+        builder.append(SCBInternationalType.germany)
         
-        builder.appendAlignment(SCBAlignmentPosition.Center)
+        builder.appendAlignment(SCBAlignmentPosition.center)
         
-        builder.appendDataWithMultiple((
+        builder.appendData(withMultiple: (
             "STAR\n" +
-            "Supermarkt\n").dataUsingEncoding(encoding), width: 2, height: 2)
+            "Supermarkt\n").data(using: encoding), width: 2, height: 2)
         
-        builder.appendData((
+        builder.append((
             "\n" +
             "Das Internet von seiner\n" +
             "genussvollsten Seite\n" +
-            "\n").dataUsingEncoding(encoding))
+            "\n").data(using: encoding))
         
-        builder.appendDataWithMultipleHeight(("www.Star-EMEM.com\n").dataUsingEncoding(encoding), height: 2)
+        builder.appendData(withMultipleHeight: "www.Star-EMEM.com\n".data(using: encoding), height: 2)
         
-        builder.appendData(("Gebührenfrei Rufnummer:\n").dataUsingEncoding(encoding))
+        builder.append("Gebührenfrei Rufnummer:\n".data(using: encoding))
         
-        builder.appendDataWithEmphasis(("08006646701\n").dataUsingEncoding(encoding))
+        builder.appendData(withEmphasis: "08006646701\n".data(using: encoding))
         
-        builder.appendAlignment(SCBAlignmentPosition.Left)
+        builder.appendAlignment(SCBAlignmentPosition.left)
         
-        builder.appendData(("------------------------------------------\n").dataUsingEncoding(encoding))
+        builder.append("------------------------------------------\n".data(using: encoding))
         
-        builder.appendAlignment(SCBAlignmentPosition.Right)
+        builder.appendAlignment(SCBAlignmentPosition.right)
         
-        builder.appendDataWithEmphasis(("EUR\n").dataUsingEncoding(encoding))
+        builder.appendData(withEmphasis: "EUR\n".data(using: encoding))
         
-        builder.appendAlignment(SCBAlignmentPosition.Left)
+        builder.appendAlignment(SCBAlignmentPosition.left)
         
-        builder.appendData((
+        builder.append((
             "Schmand 24%                           0.42\n" +
             "Kefir                                 0.79\n" +
             "Haarspray                             1.79\n" +
@@ -762,16 +764,16 @@ class GermanReceiptsImpl: ILocalizeReceipts {
             "------------------------------------------\n" +
             "Kas: 003/006    Bon  0377 PC01 P\n" +
             "Dat: 30.03.2015 Zeit 18:06:01 43\n" +
-            "\n").dataUsingEncoding(encoding))
+            "\n").data(using: encoding))
         
-        builder.appendAlignment(SCBAlignmentPosition.Center)
+        builder.appendAlignment(SCBAlignmentPosition.center)
         
-        builder.appendData((
+        builder.append((
             "USt–ID:    DE125580123\n" +
-            "\n").dataUsingEncoding(encoding))
+            "\n").data(using: encoding))
         
-        builder.appendDataWithEmphasis((
+        builder.appendData(withEmphasis: (
             "Vielen dank\n" +
-            "für Ihren Einkauf!\n").dataUsingEncoding(encoding))
+            "für Ihren Einkauf!\n").data(using: encoding))
     }
 }

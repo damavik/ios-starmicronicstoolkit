@@ -2,14 +2,14 @@
 //  SwitchTableViewCell.swift
 //  Swift SDK
 //
-//  Created by Yuji on 2016/03/19.
+//  Created by Yuji on 2016/**/**.
 //  Copyright © 2016年 Star Micronics. All rights reserved.
 //
 
 import UIKit
 
 protocol SwitchTableViewCellDelegate {
-    func tableView(tableView: UITableView, valueChangedStateSwitch on: Bool, indexPath: NSIndexPath)
+    func tableView(_ tableView: UITableView, valueChangedStateSwitch on: Bool, indexPath: IndexPath)
 }
 
 class SwitchTableViewCell: UITableViewCell {
@@ -24,22 +24,22 @@ class SwitchTableViewCell: UITableViewCell {
         // Initialization code
     }
     
-    override func setSelected(selected: Bool, animated: Bool) {
+    override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
         
         // Configure the view for the selected state
     }
     
 //  @IBAction func valueChangedStateSwitch(var sender: UIView) {
-    @IBAction func valueChangedStateSwitch    (sender: UIView) {
+    @IBAction func valueChangedStateSwitch  (_ sender: UIView) {
         var sender = sender
         
-        while sender.isKindOfClass(UITableView) == false {
+        while sender.isKind(of: UITableView.self) == false {
             sender = sender.superview!
         }
         
-        let indexPath: NSIndexPath = (sender as! UITableView).indexPathForCell(self)!
+        let indexPath: IndexPath = (sender as! UITableView).indexPath(for: self)!
         
-        self.delegate?.tableView(sender as! UITableView, valueChangedStateSwitch: self.stateSwitch.on, indexPath: indexPath)
+        self.delegate?.tableView(sender as! UITableView, valueChangedStateSwitch: self.stateSwitch.isOn, indexPath: indexPath)
     }
 }

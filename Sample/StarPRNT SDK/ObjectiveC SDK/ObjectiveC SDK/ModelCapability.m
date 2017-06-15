@@ -37,6 +37,7 @@ static const NSDictionary *_modelCapabilityDictionary;
             @(ModelIndexSM_T300I),
             @(ModelIndexSM_T400I),
             @(ModelIndexSM_L200),               // <-
+            @(ModelIndexSM_L300),               // <-
             @(ModelIndexBSC10),
             @(ModelIndexSM_S210I_StarPRNT),
             @(ModelIndexSM_S220I_StarPRNT),
@@ -44,7 +45,8 @@ static const NSDictionary *_modelCapabilityDictionary;
             @(ModelIndexSM_T300I_StarPRNT),
             @(ModelIndexSM_T400I_StarPRNT)
 //          @(ModelIndexSM_L200),
-//          @(ModelIndexSP700)
+//          @(ModelIndexSP700),
+//          @(ModelIndexSM_L300)
         ];
         
         _modelCapabilityDictionary = @ {
@@ -71,10 +73,11 @@ static const NSDictionary *_modelCapabilityDictionary;
             @(ModelIndexSM_T300I_StarPRNT) : @[@"SM-T300i StarPRNT", @(StarIoExtEmulationStarPRNT),      @NO,  @"Portable", @[@"SM-T300i StarPRNT"]],
             @(ModelIndexSM_T400I_StarPRNT) : @[@"SM-T400i StarPRNT", @(StarIoExtEmulationStarPRNT),      @NO,  @"Portable", @[@"SM-T400i StarPRNT"]],      // <-Sample
             @(ModelIndexSM_L200)           : @[@"SM-L200",           @(StarIoExtEmulationStarPRNT),      @NO,  @"Portable", @[@"SM-L200"]],
-            @(ModelIndexSP700)             : @[@"SP700",             @(StarIoExtEmulationStarDotImpact), @YES, @"",         @[@"SP712 (STR-001)",          //Only LAN model
+            @(ModelIndexSP700)             : @[@"SP700",             @(StarIoExtEmulationStarDotImpact), @YES, @"",         @[@"SP712 (STR-001)",          // Only LAN model
                                                                                                                               @"SP717 (STR-001)",
                                                                                                                               @"SP742 (STR-001)",
-                                                                                                                              @"SP747 (STR-001)"]]
+                                                                                                                              @"SP747 (STR-001)"]],
+            @(ModelIndexSM_L300)           : @[@"SM-L300",           @(StarIoExtEmulationStarPRNT),      @NO,  @"Portable", @[@"SM-L300"]]
         };
     }
 }

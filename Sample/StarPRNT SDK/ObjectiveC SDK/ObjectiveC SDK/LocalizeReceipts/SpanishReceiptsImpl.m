@@ -19,6 +19,8 @@
     
     self.languageCode = @"Es";
     
+    self.characterCode = StarIoExtCharacterCodeStandard;
+    
     return self;
 }
 
@@ -57,8 +59,8 @@
                           "MESA: 100 P: - FECHA: YYYY-MM-DD\n"
                           "CAN P/U DESCRIPCION  SUMA\n"
                           "--------------------------------\n"
-                          " 4  3,00  JARRA  CERVESA   12,00\n"
-                          " 1  1,60  COPA DE CERVESA   1,60\n"
+                          " 4  3,00  JARRA  CERVEZA   12,00\n"
+                          " 1  1,60  COPA DE CERVEZA   1,60\n"
                           "--------------------------------\n"
                           "               SUB TOTAL : 13,60\n" dataUsingEncoding:encoding]];
     
@@ -115,8 +117,8 @@
                           "MESA: 100 P: - FECHA: YYYY-MM-DD\n"
                           "CAN P/U DESCRIPCION  SUMA\n"
                           "------------------------------------------------\n"
-                          " 4     3,00      JARRA  CERVESA            12,00\n"
-                          " 1     1,60      COPA DE CERVESA            1,60\n"
+                          " 4     3,00      JARRA  CERVEZA            12,00\n"
+                          " 1     1,60      COPA DE CERVEZA            1,60\n"
                           "------------------------------------------------\n"
                           "                           SUB TOTAL :     13,60\n" dataUsingEncoding:encoding]];
     
@@ -173,8 +175,8 @@
                           "MESA: 100 P: - FECHA: YYYY-MM-DD\n"
                           "CAN P/U DESCRIPCION  SUMA\n"
                           "---------------------------------------------------------------------\n"
-                          " 4     3,00          JARRA  CERVESA                             12,00\n"
-                          " 1     1,60          COPA DE CERVESA                             1,60\n"
+                          " 4     3,00          JARRA  CERVEZA                             12,00\n"
+                          " 1     1,60          COPA DE CERVEZA                             1,60\n"
                           "---------------------------------------------------------------------\n"
                           "                                         SUB TOTAL :            13,60\n" dataUsingEncoding:encoding]];
     
@@ -209,8 +211,8 @@
     "    FECHA: YYYY-MM-DD\n"
     "CAN P/U DESCRIPCION  SUMA\n"
     "--------------------------\n"
-    "3,00 JARRA CERVESA   12,00\n"
-    "1,60 COPA DE CERVESA  1,60\n"
+    "3,00 JARRA  CERVEZA  12,00\n"
+    "1,60 COPA DE CERVEZA  1,60\n"
     "--------------------------\n"
     "         SUB TOTAL : 13,60\n"
     "TOTAL:         13,60 EUROS\n"
@@ -236,8 +238,8 @@
     "MESA: 100 P: - FECHA: YYYY-MM-DD\n"
     "CAN P/U DESCRIPCION  SUMA\n"
     "--------------------------------------\n"
-    "4 3,00 JARRA  CERVESA   12,00\n"
-    "1 1,60 COPA DE CERVESA  1,60\n"
+    "4 3,00 JARRA  CERVEZA   12,00\n"
+    "1 1,60 COPA DE CERVEZA  1,60\n"
     "--------------------------------------\n"
     "                     SUB TOTAL : 13,60\n"
     "TOTAL:               13,60 EUROS\n"
@@ -260,8 +262,8 @@
     "MESA: 100 P: - FECHA: YYYY-MM-DD\n"
     "CAN P/U DESCRIPCION  SUMA\n"
     "---------------------------------------------------------\n"
-    "4    3,00    JARRA  CERVESA                         12,00\n"
-    "1    1,60    COPA DE CERVESA                         1,60\n"
+    "4    3,00    JARRA  CERVEZA                         12,00\n"
+    "1    1,60    COPA DE CERVEZA                         1,60\n"
     "---------------------------------------------------------\n"
     "                                  SUB TOTAL :       13,60\n"
     "                                 TOTAL :      13,60 EUROS\n"
@@ -291,8 +293,8 @@
     "MESA: 100 P: - FECHA: YYYY-MM-DD\n"
     "CAN P/U DESCRIPCION  SUMA\n"
     "-----------------------------------\n"
-    "4 3,00 JARRA  CERVESA   12,00\n"
-    "1 1,60 COPA DE CERVESA  1,60\n"
+    "4 3,00 JARRA  CERVEZA   12,00\n"
+    "1 1,60 COPA DE CERVEZA  1,60\n"
     "-----------------------------------\n"
     "                  SUB TOTAL : 13,60\n"
     "TOTAL:               13,60 EUROS\n"
@@ -341,8 +343,8 @@
                           "MESA: 100 P: - FECHA: YYYY-MM-DD\n"
                           "CAN P/U DESCRIPCION  SUMA\n"
                           "------------------------------------------\n"
-                          " 4    3,00    JARRA  CERVESA         12,00\n"
-                          " 1    1,60    COPA DE CERVESA         1,60\n"
+                          " 4    3,00    JARRA  CERVEZA         12,00\n"
+                          " 1    1,60    COPA DE CERVEZA         1,60\n"
                           "------------------------------------------\n"
                           "                     SUB TOTAL :     13,60\n" dataUsingEncoding:encoding]];
     
@@ -397,8 +399,8 @@
                           "MESA: 100 P: - FECHA: YYYY-MM-DD\n"
                           "CAN P/U DESCRIPCION  SUMA\n"
                           "------------------------------------------\n"
-                          " 4 3,00 JARRA  CERVESA               12,00\n"
-                          " 1 1,60 COPA DE CERVESA               1,60\n"
+                          " 4 3,00 JARRA  CERVEZA               12,00\n"
+                          " 1 1,60 COPA DE CERVEZA               1,60\n"
                           "------------------------------------------\n"
                           " SUB TOTAL :                         13,60\n"
                           "                     TOTAL:    13,60 EUROS\n"

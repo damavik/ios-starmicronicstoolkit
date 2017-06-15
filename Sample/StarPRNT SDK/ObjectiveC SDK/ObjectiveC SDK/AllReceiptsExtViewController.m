@@ -167,7 +167,27 @@
     
     switch ([AppDelegate getSelectedIndex]) {
         default :
-//      case 2  :
+//      case 0  :
+            commands = [AllReceiptsFunctions createTextReceiptData:emulation
+                                                  localizeReceipts:localizeReceipts
+                                                              utf8:NO
+                                                             width:width
+                                                           receipt:receipt
+                                                              info:info
+                                                            qrCode:qrCode
+                                                        completion:completionUpload];
+            break;
+        case 1 :
+            commands = [AllReceiptsFunctions createTextReceiptData:emulation
+                                                  localizeReceipts:localizeReceipts
+                                                              utf8:YES
+                                                             width:width
+                                                           receipt:receipt
+                                                              info:info
+                                                            qrCode:qrCode
+                                                        completion:completionUpload];
+            break;
+        case 2 :
             commands = [AllReceiptsFunctions createRasterReceiptData:emulation
                                                     localizeReceipts:localizeReceipts
                                                              receipt:receipt
@@ -202,7 +222,11 @@
         
         [_starIoExtManager.lock lock];
         
-        [Communication sendCommands:commands port:[_starIoExtManager port]];
+        [Communication sendCommands:commands port:_starIoExtManager.port completionHandler:^(BOOL result, NSString *title, NSString *message) {
+            UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:title message:message delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+            
+            [alertView show];
+        }];
         
         [_starIoExtManager.lock unlock];
         

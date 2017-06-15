@@ -12,7 +12,9 @@
 
 @implementation Communication
 
-+ (BOOL)sendCommands:(NSData *)commands port:(SMPort *)port {
++ (BOOL)sendCommands:(NSData *)commands
+                port:(SMPort *)port
+   completionHandler:(SendCompletionHandler)completionHandler {
     BOOL result = NO;
     
     NSString *title   = @"";
@@ -65,7 +67,7 @@
             
             if (printerStatus.offline == SM_TRUE) {
                 title   = @"Printer Error";
-                message = @"Printer is offline (endCheckedBlock)";
+                message = @"Printer is offline (EndCheckedBlock)";
                 break;
             }
             
@@ -81,16 +83,16 @@
         message = @"Write port timed out (PortException)";
     }
     
-    dispatch_async(dispatch_get_main_queue(), ^{
-        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:title message:message delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
-        
-        [alertView show];
-    });
+    if (completionHandler != nil) {
+        completionHandler(result, title, message);
+    }
     
     return result;
 }
 
-+ (BOOL)sendCommandsDoNotCheckCondition:(NSData *)commands port:(SMPort *)port {
++ (BOOL)sendCommandsDoNotCheckCondition:(NSData *)commands
+                                   port:(SMPort *)port
+                      completionHandler:(SendCompletionHandler)completionHandler {
     BOOL result = NO;
     
     NSString *title   = @"";
@@ -113,7 +115,7 @@
             
 //          if (printerStatus.offline == SM_TRUE) {     // Do not check condition.
 //              title   = @"Printer Error";
-//              message = @"Printer is offline (BeginCheckedBlock)";
+//              message = @"Printer is offline (GetParsedStatus)";
 //              break;
 //          }
             
@@ -141,7 +143,7 @@
             
 //          if (printerStatus.offline == SM_TRUE) {     // Do not check condition.
 //              title   = @"Printer Error";
-//              message = @"Printer is offline (endCheckedBlock)";
+//              message = @"Printer is offline (GetParsedStatus)";
 //              break;
 //          }
             
@@ -157,16 +159,124 @@
         message = @"Write port timed out (PortException)";
     }
     
-    dispatch_async(dispatch_get_main_queue(), ^{
-        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:title message:message delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
-        
-        [alertView show];
-    });
+    if (completionHandler != nil) {
+        completionHandler(result, title, message);
+    }
     
     return result;
 }
 
-+ (BOOL)sendCommands:(NSData *)commands portName:(NSString *)portName portSettings:(NSString *)portSettings timeout:(NSInteger)timeout {
++ (BOOL)sendFunctionDoNotCheckCondition:(IStarIoExtFunction *)function
+                                   port:(SMPort *)port
+                      completionHandler:(SendCompletionHandler)completionHandler {
+    BOOL result = NO;
+    
+    NSString *title   = @"";
+    NSString *message = @"";
+    
+    NSData *commands = [function createCommands];
+    
+    uint32_t commandLength = (uint32_t) commands.length;
+    
+    unsigned char *commandsBytes = (unsigned char *) commands.bytes;
+    
+    @try {
+        while (YES) {
+            if (port == nil) {
+                title = @"Fail to Open Port";
+                break;
+            }
+            
+            StarPrinterStatus_2 printerStatus;
+            
+            [port getParsedStatus:&printerStatus :2];
+            
+//          if (printerStatus.offline == SM_TRUE) {     // Do not check condition.
+//              title   = @"Printer Error";
+//              message = @"Printer is offline (GetParsedStatus)";
+//              break;
+//          }
+            
+            NSDate *startDate = [NSDate date];
+            
+            uint32_t total = 0;
+            
+            while (total < commandLength) {
+                uint32_t written = [port writePort:commandsBytes :total :commandLength - total];
+                
+                total += written;
+                
+                if ([[NSDate date] timeIntervalSinceDate:startDate] >= 30.0) {     // 30000mS!!!
+                    break;
+                }
+            }
+            
+            if (total < commandLength) {
+                title   = @"Printer Error";
+                message = @"Write port timed out";
+                break;
+            }
+            
+            int length;
+            
+            uint8_t buffer[1024 + 8];
+            
+            length = 1024;
+            
+            [NSThread sleepForTimeInterval:0.1];     // Break time.
+            
+            startDate = [NSDate date];     // Restart
+            
+            int amount = 0;
+            
+            while (YES) {
+                if ([[NSDate date] timeIntervalSinceDate:startDate] >= 1.0) {     // 1000mS!!!
+                    title   = @"Printer Error";
+                    message = @"Read port timed out";
+                    break;
+                }
+                
+                int readLength = [port readPort:buffer :amount :length - amount];
+                
+//              NSLog(@"readPort:%d", readLength);
+//
+//              for (int i = 0; i < readLength; i++) {
+//                  NSLog(@"%02x", buffer[amount + i]);
+//              }
+                
+                amount += readLength;
+                
+                if (function.completionHandler(buffer, &amount) == YES) {
+                    length = amount;
+                    
+                    title   = @"Send Commands";
+                    message = @"Success";
+                    
+                    result = YES;
+                    break;
+                }
+            }
+            
+            break;
+        }
+    }
+    @catch (PortException *exc) {
+        title   = @"Printer Error";
+        message = @"Write port timed out (PortException)";
+    }
+    
+    if (completionHandler != nil) {
+        completionHandler(result, title, message);
+    }
+    
+    return result;
+}
+
++ (BOOL)sendCommands:(NSData *)commands
+            portName:(NSString *)portName
+        portSettings:(NSString *)portSettings
+             timeout:(NSInteger)timeout
+   completionHandler:(SendCompletionHandler)completionHandler {
     BOOL result = NO;
     
     NSString *title   = @"";
@@ -227,7 +337,7 @@
             
             if (printerStatus.offline == SM_TRUE) {
                 title   = @"Printer Error";
-                message = @"Printer is offline (endCheckedBlock)";
+                message = @"Printer is offline (EndCheckedBlock)";
                 break;
             }
             
@@ -245,19 +355,23 @@
     @finally {
         if (port != nil) {
             [SMPort releasePort:port];
+            
+            port = nil;
         }
     }
     
-    dispatch_async(dispatch_get_main_queue(), ^{
-        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:title message:message delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
-        
-        [alertView show];
-    });
+    if (completionHandler != nil) {
+        completionHandler(result, title, message);
+    }
     
     return result;
 }
 
-+ (BOOL)sendCommandsDoNotCheckCondition:(NSData *)commands portName:(NSString *)portName portSettings:(NSString *)portSettings timeout:(NSInteger)timeout {
++ (BOOL)sendCommandsDoNotCheckCondition:(NSData *)commands
+                               portName:(NSString *)portName
+                           portSettings:(NSString *)portSettings
+                                timeout:(NSInteger)timeout
+                      completionHandler:(SendCompletionHandler)completionHandler {
     BOOL result = NO;
     
     NSString *title   = @"";
@@ -288,7 +402,7 @@
             
 //          if (printerStatus.offline == SM_TRUE) {     // Do not check condition.
 //              title   = @"Printer Error";
-//              message = @"Printer is offline (BeginCheckedBlock)";
+//              message = @"Printer is offline (GetParsedStatus)";
 //              break;
 //          }
             
@@ -316,7 +430,7 @@
             
 //          if (printerStatus.offline == SM_TRUE) {     // Do not check condition.
 //              title   = @"Printer Error";
-//              message = @"Printer is offline (endCheckedBlock)";
+//              message = @"Printer is offline (GetParsedStatus)";
 //              break;
 //          }
             
@@ -334,67 +448,73 @@
     @finally {
         if (port != nil) {
             [SMPort releasePort:port];
+            
+            port = nil;
         }
     }
     
-    dispatch_async(dispatch_get_main_queue(), ^{
-        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:title message:message delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
-        
-        [alertView show];
-    });
+    if (completionHandler != nil) {
+        completionHandler(result, title, message);
+    }
     
     return result;
 }
 
-+ (void)connectBluetooth {
++ (void)connectBluetooth:(SendCompletionHandler)completionHandler {
     [[EAAccessoryManager sharedAccessoryManager] showBluetoothAccessoryPickerWithNameFilter:nil completion:^(NSError *error) {
         BOOL result;
-        BOOL show;
+        
+        NSString *title   = @"";
+        NSString *message = @"";
         
         if (error != nil) {
             NSLog(@"Error:%@", error.description);
             
             switch (error.code) {
                 case EABluetoothAccessoryPickerAlreadyConnected :
+                    title   = @"Success";
+                    message = @"";
+                    
                     result = YES;
-                    show   = YES;
                     break;
                 case EABluetoothAccessoryPickerResultCancelled :
                 case EABluetoothAccessoryPickerResultFailed    :
+                    title   = nil;
+                    message = nil;
+                    
                     result = NO;
-                    show   = NO;
                     break;
                 default                                       :
 //              case EABluetoothAccessoryPickerResultNotFound :
+                    title   = @"Fail to Connect";
+                    message = @"";
+                    
                     result = NO;
-                    show   = YES;
                     break;
             }
         }
         else {
+            title   = @"Success";
+            message = @"";
+            
             result = YES;
-            show   = YES;
         }
         
-        if (show == YES) {
-            dispatch_async(dispatch_get_main_queue(), ^{
-                UIAlertView *alertView;
-                
-                if (result == YES) {
-                    alertView = [[UIAlertView alloc] initWithTitle:@"Success" message:nil delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
-                }
-                else {
-                    alertView = [[UIAlertView alloc] initWithTitle:@"Fail to Connect" message:nil delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
-                }
-                
-                [alertView show];
-            });
+        if (completionHandler != nil) {
+            completionHandler(result, title, message);
         }
     }];
 }
 
-+ (BOOL)disconnectBluetooth:(NSString *)modelName portName:(NSString *)portName portSettings:(NSString *)portSettings timeout:(NSInteger)timeout {
++ (BOOL)disconnectBluetooth:(NSString *)modelName
+                   portName:(NSString *)portName
+               portSettings:(NSString *)portSettings
+                    timeout:(NSInteger)timeout
+          completionHandler:(SendCompletionHandler)completionHandler {
     BOOL result = NO;
+    
+    NSString *title   = @"";
+    NSString *message = @"";
     
     SMPort *port = nil;
     
@@ -403,6 +523,7 @@
             port = [SMPort getPort:portName :portSettings :(uint32_t) timeout];
             
             if (port == nil) {
+                title = @"Fail to Open Port";
                 break;
             }
             
@@ -416,6 +537,8 @@
                 [port beginCheckedBlock:&printerStatus :2];
                 
                 if (printerStatus.offline == SM_TRUE) {
+                    title   = @"Printer Error";
+                    message = @"Printer is offline (BeginCheckedBlock)";
                     break;
                 }
                 
@@ -434,6 +557,8 @@
                 }
                 
                 if (total < commandLength) {
+                    title   = @"Printer Error";
+                    message = @"Write port timed out";
                     break;
                 }
                 
@@ -442,39 +567,41 @@
 //              [port endCheckedBlock:&printerStatus :2];
 //
 //              if (printerStatus.offline == SM_TRUE) {
+//                  title   = @"Printer Error";
+//                  message = @"Printer is offline (EndCheckedBlock)";
 //                  break;
 //              }
             }
             else {
                 if ([port disconnect] == NO) {
+                    title   = @"Fail to Disconnect";
+                    message = @"Note. Portable Printers is not supported.";
                     break;
                 }
             }
-        
+            
+            title   = @"Success";
+            message = @"";
+            
             result = YES;
             break;
         }
     }
-    @catch (PortException *exception) {
+    @catch (PortException *exc) {
+        title   = @"Printer Error";
+        message = @"Write port timed out (PortException)";
     }
     @finally {
         if (port != nil) {
             [SMPort releasePort:port];
+            
+            port = nil;
         }
     }
     
-    dispatch_async(dispatch_get_main_queue(), ^{
-        UIAlertView *alertView;
-        
-        if (result == YES) {
-            alertView = [[UIAlertView alloc] initWithTitle:@"Success" message:nil delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
-        }
-        else {
-            alertView = [[UIAlertView alloc] initWithTitle:@"Fail to Disconnect" message:@"Note. Portable Printers is not supported." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
-        }
-        
-        [alertView show];
-    });
+    if (completionHandler != nil) {
+        completionHandler(result, title, message);
+    }
     
     return result;
 }

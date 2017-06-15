@@ -21,11 +21,11 @@ class AllReceiptsViewController: CommonViewController, UITableViewDelegate, UITa
         // Dispose of any resources that can be recreated.
     }
     
-    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+    func numberOfSections(in tableView: UITableView) -> Int {
         return 4
     }
     
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         let number: Int
         
         switch section {
@@ -41,21 +41,21 @@ class AllReceiptsViewController: CommonViewController, UITableViewDelegate, UITa
         return number
     }
     
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         var cell: UITableViewCell!
         
         if indexPath.section == 0 ||
            indexPath.section == 1 {
             let cellIdentifier: String = "UITableViewCellStyleValue1"
             
-            cell = self.tableView.dequeueReusableCellWithIdentifier(cellIdentifier)
+            cell = self.tableView.dequeueReusableCell(withIdentifier: cellIdentifier)
             
             if cell == nil {
-                cell = UITableViewCell(style: UITableViewCellStyle.Value1, reuseIdentifier: cellIdentifier)
+                cell = UITableViewCell(style: UITableViewCellStyle.value1, reuseIdentifier: cellIdentifier)
             }
             
             if cell != nil {
-                cell.backgroundColor = UIColor.whiteColor()
+                cell.backgroundColor = UIColor.white
                 
                 let localizeReceipts: ILocalizeReceipts = LocalizeReceipts.createLocalizeReceipts(AppDelegate.getSelectedLanguage(), paperSizeIndex: AppDelegate.getSelectedPaperSize())
                 
@@ -78,44 +78,55 @@ class AllReceiptsViewController: CommonViewController, UITableViewDelegate, UITa
                 cell      .textLabel!.textColor = UIColor(red: 0.0, green: 0.5, blue: 1.0, alpha: 1.0)
                 cell.detailTextLabel!.textColor = UIColor(red: 0.0, green: 0.5, blue: 1.0, alpha: 1.0)
                 
-//              cell.accessoryType = UITableViewCellAccessoryType.DisclosureIndicator
+//              cell.accessoryType = UITableViewCellAccessoryType.disclosureIndicator
                 
                 var userInteractionEnabled: Bool = true
+                
+                let emulation: StarIoExtEmulation = AppDelegate.getEmulation()
                 
                 if SMCloudServices.isRegistered() == false {
                     userInteractionEnabled = false
                 }
                 
-                if indexPath.row == 0 ||     // Text Receipt
-                   indexPath.row == 1 {      // Text Receipt (UTF8)
-                    userInteractionEnabled = false
+                if emulation == StarIoExtEmulation.starGraphic {
+                    if indexPath.row == 0 ||     // Text Receipt
+                       indexPath.row == 1 {      // Text Receipt (UTF8)
+                        userInteractionEnabled = false
+                    }
+                }
+                
+                if emulation == StarIoExtEmulation.escPos ||
+                   emulation == StarIoExtEmulation.escPosMobile {
+                    if indexPath.row == 1 {     // Text Receipt (UTF8)
+                        userInteractionEnabled = false
+                    }
                 }
                 
                 if userInteractionEnabled == true {
                     cell      .textLabel!.alpha = 1.0
                     cell.detailTextLabel!.alpha = 1.0
                     
-                    cell.accessoryType = UITableViewCellAccessoryType.DisclosureIndicator
+                    cell.accessoryType = UITableViewCellAccessoryType.disclosureIndicator
                     
-                    cell.userInteractionEnabled = true
+                    cell.isUserInteractionEnabled = true
                 }
                 else {
                     cell      .textLabel!.alpha = 0.3
                     cell.detailTextLabel!.alpha = 0.3
                     
-                    cell.accessoryType = UITableViewCellAccessoryType.None
+                    cell.accessoryType = UITableViewCellAccessoryType.none
                     
-                    cell.userInteractionEnabled = false
+                    cell.isUserInteractionEnabled = false
                 }
             }
         }
         else if indexPath.section == 2 {
             let cellIdentifier: String = "UITableViewCellStyleValue1"
             
-            cell = self.tableView.dequeueReusableCellWithIdentifier(cellIdentifier)
+            cell = self.tableView.dequeueReusableCell(withIdentifier: cellIdentifier)
             
             if cell == nil {
-                cell = UITableViewCell(style: UITableViewCellStyle.Value1, reuseIdentifier: cellIdentifier)
+                cell = UITableViewCell(style: UITableViewCellStyle.value1, reuseIdentifier: cellIdentifier)
             }
             
             if cell != nil {
@@ -125,8 +136,8 @@ class AllReceiptsViewController: CommonViewController, UITableViewDelegate, UITa
                     cell      .textLabel!.text = "Unregistration State"
                     cell.detailTextLabel!.text = ""
                     
-                    cell      .textLabel!.textColor = UIColor.redColor()
-                    cell.detailTextLabel!.textColor = UIColor.redColor()
+                    cell      .textLabel!.textColor = UIColor.red
+                    cell.detailTextLabel!.textColor = UIColor.red
                     
                     UIView.beginAnimations(nil, context: nil)
                     
@@ -137,44 +148,44 @@ class AllReceiptsViewController: CommonViewController, UITableViewDelegate, UITa
                     UIView.setAnimationDuration          (0.6)                             // 600mS!!!
                     UIView.setAnimationRepeatCount       (Float(UINT32_MAX))
                     UIView.setAnimationRepeatAutoreverses(true)
-                    UIView.setAnimationCurve             (UIViewAnimationCurve.EaseIn)
+                    UIView.setAnimationCurve             (UIViewAnimationCurve.easeIn)
                     
                     cell      .textLabel!.alpha = 1.0
                     cell.detailTextLabel!.alpha = 1.0
                     
                     UIView.commitAnimations()
                     
-                    cell.accessoryType = UITableViewCellAccessoryType.DisclosureIndicator
+                    cell.accessoryType = UITableViewCellAccessoryType.disclosureIndicator
                     
-                    cell.userInteractionEnabled = true
+                    cell.isUserInteractionEnabled = true
                 }
                 else {
                     cell.textLabel!      .text = "Registration"
                     cell.detailTextLabel!.text = ""
                     
-                    cell      .textLabel!.textColor = UIColor.blueColor()
-                    cell.detailTextLabel!.textColor = UIColor.blueColor()
+                    cell      .textLabel!.textColor = UIColor.blue
+                    cell.detailTextLabel!.textColor = UIColor.blue
                     
                     cell      .textLabel!.alpha = 1.0
                     cell.detailTextLabel!.alpha = 1.0
                     
-                    cell.accessoryType = UITableViewCellAccessoryType.DisclosureIndicator
+                    cell.accessoryType = UITableViewCellAccessoryType.disclosureIndicator
                     
-                    cell.userInteractionEnabled = true
+                    cell.isUserInteractionEnabled = true
                 }
             }
         }
         else {     // section == 3
             let cellIdentifier: String = "SwitchTableViewCell"
             
-            cell = self.tableView.dequeueReusableCellWithIdentifier(cellIdentifier, forIndexPath: indexPath)
+            cell = self.tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath)
             
             if cell != nil {
                 let customCell: SwitchTableViewCell = cell as! SwitchTableViewCell
                 
                 customCell.backgroundColor = UIColor(red: 0.9, green: 1.0, blue: 1.0, alpha: 1.0)
                 
-                customCell.stateSwitch.on = true
+                customCell.stateSwitch.isOn = true
                 
                 let allReceiptsSettings: Int = AppDelegate.getAllReceiptsSettings()
                 
@@ -183,28 +194,28 @@ class AllReceiptsViewController: CommonViewController, UITableViewDelegate, UITa
                     customCell.titleLabel.text = "Receipt"
                     
                     if (allReceiptsSettings & 0x00000001) == 0x00000000 {
-                        customCell.stateSwitch.on = false
+                        customCell.stateSwitch.isOn = false
                     }
                 case 1 :
                     customCell.titleLabel.text = "Information"
                     
                     if (allReceiptsSettings & 0x00000002) == 0x00000000 {
-                        customCell.stateSwitch.on = false
+                        customCell.stateSwitch.isOn = false
                     }
 //              case 2  :
                 default :
                     customCell.titleLabel.text = "QR Code"
                     
                     if (allReceiptsSettings & 0x00000004) == 0x00000000 {
-                        customCell.stateSwitch.on = false
+                        customCell.stateSwitch.isOn = false
                     }
                 }
                 
-                customCell.titleLabel.textColor = UIColor.blueColor()
+                customCell.titleLabel.textColor = UIColor.blue
                 
                 customCell.delegate = self
                 
-                var frame: CGRect = customCell.titleLabel.frame     // 以下,iPhone6での位置揃え実装!!!
+                var frame: CGRect = customCell.titleLabel.frame
                 
                 let insets: UIEdgeInsets = self.tableView.separatorInset
                 
@@ -217,7 +228,7 @@ class AllReceiptsViewController: CommonViewController, UITableViewDelegate, UITa
         return cell
     }
     
-    func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         let title: String
         
         switch section {
@@ -235,8 +246,8 @@ class AllReceiptsViewController: CommonViewController, UITableViewDelegate, UITa
         return title
     }
     
-    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        self.tableView.deselectRowAtIndexPath(indexPath, animated: true)
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        self.tableView.deselectRow(at: indexPath, animated: true)
         
         if indexPath.section == 0 {
             let emulation: StarIoExtEmulation = AppDelegate.getEmulation()
@@ -245,10 +256,10 @@ class AllReceiptsViewController: CommonViewController, UITableViewDelegate, UITa
             
             let localizeReceipts: ILocalizeReceipts = LocalizeReceipts.createLocalizeReceipts(AppDelegate.getSelectedLanguage(), paperSizeIndex: AppDelegate.getSelectedPaperSize())
             
-            let completionUpload: (Int, NSError!) -> Void = {(statusCode, error) -> Void in
+            let completionUpload: (Int, Error?) -> Void = {(statusCode, error) -> Void in
                 let prompt: String
                 
-                if error != nil {
+                if let error = error as NSError? {
                     prompt = String(format: "%@", error)
                 }
                 else {
@@ -259,12 +270,12 @@ class AllReceiptsViewController: CommonViewController, UITableViewDelegate, UITa
                 
                 self.navigationItem.prompt = prompt
                 
-                dispatch_after(dispatch_time(DISPATCH_TIME_NOW, Int64(2.0 * Double(NSEC_PER_SEC))), dispatch_get_main_queue(), {
+                DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + Double(Int64(2.0 * Double(NSEC_PER_SEC))) / Double(NSEC_PER_SEC), execute: {
                     self.navigationItem.prompt = nil
                 })
             }
             
-            let commands: NSData?
+            let commands: Data?
             
             var receipt: Bool = true
             var info:    Bool = true
@@ -285,6 +296,10 @@ class AllReceiptsViewController: CommonViewController, UITableViewDelegate, UITa
             }
             
             switch indexPath.row {
+            case 0 :
+                commands = AllReceiptsFunctions.createTextReceiptData(emulation, localizeReceipts: localizeReceipts, utf8: false, width: width, receipt: receipt, info: info, qrCode: qrCode, completion: completionUpload)
+            case 1 :
+                commands = AllReceiptsFunctions.createTextReceiptData(emulation, localizeReceipts: localizeReceipts, utf8: true,  width: width, receipt: receipt, info: info, qrCode: qrCode, completion: completionUpload)
             case 2 :
                 commands = AllReceiptsFunctions.createRasterReceiptData(emulation, localizeReceipts: localizeReceipts, receipt: receipt, info: info, qrCode: qrCode, completion: completionUpload)
             case 3 :
@@ -301,13 +316,20 @@ class AllReceiptsViewController: CommonViewController, UITableViewDelegate, UITa
                     self.blind = false
                 }
                 
-                Communication.sendCommands(commands, portName: AppDelegate.getPortName(), portSettings: AppDelegate.getPortSettings(), timeout: 10000)     // 10000mS!!!
+                let portName:     String = AppDelegate.getPortName()
+                let portSettings: String = AppDelegate.getPortSettings()
+                
+                _ = Communication.sendCommands(commands, portName: portName, portSettings: portSettings, timeout: 10000, completionHandler: { (result: Bool, title: String, message: String) in     // 10000mS!!!
+                    let alertView: UIAlertView = UIAlertView(title: title, message: message, delegate: nil, cancelButtonTitle: "OK")
+                    
+                    alertView.show()
+                })
             }
         }
         else if indexPath.section == 1 {
             AppDelegate.setSelectedIndex(indexPath.row)
             
-            self.performSegueWithIdentifier("PushAllReceiptsExtViewController", sender: nil)
+            self.performSegue(withIdentifier: "PushAllReceiptsExtViewController", sender: nil)
         }
         else if indexPath.section == 2 {
             SMCloudServices.showRegistrationView({ (Bool) -> Void in
@@ -318,7 +340,7 @@ class AllReceiptsViewController: CommonViewController, UITableViewDelegate, UITa
 //      }
     }
     
-    func tableView(tableView: UITableView, valueChangedStateSwitch on: Bool, indexPath: NSIndexPath) {
+    func tableView(_ tableView: UITableView, valueChangedStateSwitch on: Bool, indexPath: IndexPath) {
         var allReceiptsSettings: Int = AppDelegate.getAllReceiptsSettings()
         
         if on == true {

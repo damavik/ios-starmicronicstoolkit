@@ -54,22 +54,22 @@ typedef enum {
                    portSettings:(NSString *)portSettings
                   sensorSetting:(SensorActive)sensorActiveSetting;
 
-+ (void)PrintBarcodeWithPortname:(NSString*)portName
-                    portSettings:(NSString*)portSettings
++ (void)PrintBarcodeWithPortname:(NSString *)portName
+                    portSettings:(NSString *)portSettings
                           height:(unsigned char)height
                            width:(BarcodeWidth)width
                      barcodeType:(BarcodeType)type
-                     barcodeData:(unsigned char*)barcodeData
+                     barcodeData:(unsigned char *)barcodeData
                  barcodeDataSize:(unsigned int)barcodeDataSize;
-+ (void)PrintQrcodePortname:(NSString*)portName
-               portSettings:(NSString*)portSettings
++ (void)PrintQrcodePortname:(NSString *)portName
+               portSettings:(NSString *)portSettings
       correctionLevelOption:(CorrectionLevelOption)correctionLevel
                     ECLevel:(unsigned char)sizeByECLevel
                  moduleSize:(unsigned char)moduleSize
                 barcodeData:(unsigned char*)barcodeData
             barcodeDataSize:(unsigned int)barcodeDataSize;
-+ (void)PrintPDF417WithPortname:(NSString*)portName
-                   portSettings:(NSString*)portSettings
++ (void)PrintPDF417WithPortname:(NSString *)portName
+                   portSettings:(NSString *)portSettings
                           width:(BarcodeWidth)width
                    columnNumber:(unsigned char)columnNumber
                   securityLevel:(unsigned char)securityLevel
@@ -77,14 +77,14 @@ typedef enum {
                     barcodeData:(unsigned char *)barcodeData
                 barcodeDataSize:(unsigned char)barcodeDataSize;
 
-+ (void)PrintBitmapWithPortName:(NSString*)portName
-                   portSettings:(NSString*)portSettings
-                    imageSource:(UIImage*)source
++ (void)PrintBitmapWithPortName:(NSString *)portName
+                   portSettings:(NSString *)portSettings
+                    imageSource:(UIImage *)source
                    printerWidth:(int)maxWidth
               compressionEnable:(BOOL)compressionEnable
                  pageModeEnable:(BOOL)pageModeEnable;
-+ (void)PrintText:(NSString*)portName
-     PortSettings:(NSString*)portSettings
++ (void)PrintText:(NSString *)portName
+     PortSettings:(NSString *)portSettings
         Underline:(bool)underline
        Emphasized:(bool)emphasized
       Upsideddown:(bool)upsideddown
@@ -93,10 +93,10 @@ typedef enum {
    WidthExpansion:(unsigned char)widthExpansion
        LeftMargin:(int)leftMargin
         Alignment:(Alignment)alignment
-      TextToPrint:(unsigned char*)textToPrint
+      TextToPrint:(unsigned char *)textToPrint
   TextToPrintSize:(unsigned int)textToPrintSize;
-+ (void)PrintJpKanji:(NSString*)portName
-        PortSettings:(NSString*)portSettings
++ (void)PrintJpKanji:(NSString *)portName
+        PortSettings:(NSString *)portSettings
            Underline:(bool)underline
           Emphasized:(bool)emphasized
          Upsideddown:(bool)upsideddown
@@ -116,8 +116,8 @@ typedef enum {
 + (NSData *)sampleReceiptDataWithLanguage:(SMLanguage)language
                                paperWidth:(SMPaperWidth)paperWidth;
 
-- (void)MCRStartWithPortName:(NSString*)portName
-                portSettings:(NSString*)portSettings;
+- (void)MCRStartWithPortName:(NSString *)portName
+                portSettings:(NSString *)portSettings;
 
 + (void)PrintSampleReceiptWithPortname:(NSString *)portName
                           portSettings:(NSString *)portSettings

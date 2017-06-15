@@ -2,7 +2,7 @@
 //  IOS_SDKViewControllerImpactDotMatrix.h
 //  IOS_SDK
 //
-//  Copyright 2011 - 2016 STAR MICRONICS CO., LTD. All rights reserved.
+//  Copyright 2011 - 2017 STAR MICRONICS CO., LTD. All rights reserved.
 //
 
 #import <UIKit/UIKit.h>

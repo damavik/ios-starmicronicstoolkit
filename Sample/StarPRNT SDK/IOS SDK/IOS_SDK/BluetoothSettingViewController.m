@@ -302,6 +302,7 @@ typedef enum _AlertViewType {
             } else {
                 cell.detailTextLabel.text = @"No Support";
                 cell.detailTextLabel.textColor = UIColor.grayColor;
+                cell.selectionStyle = UITableViewCellSelectionStyleNone;
             }
             
             break;
@@ -312,6 +313,7 @@ typedef enum _AlertViewType {
             } else {
                 cell.detailTextLabel.text = @"No Support";
                 cell.detailTextLabel.textColor = UIColor.grayColor;
+                cell.selectionStyle = UITableViewCellSelectionStyleNone;
             }
             break;
             
@@ -325,6 +327,7 @@ typedef enum _AlertViewType {
             } else {
                 cell.detailTextLabel.text = @"No Support";
                 cell.detailTextLabel.textColor = UIColor.grayColor;
+                cell.selectionStyle = UITableViewCellSelectionStyleNone;
             }
             break;
             
@@ -346,6 +349,11 @@ typedef enum _AlertViewType {
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    UITableViewCell *selectedCell = [tableView cellForRowAtIndexPath:indexPath];
+    if (selectedCell.selectionStyle == UITableViewCellSelectionStyleNone) {
+        return;
+    }
+    
     switch (indexPath.row) {
         case 3: // Security
             if ((self.bluetoothManager.deviceType == SMDeviceTypeDesktopPrinter) ||

@@ -49,7 +49,7 @@
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     // Return the number of rows in the section.
     
-    return 22;
+    return 24;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -132,6 +132,12 @@
             case 21 :
                 cell.textLabel.text = @"QR Code";
                 break;
+            case 22 :
+                cell.textLabel.text = @"Black Mark";
+                break;
+            case 23 :
+                cell.textLabel.text = @"Page Mode";
+                break;
         }
         
         cell.detailTextLabel.text = @"";
@@ -152,87 +158,144 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     
+    NSData *commands = nil;
+    
+    StarIoExtEmulation emulation = [AppDelegate getEmulation];
+    
+    NSInteger width = [AppDelegate getSelectedPaperSize];
+    
+    UIAlertView *alertView = nil;
+    
+    switch (indexPath.row) {
+        default :
+//      case 0  :
+            commands = [ApiFunctions createGenericData:emulation];
+            break;
+        case 1  :
+            commands = [ApiFunctions createFontStyleData:emulation];
+            break;
+        case 2  :
+            commands = [ApiFunctions createInitializationData:emulation];
+            break;
+        case 3  :
+            commands = [ApiFunctions createCodePageData:emulation];
+            break;
+        case 4  :
+            commands = [ApiFunctions createInternationalData:emulation];
+            break;
+        case 5  :
+            commands = [ApiFunctions createFeedData:emulation];
+            break;
+        case 6  :
+            commands = [ApiFunctions createCharacterSpaceData:emulation];
+            break;
+        case 7  :
+            commands = [ApiFunctions createLineSpaceData:emulation];
+            break;
+        case 8  :
+            commands = [ApiFunctions createEmphasisData:emulation];
+            break;
+        case 9  :
+            commands = [ApiFunctions createInvertData:emulation];
+            break;
+        case 10 :
+            commands = [ApiFunctions createUnderLineData:emulation];
+            break;
+        case 11 :
+            commands = [ApiFunctions createMultipleData:emulation];
+            break;
+        case 12 :
+            commands = [ApiFunctions createAbsolutePositionData:emulation];
+            break;
+        case 13 :
+            commands = [ApiFunctions createAlignmentData:emulation];
+            break;
+        case 14 :
+            commands = [ApiFunctions createLogoData:emulation];
+            break;
+        case 15 :
+            commands = [ApiFunctions createCutPaperData:emulation];
+            break;
+        case 16 :
+            commands = [ApiFunctions createPeripheralData:emulation];
+            break;
+        case 17 :
+            commands = [ApiFunctions createSoundData:emulation];
+            break;
+        case 18 :
+            commands = [ApiFunctions createBitmapData:emulation width:width];
+            break;
+        case 19 :
+            commands = [ApiFunctions createBarcodeData:emulation];
+            break;
+        case 20 :
+            commands = [ApiFunctions createPdf417Data:emulation];
+            break;
+        case 21 :
+            commands = [ApiFunctions createQrCodeData:emulation];
+            break;
+        case 22 :
+            alertView = [[UIAlertView alloc] initWithTitle:@"Select black mark type."
+                                                   message:@""
+                                                  delegate:self
+                                         cancelButtonTitle:@"Cancel"
+                                         otherButtonTitles:@"Invalid", @"Valid", @"Valid with Detection", nil];
+            
+            [alertView show];
+            break;
+        case 23 :
+            commands = [ApiFunctions createPageModeData:emulation width:width];
+            break;
+    }
+    
+    if (commands != nil) {
+        self.blind = YES;
+        
+        NSString *portName     = [AppDelegate getPortName];
+        NSString *portSettings = [AppDelegate getPortSettings];
+        
+        [Communication sendCommands:commands portName:portName portSettings:portSettings timeout:10000 completionHandler:^(BOOL result, NSString *title, NSString *message) {     // 10000mS!!!
+            UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:title message:message delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+            
+            [alertView show];
+        }];
+        
+        self.blind = NO;
+    }
+}
+
+- (void)alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex {
+    if (buttonIndex != alertView.cancelButtonIndex) {
         NSData *commands = nil;
         
         StarIoExtEmulation emulation = [AppDelegate getEmulation];
         
-        NSInteger width = [AppDelegate getSelectedPaperSize];
-        
-        switch (indexPath.row) {
-            default :
+        switch (buttonIndex - 1) {
+            default :     // Invalid
 //          case 0  :
-                commands = [ApiFunctions createGenericData:emulation];
+                commands = [ApiFunctions createBlackMarkData:emulation type:SCBBlackMarkTypeInvalid];
                 break;
-            case 1  :
-                commands = [ApiFunctions createFontStyleData:emulation];
+            case 1 :      // Valid
+                commands = [ApiFunctions createBlackMarkData:emulation type:SCBBlackMarkTypeValid];
                 break;
-            case 2  :
-                commands = [ApiFunctions createInitializationData:emulation];
-                break;
-            case 3  :
-                commands = [ApiFunctions createCodePageData:emulation];
-                break;
-            case 4  :
-                commands = [ApiFunctions createInternationalData:emulation];
-                break;
-            case 5  :
-                commands = [ApiFunctions createFeedData:emulation];
-                break;
-            case 6  :
-                commands = [ApiFunctions createCharacterSpaceData:emulation];
-                break;
-            case 7  :
-                commands = [ApiFunctions createLineSpaceData:emulation];
-                break;
-            case 8  :
-                commands = [ApiFunctions createEmphasisData:emulation];
-                break;
-            case 9  :
-                commands = [ApiFunctions createInvertData:emulation];
-                break;
-            case 10 :
-                commands = [ApiFunctions createUnderLineData:emulation];
-                break;
-            case 11 :
-                commands = [ApiFunctions createMultipleData:emulation];
-                break;
-            case 12 :
-                commands = [ApiFunctions createAbsolutePositionData:emulation];
-                break;
-            case 13 :
-                commands = [ApiFunctions createAlignmentData:emulation];
-                break;
-            case 14 :
-                commands = [ApiFunctions createLogoData:emulation];
-                break;
-            case 15 :
-                commands = [ApiFunctions createCutPaperData:emulation];
-                break;
-            case 16 :
-                commands = [ApiFunctions createPeripheralData:emulation];
-                break;
-            case 17 :
-                commands = [ApiFunctions createSoundData:emulation];
-                break;
-            case 18 :
-                commands = [ApiFunctions createBitmapData:emulation width:width];
-                break;
-            case 19 :
-                commands = [ApiFunctions createBarcodeData:emulation];
-                break;
-            case 20 :
-                commands = [ApiFunctions createPdf417Data:emulation];
-                break;
-            case 21 :
-                commands = [ApiFunctions createQrCodeData:emulation];
+            case 2 :      // Valid with Detection
+                commands = [ApiFunctions createBlackMarkData:emulation type:SCBBlackMarkTypeValidWithDetection];
                 break;
         }
         
         self.blind = YES;
         
-        [Communication sendCommands:commands portName:[AppDelegate getPortName] portSettings:[AppDelegate getPortSettings] timeout:10000];     // 10000mS!!!
+        NSString *portName     = [AppDelegate getPortName];
+        NSString *portSettings = [AppDelegate getPortSettings];
+        
+        [Communication sendCommands:commands portName:portName portSettings:portSettings timeout:10000 completionHandler:^(BOOL result, NSString *title, NSString *message) {     // 10000mS!!!
+            UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:title message:message delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+            
+            [alertView show];
+        }];
         
         self.blind = NO;
+    }
 }
 
 @end

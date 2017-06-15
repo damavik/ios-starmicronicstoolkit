@@ -19,6 +19,8 @@
     
     self.languageCode = @"Fr";
     
+    self.characterCode = StarIoExtCharacterCodeStandard;
+    
     return self;
 }
 
@@ -42,9 +44,9 @@
     
     [builder appendAlignment:SCBAlignmentPositionCenter];
     
-    [builder appendDataWithMultiple:[@"ORANGE\n" dataUsingEncoding:encoding] width:2 height:2];
+    [builder appendDataWithMultipleHeight:[@"Star Micronics Communications\n" dataUsingEncoding:encoding] height:2];
     
-    [builder appendData:[@"36 AVENUE LA MOTTE PICQUET\n"
+    [builder appendData:[@"AVENUE LA MOTTE PICQUET\n"
                           "\n" dataUsingEncoding:encoding]];
     
     [builder appendAlignment:SCBAlignmentPositionLeft];
@@ -58,12 +60,12 @@
                           "\n"
                           "Vous avez été servi par : Souad\n"
                           "\n"
-                          "CAC IPHONE ORANGE\n"
+                          "CAC IPHONE\n"
                           "3700615033581 1 X 19.99€  19.99€\n"
                           "\n"
                           "dont contribution\n"
                           " environnementale :\n"
-                          "CAC IPHONE ORANGE          0.01€\n"
+                          "CAC IPHONE                 0.01€\n"
                           "--------------------------------\n"
                           "1 Piéce(s) Total :        19.99€\n"
                           "Mastercard Visa  :        19.99€\n"
@@ -109,9 +111,9 @@
 //
 //  [builder appendLogo:SCBLogoSizeNormal number:1];
     
-    [builder appendDataWithMultiple:[@"ORANGE\n" dataUsingEncoding:encoding] width:2 height:2];
+    [builder appendDataWithMultipleHeight:[@"Star Micronics Communications\n" dataUsingEncoding:encoding] height:2];
     
-    [builder appendData:[@"36 AVENUE LA MOTTE PICQUET\n"
+    [builder appendData:[@"AVENUE LA MOTTE PICQUET\n"
                           "\n" dataUsingEncoding:encoding]];
     
     [builder appendAlignment:SCBAlignmentPositionLeft];
@@ -124,11 +126,11 @@
                           "\n"
                           "Vous avez été servi par : Souad\n"
                           "\n"
-                          "CAC IPHONE ORANGE\n"
+                          "CAC IPHONE\n"
                           "3700615033581   1    X     19.99€         19.99€\n"
                           "\n"
                           "dont contribution environnementale :\n"
-                          "CAC IPHONE ORANGE                          0.01€\n"
+                          "CAC IPHONE                                 0.01€\n"
                           "------------------------------------------------\n"
                           "1 Piéce(s) Total :                        19.99€\n"
                           "Mastercard Visa  :                        19.99€\n"
@@ -171,9 +173,9 @@
 //
 //  [builder appendLogo:SCBLogoSizeNormal number:1];
     
-    [builder appendDataWithMultiple:[@"ORANGE\n" dataUsingEncoding:encoding] width:2 height:2];
+    [builder appendDataWithMultiple:[@"Star Micronics Communications\n" dataUsingEncoding:encoding] width:2 height:2];
     
-    [builder appendData:[@"36 AVENUE LA MOTTE PICQUET\n"
+    [builder appendData:[@"AVENUE LA MOTTE PICQUET\n"
                           "\n" dataUsingEncoding:encoding]];
     
     [builder appendAlignment:SCBAlignmentPositionLeft];
@@ -186,11 +188,11 @@
                           "\n"
                           "Vous avez été servi par : Souad\n"
                           "\n"
-                          "CAC IPHONE ORANGE\n"
+                          "CAC IPHONE\n"
                           "3700615033581   1    X     19.99€                              19.99€\n"
                           "\n"
                           "dont contribution environnementale :\n"
-                          "CAC IPHONE ORANGE                                               0.01€\n"
+                          "CAC IPHONE                                                      0.01€\n"
                           "---------------------------------------------------------------------\n"
                           "1 Piéce(s) Total :                                             19.99€\n"
                           "Mastercard Visa  :                                             19.99€\n"
@@ -211,8 +213,9 @@
 
 - (UIImage *)create2inchRasterReceiptImage {
     NSString *textToPrint =
-    @"          ORANGE\n"
-    "    36 AVENUE LA MOTTE\n"
+    @"      Star Micronics\n"
+    "      Communications\n"
+    "      AVENUE LA MOTTE\n"
     " PICQUET City, State 12345\n"
     "\n"
     "--------------------------\n"
@@ -225,12 +228,12 @@
     "--------------------------\n"
     "Vous avez été servi par :\n"
     "                     Souad\n"
-    "CAC IPHONE ORANGE\n"
+    "CAC IPHONE\n"
     "3700615033581 1 X   19.99€\n"
     "                    19.99€\n"
     "dont contribution\n"
     " environnementale :\n"
-    "CAC IPHONE ORANGE    0.01€\n"
+    "CAC IPHONE           0.01€\n"
     "--------------------------\n"
     " 1 Piéce(s) Total : 19.99€\n"
     "\n"
@@ -252,8 +255,8 @@
 
 - (UIImage *)create3inchRasterReceiptImage {
     NSString *textToPrint =
-    @"                ORANGE\n"
-    "           36 AVENUE LA MOTTE\n"
+    @"      Star Micronics Communications\n"
+    "             AVENUE LA MOTTE\n"
     "        PICQUET City, State 12345\n"
     "\n"
     "--------------------------------------\n"
@@ -262,10 +265,10 @@
     "      Conseiller: 002970  Ticket: 3881\n"
     "--------------------------------------\n"
     "Vous avez été servi par : Souad\n"
-    "CAC IPHONE ORANGE\n"
+    "CAC IPHONE\n"
     "3700615033581   1 X 19.99€      19.99€\n"
     "dont contribution environnementale :\n"
-    "CAC IPHONE ORANGE                0.01€\n"
+    "CAC IPHONE                       0.01€\n"
     "--------------------------------------\n"
     "  1 Piéce(s)    Total :         19.99€\n"
     "\n"
@@ -283,8 +286,8 @@
 
 - (UIImage *)create4inchRasterReceiptImage {
     NSString *textToPrint =
-    @"                        ORANGE\n"
-    "     36 AVENUE LA MOTTE PICQUET City, State 12345\n"
+    @"             Star Micronics Communications\n"
+    "       AVENUE LA MOTTE PICQUET City, State 12345\n"
     "\n"
     "-------------------------------------------------------\n"
     "                      Date: MM/DD/YYYY    Time:HH:MM PM\n"
@@ -292,10 +295,10 @@
     "                Conseiller: 002970         Ticket: 3881\n"
     "-------------------------------------------------------\n"
     "Vous avez été servi par : Souad\n"
-    "CAC IPHONE ORANGE\n"
+    "CAC IPHONE\n"
     "3700615033581      1  X  19.99€                  19.99€\n"
     "dont contribution environnementale :\n"
-    "CAC IPHONE ORANGE                                 0.01€\n"
+    "CAC IPHONE                                        0.01€\n"
     "-------------------------------------------------------\n"
     "        1 Piéce(s)    Total :                    19.99€\n"
     "\n"
@@ -317,8 +320,8 @@
 
 - (UIImage *)createEscPos3inchRasterReceiptImage {
     NSString *textToPrint =
-    @"              ORANGE\n"
-    "         36 AVENUE LA MOTTE\n"
+    @"   Star Micronics Communications\n"
+    "           AVENUE LA MOTTE\n"
     "      PICQUET City, State 12345\n"
     "\n"
     "-----------------------------------\n"
@@ -327,10 +330,10 @@
     "   Conseiller: 002970  Ticket: 3881\n"
     "-----------------------------------\n"
     "Vous avez été servi par : Souad\n"
-    "CAC IPHONE ORANGE\n"
+    "CAC IPHONE\n"
     "3700615033581  1 X 19.99€    19.99€\n"
     "dont contribution environnementale:\n"
-    "CAC IPHONE ORANGE             0.01€\n"
+    "CAC IPHONE                    0.01€\n"
     "-----------------------------------\n"
     "  1 Piéce(s)    Total :      19.99€\n"
     "\n"
@@ -371,9 +374,9 @@
 //
 //  [builder appendLogo:SCBLogoSizeNormal number:1];
     
-    [builder appendDataWithMultiple:[@"ORANGE\n" dataUsingEncoding:encoding] width:2 height:2];
+    [builder appendDataWithMultipleHeight:[@"Star Micronics Communications\n" dataUsingEncoding:encoding] height:2];
     
-    [builder appendData:[@"36 AVENUE LA MOTTE PICQUET\n"
+    [builder appendData:[@"AVENUE LA MOTTE PICQUET\n"
                           "\n" dataUsingEncoding:encoding]];
     
     [builder appendAlignment:SCBAlignmentPositionLeft];
@@ -386,11 +389,11 @@
                           "\n"
                           "Vous avez été servi par : Souad\n"
                           "\n"
-                          "CAC IPHONE ORANGE\n"
+                          "CAC IPHONE\n"
                           "3700615033581   1    X   19.99€     19.99€\n"
                           "\n"
                           "dont contribution environnementale :\n"
-                          "CAC IPHONE ORANGE                    0.01€\n"
+                          "CAC IPHONE                           0.01€\n"
                           "------------------------------------------\n"
                           "1 Piéce(s) Total :                  19.99€\n"
                           "Mastercard Visa  :                  19.99€\n"
@@ -431,9 +434,9 @@
 //
 //  [builder appendLogo:SCBLogoSizeNormal number:1];
     
-    [builder appendDataWithMultiple:[@"ORANGE\n" dataUsingEncoding:encoding] width:2 height:2];
+    [builder appendDataWithMultipleHeight:[@"Star Micronics Communications\n" dataUsingEncoding:encoding] height:2];
     
-    [builder appendData:[@"36 AVENUE LA MOTTE PICQUET\n"
+    [builder appendData:[@"AVENUE LA MOTTE PICQUET\n"
                           "\n" dataUsingEncoding:encoding]];
     
     [builder appendAlignment:SCBAlignmentPositionLeft];
@@ -446,11 +449,11 @@
                           "\n"
                           "Vous avez été servi par : Souad\n"
                           "\n"
-                          "CAC IPHONE ORANGE\n"
+                          "CAC IPHONE\n"
                           "3700615033581 1 X 19.99€            19.99€\n"
                           "\n"
                           "dont contribution environnementale :\n"
-                          "CAC IPHONE ORANGE                    0.01€\n"
+                          "CAC IPHONE                           0.01€\n"
                           "------------------------------------------\n"
                           "1 Piéce(s) Total :                  19.99€\n"
                           "Mastercard Visa  :                  19.99€\n"

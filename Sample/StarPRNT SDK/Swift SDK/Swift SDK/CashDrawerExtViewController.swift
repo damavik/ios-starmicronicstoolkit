@@ -25,15 +25,14 @@ class CashDrawerExtViewController: CommonViewController, StarIoExtManagerDelegat
         
         self.commentLabel.adjustsFontSizeToFitWidth = true
         
-        self.openButton.enabled           = true
-        self.openButton.backgroundColor   = UIColor.cyanColor()
-        self.openButton.layer.borderColor = UIColor.blueColor().CGColor
+        self.openButton.isEnabled           = true
+        self.openButton.backgroundColor   = UIColor.cyan
+        self.openButton.layer.borderColor = UIColor.blue.cgColor
         self.openButton.layer.borderWidth = 1.0
         
-//      self.appendRefreshButton                                     ("refreshCashDrawer")
         self.appendRefreshButton(#selector(CashDrawerExtViewController.refreshCashDrawer))
         
-        self.starIoExtManager = StarIoExtManager(type: StarIoExtManagerType.Standard,
+        self.starIoExtManager = StarIoExtManager(type: StarIoExtManagerType.standard,
                                              portName: AppDelegate.getPortName(),
                                          portSettings: AppDelegate.getPortSettings(),
                                       ioTimeoutMillis: 10000)                             // 10000mS!!!
@@ -50,38 +49,36 @@ class CashDrawerExtViewController: CommonViewController, StarIoExtManagerDelegat
         // Dispose of any resources that can be recreated.
     }
     
-    override func viewWillAppear(animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-//      NSNotificationCenter.defaultCenter().addObserver(self, selector:                                   "applicationWillResignActive", name: "UIApplicationWillResignActiveNotification", object: nil)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(PrinterExtViewController.applicationWillResignActive), name: "UIApplicationWillResignActiveNotification", object: nil)
-//      NSNotificationCenter.defaultCenter().addObserver(self, selector:                                   "applicationDidBecomeActive",  name: "UIApplicationDidBecomeActiveNotification",  object: nil)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(PrinterExtViewController.applicationDidBecomeActive),  name: "UIApplicationDidBecomeActiveNotification",  object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(PrinterExtViewController.applicationWillResignActive), name: NSNotification.Name(rawValue: "UIApplicationWillResignActiveNotification"), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(PrinterExtViewController.applicationDidBecomeActive),  name: NSNotification.Name(rawValue: "UIApplicationDidBecomeActiveNotification"),  object: nil)
         
 //      self.refreshCashDrawer()
     }
     
-    override func viewDidAppear(animated: Bool) {
+    override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
         self.refreshCashDrawer()
         
         if self.didAppear == false {
             if self.starIoExtManager.port != nil {
-                self.openButton.sendActionsForControlEvents(UIControlEvents.TouchUpInside)
+                self.openButton.sendActions(for: UIControlEvents.touchUpInside)
             }
             
             self.didAppear = true
         }
     }
     
-    override func viewWillDisappear(animated: Bool) {
+    override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         
         self.starIoExtManager.disconnect()
         
-        NSNotificationCenter.defaultCenter().removeObserver(self, name: "UIApplicationWillResignActiveNotification", object: nil)
-        NSNotificationCenter.defaultCenter().removeObserver(self, name: "UIApplicationDidBecomeActiveNotification",  object: nil)
+        NotificationCenter.default.removeObserver(self, name: NSNotification.Name(rawValue: "UIApplicationWillResignActiveNotification"), object: nil)
+        NotificationCenter.default.removeObserver(self, name: NSNotification.Name(rawValue: "UIApplicationDidBecomeActiveNotification"),  object: nil)
     }
     
     func applicationDidBecomeActive() {
@@ -94,15 +91,15 @@ class CashDrawerExtViewController: CommonViewController, StarIoExtManagerDelegat
         self.starIoExtManager.disconnect()
     }
     
-    @IBAction func touchUpInsideOpenButton(sender: UIButton) {
-        let commands: NSData
+    @IBAction func touchUpInsideOpenButton(_ sender: UIButton) {
+        let commands: Data
         
         switch AppDelegate.getSelectedIndex() {
         case 0, 1 :
-            commands = CashDrawerFunctions.createData(AppDelegate.getEmulation(), channel: SCBPeripheralChannel.No1)
+            commands = CashDrawerFunctions.createData(AppDelegate.getEmulation(), channel: SCBPeripheralChannel.no1)
 //      case 2, 3 :
         default   :
-            commands = CashDrawerFunctions.createData(AppDelegate.getEmulation(), channel: SCBPeripheralChannel.No2)
+            commands = CashDrawerFunctions.createData(AppDelegate.getEmulation(), channel: SCBPeripheralChannel.no2)
         }
         
         self.blind = true
@@ -115,10 +112,18 @@ class CashDrawerExtViewController: CommonViewController, StarIoExtManagerDelegat
         
         switch AppDelegate.getSelectedIndex() {
         case 0, 2 :
-            Communication.sendCommands                   (commands, port: self.starIoExtManager.port)
+            _ = Communication.sendCommands(commands, port: self.starIoExtManager.port, completionHandler: { (result: Bool, title: String, message: String) in
+                let alertView: UIAlertView = UIAlertView(title: title, message: message, delegate: nil, cancelButtonTitle: "OK")
+                
+                alertView.show()
+            })
 //      case 1, 3 :
         default   :
-            Communication.sendCommandsDoNotCheckCondition(commands, port: self.starIoExtManager.port)
+            _ = Communication.sendCommandsDoNotCheckCondition(commands, port: self.starIoExtManager.port, completionHandler: { (result: Bool, title: String, message: String) in
+                let alertView: UIAlertView = UIAlertView(title: title, message: message, delegate: nil, cancelButtonTitle: "OK")
+                
+                alertView.show()
+            })
         }
         
         self.starIoExtManager.lock.unlock()
@@ -140,86 +145,86 @@ class CashDrawerExtViewController: CommonViewController, StarIoExtManagerDelegat
         }
     }
     
-    func alertView(alertView: UIAlertView, clickedButtonAtIndex buttonIndex: Int) {
+    func alertView(_ alertView: UIAlertView, clickedButtonAt buttonIndex: Int) {
         self.commentLabel.text = "Check the device. (Power and Bluetooth pairing)\nThen touch up the Refresh button."
         
-        self.commentLabel.textColor = UIColor.redColor()
+        self.commentLabel.textColor = UIColor.red
         
         self.beginAnimationCommantLabel()
     }
     
-    func didPrinterImpossible(manager: StarIoExtManager!) {
+    func didPrinterImpossible(_ manager: StarIoExtManager!) {
         NSLog("%@", MakePrettyFunction())
         
         self.commentLabel.text = "Printer Impossible."
         
-        self.commentLabel.textColor = UIColor.redColor()
+        self.commentLabel.textColor = UIColor.red
         
         self.beginAnimationCommantLabel()
     }
     
-    func didCashDrawerOpen(manager: StarIoExtManager!) {
+    func didCashDrawerOpen(_ manager: StarIoExtManager!) {
         NSLog("%@", MakePrettyFunction())
         
         self.commentLabel.text = "Cash Drawer Open."
         
-//      self.commentLabel.textColor = UIColor.redColor()
-        self.commentLabel.textColor = UIColor.magentaColor()
+//      self.commentLabel.textColor = UIColor.red
+        self.commentLabel.textColor = UIColor.magenta
         
         self.beginAnimationCommantLabel()
     }
     
-    func didCashDrawerClose(manager: StarIoExtManager!) {
+    func didCashDrawerClose(_ manager: StarIoExtManager!) {
         NSLog("%@", MakePrettyFunction())
         
         self.commentLabel.text = "Cash Drawer Close."
         
-        self.commentLabel.textColor = UIColor.blueColor()
+        self.commentLabel.textColor = UIColor.blue
         
         self.beginAnimationCommantLabel()
     }
     
-    func didAccessoryConnectSuccess(manager: StarIoExtManager!) {
+    func didAccessoryConnectSuccess(_ manager: StarIoExtManager!) {
         NSLog("%@", MakePrettyFunction())
         
         self.commentLabel.text = "Accessory Connect Success."
         
-        self.commentLabel.textColor = UIColor.blueColor()
+        self.commentLabel.textColor = UIColor.blue
         
         self.beginAnimationCommantLabel()
     }
     
-    func didAccessoryConnectFailure(manager: StarIoExtManager!) {
+    func didAccessoryConnectFailure(_ manager: StarIoExtManager!) {
         NSLog("%@", MakePrettyFunction())
         
         self.commentLabel.text = "Accessory Connect Failure."
         
-        self.commentLabel.textColor = UIColor.redColor()
+        self.commentLabel.textColor = UIColor.red
         
         self.beginAnimationCommantLabel()
     }
     
-    func didAccessoryDisconnect(manager: StarIoExtManager!) {
+    func didAccessoryDisconnect(_ manager: StarIoExtManager!) {
         NSLog("%@", MakePrettyFunction())
         
         self.commentLabel.text = "Accessory Disconnect."
         
-        self.commentLabel.textColor = UIColor.redColor()
+        self.commentLabel.textColor = UIColor.red
         
         self.beginAnimationCommantLabel()
     }
     
-    func didStatusUpdate(manager: StarIoExtManager!, status: String!) {
+    func didStatusUpdate(_ manager: StarIoExtManager!, status: String!) {
         NSLog("%@", MakePrettyFunction())
         
 //      self.commentLabel.text = status
 //
-//      self.commentLabel.textColor = UIColor.greenColor()
+//      self.commentLabel.textColor = UIColor.green
 //
 //      self.beginAnimationCommantLabel()
     }
     
-    private func beginAnimationCommantLabel() {
+    fileprivate func beginAnimationCommantLabel() {
         UIView.beginAnimations(nil, context: nil)
         
         self.commentLabel.alpha = 0.0
@@ -228,7 +233,7 @@ class CashDrawerExtViewController: CommonViewController, StarIoExtManagerDelegat
         UIView.setAnimationDuration          (0.6)                             // 600mS!!!
         UIView.setAnimationRepeatCount       (Float(UINT32_MAX))
         UIView.setAnimationRepeatAutoreverses(true)
-        UIView.setAnimationCurve             (UIViewAnimationCurve.EaseIn)
+        UIView.setAnimationCurve             (UIViewAnimationCurve.easeIn)
         
         self.commentLabel.alpha = 1.0
         

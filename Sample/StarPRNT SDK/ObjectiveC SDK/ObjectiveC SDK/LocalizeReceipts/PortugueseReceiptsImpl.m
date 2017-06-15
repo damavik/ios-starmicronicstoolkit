@@ -19,6 +19,8 @@
     
     self.languageCode = @"Pt";
     
+    self.characterCode = StarIoExtCharacterCodeStandard;
+    
     return self;
 }
 
@@ -43,7 +45,7 @@
     [builder appendAlignment:SCBAlignmentPositionCenter];
     
     [builder appendDataWithMultipleHeight:[@"COMERCIAL DE ALIMENTOS\n"
-                                            "CARREFOUR LTDA.\n" dataUsingEncoding:encoding] height:2];
+                                            "STAR LTDA.\n" dataUsingEncoding:encoding] height:2];
     
     [builder appendData:[@"Avenida Moyses Roysen,\n"
                           "S/N Vila Guilherme\n"
@@ -136,7 +138,7 @@
 //
 //  [builder appendLogo:SCBLogoSizeNormal number:1];
     
-    [builder appendDataWithMultipleHeight:[@"COMERCIAL DE ALIMENTOS CARREFOUR LTDA.\n" dataUsingEncoding:encoding] height:2];
+    [builder appendDataWithMultipleHeight:[@"COMERCIAL DE ALIMENTOS STAR LTDA.\n" dataUsingEncoding:encoding] height:2];
     
     [builder appendData:[@"Avenida Moyses Roysen, S/N  Vila Guilherme\n"
                           "Cep: 02049-010 – Sao Paulo – SP\n"
@@ -219,7 +221,7 @@
 //
 //  [builder appendLogo:SCBLogoSizeNormal number:1];
     
-    [builder appendDataWithMultipleHeight:[@"COMERCIAL DE ALIMENTOS CARREFOUR LTDA.\n" dataUsingEncoding:encoding] height:2];
+    [builder appendDataWithMultipleHeight:[@"COMERCIAL DE ALIMENTOS STAR LTDA.\n" dataUsingEncoding:encoding] height:2];
     
     [builder appendData:[@"Avenida Moyses Roysen, S/N  Vila Guilherme\n"
                           "Cep: 02049-010 – Sao Paulo – SP\n"
@@ -281,7 +283,7 @@
 - (UIImage *)create2inchRasterReceiptImage {
     NSString *textToPrint =
     @"COMERCIAL DE ALIMENTOS\n"
-    "       CARREFOUR LTDA.\n"
+    "         STAR LTDA.\n"
     "Avenida Moyses Roysen,\n"
     "S/N Vila Guilherme\n"
     "Cep: 02049-010 – Sao Paulo\n"
@@ -341,7 +343,7 @@
 - (UIImage *)create3inchRasterReceiptImage {
     NSString *textToPrint =
     @"         COMERCIAL DE ALIMENTOS\n"
-    "            CARREFOUR LTDA.\n"
+    "              STAR LTDA.\n"
     "        Avenida Moyses Roysen,\n"
     "          S/N Vila Guilherme\n"
     "     Cep: 02049-010 – Sao Paulo – SP\n"
@@ -386,7 +388,7 @@
 
 - (UIImage *)create4inchRasterReceiptImage {
     NSString *textToPrint =
-    @"          COMERCIAL DE ALIMENTOS CARREFOUR LTDA.\n"
+    @"            COMERCIAL DE ALIMENTOS STAR LTDA.\n"
     "         Avenida Moyses Roysen, S/N Vila Guilherme\n"
     "              Cep: 02049-010 – Sao Paulo – SP\n"
     "                  CNPJ: 62.545.579/0013-69\n"
@@ -434,7 +436,7 @@
 - (UIImage *)createEscPos3inchRasterReceiptImage {
     NSString *textToPrint =
     @"     COMERCIAL DE ALIMENTOS\n"
-    "          CARREFOUR LTDA.\n"
+    "            STAR LTDA.\n"
     "      Avenida Moyses Roysen,\n"
     "        S/N Vila Guilherme\n"
     "  Cep: 02049-010 – Sao Paulo – SP\n"
@@ -508,7 +510,7 @@
 //
 //  [builder appendLogo:SCBLogoSizeNormal number:1];
     
-    [builder appendDataWithMultipleHeight:[@"COMERCIAL DE ALIMENTOS CARREFOUR LTDA.\n" dataUsingEncoding:encoding] height:2];
+    [builder appendDataWithMultipleHeight:[@"COMERCIAL DE ALIMENTOS STAR LTDA.\n" dataUsingEncoding:encoding] height:2];
     
     [builder appendData:[@"Avenida Moyses Roysen, S/N  Vila Guilherme\n"
                           "Cep: 02049-010 – Sao Paulo – SP\n"
@@ -594,7 +596,7 @@
 //
 //  [builder appendLogo:SCBLogoSizeNormal number:1];
     
-    [builder appendDataWithMultipleHeight:[@"\nCOMERCIAL DE ALIMENTOS CARREFOUR LTDA.\n" dataUsingEncoding:encoding] height:2];
+    [builder appendDataWithMultipleHeight:[@"\nCOMERCIAL DE ALIMENTOS STAR LTDA.\n" dataUsingEncoding:encoding] height:2];
     
     [builder appendData:[@"Avenida Moyses Roysen, S/N  Vila Guilherme\n"
                           "Cep: 02049-010 – Sao Paulo - SP\n"

@@ -165,7 +165,7 @@
     NSString *sdkVersion = [NSString stringWithFormat:@"Version Number: %@",[NSBundle.mainBundle objectForInfoDictionaryKey:@"CFBundleShortVersionString"]];
     NSString *starIOVersion = [NSString stringWithFormat:@"StarIO Version: %@", SMPort.StarIOVersion];
     
-    NSString *message = [NSString stringWithFormat:@"%@\n%@\nCopyright 2016(C) Star Micronics Co., Ltd.", sdkVersion, starIOVersion];
+    NSString *message = [NSString stringWithFormat:@"%@\n%@\nCopyright 2017(C) Star Micronics Co., Ltd.", sdkVersion, starIOVersion];
     
     UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Version Information"
                                                     message:message

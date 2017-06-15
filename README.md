@@ -1,3 +1,17 @@
+## 5.3.0
+2017/06/15
+
+*** StarIO ***
+* Added support of TSP100IIIU and SM-L300(Bluetooth Low Energy).
+* The performance when the getPort method failed on Ethernet was improved.
+
+*** Objective-C SDK and Swift SDK ***
+* Add Sample Code.
+* Implementation of BlackMark and PageMode.
+
+*** Swift SDK ***
+* Supported Swift3.
+
 ## 5.0.2
 2016/08/25
 

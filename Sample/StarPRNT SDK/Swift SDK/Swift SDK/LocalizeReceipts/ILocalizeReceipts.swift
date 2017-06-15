@@ -9,41 +9,41 @@
 import Foundation
 
 class LocalizeReceipts {
-    static func createLocalizeReceipts(languageIndex: LanguageIndex, paperSizeIndex: PaperSizeIndex) -> ILocalizeReceipts {
+    static func createLocalizeReceipts(_ languageIndex: LanguageIndex, paperSizeIndex: PaperSizeIndex) -> ILocalizeReceipts {
         var localizeReceipts: ILocalizeReceipts
         
         switch languageIndex {
-        case LanguageIndex.English :
+        case LanguageIndex.english :
             localizeReceipts = EnglishReceiptsImpl()
-        case LanguageIndex.Japanese :
+        case LanguageIndex.japanese :
             localizeReceipts = JapaneseReceiptsImpl()
-        case LanguageIndex.French :
+        case LanguageIndex.french :
             localizeReceipts = FrenchReceiptsImpl()
-        case LanguageIndex.Portuguese :
+        case LanguageIndex.portuguese :
             localizeReceipts = PortugueseReceiptsImpl()
-        case LanguageIndex.Spanish :
+        case LanguageIndex.spanish :
             localizeReceipts = SpanishReceiptsImpl()
-        case LanguageIndex.German :
+        case LanguageIndex.german :
             localizeReceipts = GermanReceiptsImpl()
-        case LanguageIndex.Russian :
+        case LanguageIndex.russian :
             localizeReceipts = RussianReceiptsImpl()
-        case LanguageIndex.SimplifiedChinese :
+        case LanguageIndex.simplifiedChinese :
             localizeReceipts = SimplifiedChineseReceiptsImpl()
-//      case LanguageIndex.TraditionalChinese :
+//      case LanguageIndex.traditionalChinese :
         default                               :
             localizeReceipts = TraditionalChineseReceiptsImpl()
         }
         
         switch paperSizeIndex {
-        case PaperSizeIndex.TwoInch :
+        case PaperSizeIndex.twoInch :
             localizeReceipts.paperSize      = "2\""
             localizeReceipts.scalePaperSize = "3\""     // 3inch -> 2inch
-        case PaperSizeIndex.ThreeInch,
-             PaperSizeIndex.EscPosThreeInch,
-             PaperSizeIndex.DotImpactThreeInch :
+        case PaperSizeIndex.threeInch,
+             PaperSizeIndex.escPosThreeInch,
+             PaperSizeIndex.dotImpactThreeInch :
             localizeReceipts.paperSize      = "3\""
             localizeReceipts.scalePaperSize = "4\""     // 4inch -> 3inch
-//      case PaperSizeIndex.FourInch :
+//      case PaperSizeIndex.fourInch :
         default                      :
             localizeReceipts.paperSize      = "4\""
             localizeReceipts.scalePaperSize = "3\""     // 3inch -> 4inch
@@ -57,75 +57,76 @@ class LocalizeReceipts {
 }
 
 class ILocalizeReceipts {
-    private var languageIndex:  LanguageIndex!
-    private var paperSizeIndex: PaperSizeIndex!
+    fileprivate var languageIndex:  LanguageIndex!
+    fileprivate var paperSizeIndex: PaperSizeIndex!
     
     var languageCode:   String!
     var paperSize:      String!
     var scalePaperSize: String!
+    var characterCode:  StarIoExtCharacterCode!
     
-    func appendTextReceiptData(builder: ISCBBuilder, utf8: Bool) {
+    func appendTextReceiptData(_ builder: ISCBBuilder, utf8: Bool) {
         switch self.paperSizeIndex! {
-        case PaperSizeIndex.TwoInch :
+        case PaperSizeIndex.twoInch :
             self.append2inchTextReceiptData         (builder, utf8: utf8)
-        case PaperSizeIndex.ThreeInch :
+        case PaperSizeIndex.threeInch :
             self.append3inchTextReceiptData         (builder, utf8: utf8)
-        case PaperSizeIndex.FourInch :
+        case PaperSizeIndex.fourInch :
             self.append4inchTextReceiptData         (builder, utf8: utf8)
-        case PaperSizeIndex.EscPosThreeInch :
+        case PaperSizeIndex.escPosThreeInch :
             self.appendEscPos3inchTextReceiptData   (builder, utf8: utf8)
-//      case PaperSizeIndex.DotImpactThreeInch :
+//      case PaperSizeIndex.dotImpactThreeInch :
         default                                :
             self.appendDotImpact3inchTextReceiptData(builder, utf8: utf8)
         }
     }
     
     func createRasterReceiptImage() -> UIImage? {
-        let image: UIImage
+        let image: UIImage?
         
         switch self.paperSizeIndex! {
-        case PaperSizeIndex.TwoInch :
+        case PaperSizeIndex.twoInch :
             image = self.create2inchRasterReceiptImage()!
-        case PaperSizeIndex.ThreeInch :
+        case PaperSizeIndex.threeInch :
             image = self.create3inchRasterReceiptImage()!
-        case PaperSizeIndex.FourInch :
+        case PaperSizeIndex.fourInch :
             image = self.create4inchRasterReceiptImage()!
-        case PaperSizeIndex.EscPosThreeInch :
+        case PaperSizeIndex.escPosThreeInch :
             image = self.createEscPos3inchRasterReceiptImage()!
-//      case PaperSizeIndex.DotImpactThreeInch :
+//      case PaperSizeIndex.dotImpactThreeInch :
         default                                :
-            image = self.createCouponImage()!
+            image = nil
         }
         
         return image
     }
     
     func createScaleRasterReceiptImage() -> UIImage? {
-        let image: UIImage
+        let image: UIImage?
         
         switch self.paperSizeIndex! {
-        case PaperSizeIndex.TwoInch :
+        case PaperSizeIndex.twoInch :
             image = self.create3inchRasterReceiptImage()!      // 3inch -> 2inch
-        case PaperSizeIndex.ThreeInch,
-             PaperSizeIndex.EscPosThreeInch :
+        case PaperSizeIndex.threeInch,
+             PaperSizeIndex.escPosThreeInch :
             image = self.create4inchRasterReceiptImage()!      // 4inch -> 3inch
-        case PaperSizeIndex.FourInch :
+        case PaperSizeIndex.fourInch :
             image = self.create3inchRasterReceiptImage()!      // 3inch -> 4inch
-//      case PaperSizeIndex.DotImpactThreeInch :
+//      case PaperSizeIndex.dotImpactThreeInch :
         default                                :
-            image = self.createCouponImage()!
+            image = nil
         }
         
         return image
     }
     
-    func append2inchTextReceiptData(builder: ISCBBuilder, utf8: Bool) {     // abstract!!!
+    func append2inchTextReceiptData(_ builder: ISCBBuilder, utf8: Bool) {     // abstract!!!
     }
     
-    func append3inchTextReceiptData(builder: ISCBBuilder, utf8: Bool) {     // abstract!!!
+    func append3inchTextReceiptData(_ builder: ISCBBuilder, utf8: Bool) {     // abstract!!!
     }
     
-    func append4inchTextReceiptData(builder: ISCBBuilder, utf8: Bool) {     // abstract!!!
+    func append4inchTextReceiptData(_ builder: ISCBBuilder, utf8: Bool) {     // abstract!!!
     }
     
     func create2inchRasterReceiptImage() -> UIImage? {     // abstract!!!
@@ -148,22 +149,31 @@ class ILocalizeReceipts {
         return nil
     }
     
-    func appendEscPos3inchTextReceiptData(builder: ISCBBuilder, utf8: Bool) {     // abstract!!!
+    func appendEscPos3inchTextReceiptData(_ builder: ISCBBuilder, utf8: Bool) {     // abstract!!!
     }
     
-    func appendDotImpact3inchTextReceiptData(builder: ISCBBuilder, utf8: Bool) {     // abstract!!!
+    func appendDotImpact3inchTextReceiptData(_ builder: ISCBBuilder, utf8: Bool) {     // abstract!!!
     }
     
-    static func imageWithString(string: String, font: UIFont, width: CGFloat) -> UIImage {
+    func appendTextLabelData(_ builder: ISCBBuilder, utf8: Bool) {     // abstract!!!
+    }
+    
+    func createPasteTextLabelString() -> String? {     // abstract!!!
+        return nil
+    }
+    
+    func appendPasteTextLabelData(_ builder: ISCBBuilder, pasteText: String, utf8: Bool) {     // abstract!!!
+    }
+    
+    static func imageWithString(_ string: String, font: UIFont, width: CGFloat) -> UIImage {
         let attributeDic: NSDictionary = NSDictionary(dictionary: [NSFontAttributeName : font])
         
-        let stringDrawingOptions: NSStringDrawingOptions = [NSStringDrawingOptions.UsesLineFragmentOrigin, NSStringDrawingOptions.TruncatesLastVisibleLine]
+        let stringDrawingOptions: NSStringDrawingOptions = [NSStringDrawingOptions.usesLineFragmentOrigin, NSStringDrawingOptions.truncatesLastVisibleLine]
         
-        let size: CGSize = (string.boundingRectWithSize(CGSizeMake(width, 10000), options: stringDrawingOptions, attributes: attributeDic as? [String : AnyObject], context: nil)).size
+        let size: CGSize = (string.boundingRect(with: CGSize(width: width, height: 10000), options: stringDrawingOptions, attributes: attributeDic as? [String : AnyObject], context: nil)).size
         
-//      if UIScreen.mainScreen().respondsToSelector                                  ("scale") {
-        if UIScreen.mainScreen().respondsToSelector(#selector(NSDecimalNumberBehaviors.scale)) {
-            if UIScreen.mainScreen().scale == 2.0 {
+        if UIScreen.main.responds(to: #selector(NSDecimalNumberBehaviors.scale)) {
+            if UIScreen.main.scale == 2.0 {
                 UIGraphicsBeginImageContextWithOptions(size, false, 1.0)
             } else {
                 UIGraphicsBeginImageContext(size)
@@ -172,19 +182,19 @@ class ILocalizeReceipts {
             UIGraphicsBeginImageContext(size)
         }
         
-        let context: CGContextRef = UIGraphicsGetCurrentContext()!
+        let context: CGContext = UIGraphicsGetCurrentContext()!
         
-        UIColor.whiteColor().set()
+        UIColor.white.set()
         
-        let rect: CGRect = CGRectMake(0, 0, size.width + 1, size.height + 1)
+        let rect: CGRect = CGRect(x: 0, y: 0, width: size.width + 1, height: size.height + 1)
         
-        CGContextFillRect(context, rect)
+        context.fill(rect)
         
-        let attributes: NSDictionary = NSDictionary(dictionary: [NSForegroundColorAttributeName : UIColor.blackColor(), NSFontAttributeName : font])
+        let attributes: NSDictionary = NSDictionary(dictionary: [NSForegroundColorAttributeName : UIColor.black, NSFontAttributeName : font])
         
-        string.drawInRect(rect, withAttributes: attributes as? [String : AnyObject])
+        string.draw(in: rect, withAttributes: attributes as? [String : AnyObject])
         
-        let imageToPrint: UIImage = UIGraphicsGetImageFromCurrentImageContext()
+        let imageToPrint: UIImage = UIGraphicsGetImageFromCurrentImageContext()!
         
         UIGraphicsEndImageContext()
         

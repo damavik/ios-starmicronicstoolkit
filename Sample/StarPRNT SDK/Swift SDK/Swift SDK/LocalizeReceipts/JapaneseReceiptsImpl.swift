@@ -13,39 +13,41 @@ class JapaneseReceiptsImpl: ILocalizeReceipts {
         super.init()
         
         languageCode = "Ja"
+        
+        characterCode = StarIoExtCharacterCode.japanese
     }
     
-    override func append2inchTextReceiptData(builder: ISCBBuilder, utf8: Bool) {
-        let encoding: NSStringEncoding
+    override func append2inchTextReceiptData(_ builder: ISCBBuilder, utf8: Bool) {
+        let encoding: String.Encoding
         
         if utf8 == true {
-            encoding = NSUTF8StringEncoding
+            encoding = String.Encoding.utf8
             
-            builder.appendCodePage(SCBCodePageType.UTF8)
+            builder.append(SCBCodePageType.UTF8)
         }
         else {
-            encoding = NSShiftJISStringEncoding
+            encoding = String.Encoding.shiftJIS
             
-            builder.appendCodePage(SCBCodePageType.CP932)
+            builder.append(SCBCodePageType.CP932)
         }
         
-        builder.appendInternational(SCBInternationalType.Japan)
+        builder.append(SCBInternationalType.japan)
         
         builder.appendCharacterSpace(0)
         
-        builder.appendAlignment(SCBAlignmentPosition.Center)
+        builder.appendAlignment(SCBAlignmentPosition.center)
         
         builder.appendEmphasis(true)
         
-        builder.appendDataWithMultipleHeight("スター電機\n".dataUsingEncoding(encoding), height: 3)
+        builder.appendData(withMultipleHeight: "スター電機\n".data(using: encoding), height: 3)
         
-        builder.appendDataWithMultipleHeight("修理報告書　兼領収書\n".dataUsingEncoding(encoding), height: 2)
+        builder.appendData(withMultipleHeight: "修理報告書　兼領収書\n".data(using: encoding), height: 2)
         
         builder.appendEmphasis(false)
         
-        builder.appendAlignment(SCBAlignmentPosition.Left)
+        builder.appendAlignment(SCBAlignmentPosition.left)
         
-        builder.appendData((
+        builder.append((
             "--------------------------------\n" +
             "発行日時：YYYY年MM月DD日HH時MM分\n" +
             "TEL：054-347-XXXX\n" +
@@ -73,45 +75,45 @@ class JapaneseReceiptsImpl: ILocalizeReceipts {
             "             合計      \\ 37,590\n" +
             "\n" +
             "　お問合わせ番号　12345-67890\n" +
-            "\n").dataUsingEncoding(encoding))
+            "\n").data(using: encoding))
         
-        builder.appendAlignment(SCBAlignmentPosition.Center)
+        builder.appendAlignment(SCBAlignmentPosition.center)
         
-//      builder.appendBarcodeData("{BStar.".dataUsingEncoding(encoding),              symbology: SCBBarcodeSymbology.Code128, width: SCBBarcodeWidth.Mode2, height: 40, hri: true)
-        builder.appendBarcodeData("{BStar.".dataUsingEncoding(NSASCIIStringEncoding), symbology: SCBBarcodeSymbology.Code128, width: SCBBarcodeWidth.Mode2, height: 40, hri: true)
+//      builder.appendBarcodeData("{BStar.".data(using: encoding),              symbology: SCBBarcodeSymbology.Code128, width: SCBBarcodeWidth.Mode2, height: 40, hri: true)
+        builder.appendBarcodeData("{BStar.".data(using: String.Encoding.ascii), symbology: SCBBarcodeSymbology.code128, width: SCBBarcodeWidth.mode2, height: 40, hri: true)
     }
     
-    override func append3inchTextReceiptData(builder: ISCBBuilder, utf8: Bool) {
-        let encoding: NSStringEncoding
+    override func append3inchTextReceiptData(_ builder: ISCBBuilder, utf8: Bool) {
+        let encoding: String.Encoding
         
         if utf8 == true {
-            encoding = NSUTF8StringEncoding
+            encoding = String.Encoding.utf8
             
-            builder.appendCodePage(SCBCodePageType.UTF8)
+            builder.append(SCBCodePageType.UTF8)
         }
         else {
-            encoding = NSShiftJISStringEncoding
+            encoding = String.Encoding.shiftJIS
             
-            builder.appendCodePage(SCBCodePageType.CP932)
+            builder.append(SCBCodePageType.CP932)
         }
         
-        builder.appendInternational(SCBInternationalType.Japan)
+        builder.append(SCBInternationalType.japan)
         
         builder.appendCharacterSpace(0)
         
-        builder.appendAlignment(SCBAlignmentPosition.Center)
+        builder.appendAlignment(SCBAlignmentPosition.center)
         
         builder.appendEmphasis(true)
         
-        builder.appendDataWithMultipleHeight("スター電機\n".dataUsingEncoding(encoding), height: 3)
+        builder.appendData(withMultipleHeight: "スター電機\n".data(using: encoding), height: 3)
         
-        builder.appendDataWithMultipleHeight("修理報告書　兼領収書\n".dataUsingEncoding(encoding), height: 2)
+        builder.appendData(withMultipleHeight: "修理報告書　兼領収書\n".data(using: encoding), height: 2)
         
         builder.appendEmphasis(false)
         
-        builder.appendAlignment(SCBAlignmentPosition.Left)
+        builder.appendAlignment(SCBAlignmentPosition.left)
         
-        builder.appendData((
+        builder.append((
             "------------------------------------------------\n" +
             "発行日時：YYYY年MM月DD日HH時MM分\n" +
             "TEL：054-347-XXXX\n" +
@@ -139,45 +141,45 @@ class JapaneseReceiptsImpl: ILocalizeReceipts {
             "                            合計       \\ 37,590\n" +
             "\n" +
             "　お問合わせ番号　　12345-67890\n" +
-            "\n").dataUsingEncoding(encoding))
+            "\n").data(using: encoding))
         
-        builder.appendAlignment(SCBAlignmentPosition.Center)
+        builder.appendAlignment(SCBAlignmentPosition.center)
         
-//      builder.appendBarcodeData("{BStar.".dataUsingEncoding(encoding),              symbology: SCBBarcodeSymbology.Code128, width: SCBBarcodeWidth.Mode2, height: 40, hri: true)
-        builder.appendBarcodeData("{BStar.".dataUsingEncoding(NSASCIIStringEncoding), symbology: SCBBarcodeSymbology.Code128, width: SCBBarcodeWidth.Mode2, height: 40, hri: true)
+//      builder.appendBarcodeData("{BStar.".data(using: encoding),              symbology: SCBBarcodeSymbology.Code128, width: SCBBarcodeWidth.Mode2, height: 40, hri: true)
+        builder.appendBarcodeData("{BStar.".data(using: String.Encoding.ascii), symbology: SCBBarcodeSymbology.code128, width: SCBBarcodeWidth.mode2, height: 40, hri: true)
     }
     
-    override func append4inchTextReceiptData(builder: ISCBBuilder, utf8: Bool) {
-        let encoding: NSStringEncoding
+    override func append4inchTextReceiptData(_ builder: ISCBBuilder, utf8: Bool) {
+        let encoding: String.Encoding
         
         if utf8 == true {
-            encoding = NSUTF8StringEncoding
+            encoding = String.Encoding.utf8
             
-            builder.appendCodePage(SCBCodePageType.UTF8)
+            builder.append(SCBCodePageType.UTF8)
         }
         else {
-            encoding = NSShiftJISStringEncoding
+            encoding = String.Encoding.shiftJIS
             
-            builder.appendCodePage(SCBCodePageType.CP932)
+            builder.append(SCBCodePageType.CP932)
         }
         
-        builder.appendInternational(SCBInternationalType.Japan)
+        builder.append(SCBInternationalType.japan)
         
         builder.appendCharacterSpace(0)
         
-        builder.appendAlignment(SCBAlignmentPosition.Center)
+        builder.appendAlignment(SCBAlignmentPosition.center)
         
         builder.appendEmphasis(true)
         
-        builder.appendDataWithMultipleHeight("スター電機\n".dataUsingEncoding(encoding), height: 3)
+        builder.appendData(withMultipleHeight: "スター電機\n".data(using: encoding), height: 3)
         
-        builder.appendDataWithMultipleHeight("修理報告書　兼領収書\n".dataUsingEncoding(encoding), height: 2)
+        builder.appendData(withMultipleHeight: "修理報告書　兼領収書\n".data(using: encoding), height: 2)
         
         builder.appendEmphasis(false)
         
-        builder.appendAlignment(SCBAlignmentPosition.Left)
+        builder.appendAlignment(SCBAlignmentPosition.left)
         
-        builder.appendData((
+        builder.append((
             "---------------------------------------------------------------------\n" +
             "発行日時：YYYY年MM月DD日HH時MM分\n" +
             "TEL：054-347-XXXX\n" +
@@ -206,12 +208,12 @@ class JapaneseReceiptsImpl: ILocalizeReceipts {
             "\n" +
             "　お問合わせ番号　　12345-67890\n" +
             "\n" +
-            "\n").dataUsingEncoding(encoding))
+            "\n").data(using: encoding))
         
-        builder.appendAlignment(SCBAlignmentPosition.Center)
+        builder.appendAlignment(SCBAlignmentPosition.center)
         
-//      builder.appendBarcodeData("{BStar.".dataUsingEncoding(encoding),              symbology: SCBBarcodeSymbology.Code128, width: SCBBarcodeWidth.Mode2, height: 40, hri: true)
-        builder.appendBarcodeData("{BStar.".dataUsingEncoding(NSASCIIStringEncoding), symbology: SCBBarcodeSymbology.Code128, width: SCBBarcodeWidth.Mode2, height: 40, hri: true)
+//      builder.appendBarcodeData("{BStar.".data(using: encoding),              symbology: SCBBarcodeSymbology.Code128, width: SCBBarcodeWidth.Mode2, height: 40, hri: true)
+        builder.appendBarcodeData("{BStar.".data(using: String.Encoding.ascii), symbology: SCBBarcodeSymbology.code128, width: SCBBarcodeWidth.mode2, height: 40, hri: true)
     }
     
     override func create2inchRasterReceiptImage() -> UIImage {
@@ -367,37 +369,37 @@ class JapaneseReceiptsImpl: ILocalizeReceipts {
         return ILocalizeReceipts.imageWithString(textToPrint, font: font, width: 512)     // EscPos3inch(512dots)
     }
     
-    override func appendEscPos3inchTextReceiptData(builder: ISCBBuilder, utf8: Bool) {
-        let encoding: NSStringEncoding
+    override func appendEscPos3inchTextReceiptData(_ builder: ISCBBuilder, utf8: Bool) {
+        let encoding: String.Encoding
         
         if utf8 == true {
-            encoding = NSUTF8StringEncoding
+            encoding = String.Encoding.utf8
             
-            builder.appendCodePage(SCBCodePageType.UTF8)
+            builder.append(SCBCodePageType.UTF8)
         }
         else {
-            encoding = NSShiftJISStringEncoding
+            encoding = String.Encoding.shiftJIS
             
-            builder.appendCodePage(SCBCodePageType.CP932)
+            builder.append(SCBCodePageType.CP932)
         }
         
-        builder.appendInternational(SCBInternationalType.Japan)
+        builder.append(SCBInternationalType.japan)
         
         builder.appendCharacterSpace(0)
         
-        builder.appendAlignment(SCBAlignmentPosition.Center)
+        builder.appendAlignment(SCBAlignmentPosition.center)
         
         builder.appendEmphasis(true)
         
-        builder.appendDataWithMultipleHeight("スター電機\n".dataUsingEncoding(encoding), height: 3)
+        builder.appendData(withMultipleHeight: "スター電機\n".data(using: encoding), height: 3)
         
-        builder.appendDataWithMultipleHeight("修理報告書　兼領収書\n".dataUsingEncoding(encoding), height: 2)
+        builder.appendData(withMultipleHeight: "修理報告書　兼領収書\n".data(using: encoding), height: 2)
         
         builder.appendEmphasis(false)
         
-        builder.appendAlignment(SCBAlignmentPosition.Left)
+        builder.appendAlignment(SCBAlignmentPosition.left)
         
-        builder.appendData((
+        builder.append((
             "------------------------------------------\n" +
             "発行日時：YYYY年MM月DD日HH時MM分\n" +
             "TEL：054-347-XXXX\n" +
@@ -425,43 +427,43 @@ class JapaneseReceiptsImpl: ILocalizeReceipts {
             "                      合計       \\ 37,590\n" +
             "\n" +
             "　お問合わせ番号　　12345-67890\n" +
-            "\n").dataUsingEncoding(encoding))
+            "\n").data(using: encoding))
         
-        builder.appendAlignment(SCBAlignmentPosition.Center)
+        builder.appendAlignment(SCBAlignmentPosition.center)
         
-//      builder.appendBarcodeData("{BStar.".dataUsingEncoding(encoding),              symbology: SCBBarcodeSymbology.Code128, width: SCBBarcodeWidth.Mode2, height: 40, hri: true)
-        builder.appendBarcodeData("{BStar.".dataUsingEncoding(NSASCIIStringEncoding), symbology: SCBBarcodeSymbology.Code128, width: SCBBarcodeWidth.Mode2, height: 40, hri: true)
+//      builder.appendBarcodeData("{BStar.".data(using: encoding),              symbology: SCBBarcodeSymbology.Code128, width: SCBBarcodeWidth.Mode2, height: 40, hri: true)
+        builder.appendBarcodeData("{BStar.".data(using: String.Encoding.ascii), symbology: SCBBarcodeSymbology.code128, width: SCBBarcodeWidth.mode2, height: 40, hri: true)
     }
     
-    override func appendDotImpact3inchTextReceiptData(builder: ISCBBuilder, utf8: Bool) {
-        let encoding: NSStringEncoding
+    override func appendDotImpact3inchTextReceiptData(_ builder: ISCBBuilder, utf8: Bool) {
+        let encoding: String.Encoding
         
         if utf8 == true {
-            encoding = NSUTF8StringEncoding
+            encoding = String.Encoding.utf8
             
-            builder.appendCodePage(SCBCodePageType.UTF8)
+            builder.append(SCBCodePageType.UTF8)
         }
         else {
-            encoding = NSShiftJISStringEncoding
+            encoding = String.Encoding.shiftJIS
             
-            builder.appendCodePage(SCBCodePageType.CP932)
+            builder.append(SCBCodePageType.CP932)
         }
         
-        builder.appendInternational(SCBInternationalType.Japan)
+        builder.append(SCBInternationalType.japan)
         
-        builder.appendAlignment(SCBAlignmentPosition.Center)
+        builder.appendAlignment(SCBAlignmentPosition.center)
         
         builder.appendEmphasis(true)
         
-        builder.appendDataWithMultipleHeight((
+        builder.appendData(withMultipleHeight: (
             "スター電機\n" +
-            "修理報告書　兼領収書\n").dataUsingEncoding(encoding), height: 2)
+            "修理報告書　兼領収書\n").data(using: encoding), height: 2)
         
         builder.appendEmphasis(false)
         
-        builder.appendAlignment(SCBAlignmentPosition.Left)
+        builder.appendAlignment(SCBAlignmentPosition.left)
         
-        builder.appendData((
+        builder.append((
             "------------------------------------------\n" +
             "発行日時：YYYY年MM月DD日HH時MM分\n" +
             "TEL：054-347-XXXX\n" +
@@ -488,6 +490,70 @@ class JapaneseReceiptsImpl: ILocalizeReceipts {
             "                       内税       \\  1,790\n" +
             "                       合計       \\ 37,590\n" +
             "\n" +
-            "　お問合わせ番号　　12345-67890\n").dataUsingEncoding(encoding))
+            "　お問合わせ番号　　12345-67890\n").data(using: encoding))
+    }
+    
+    override func appendTextLabelData(_ builder: ISCBBuilder, utf8: Bool) {
+        let encoding: String.Encoding
+        
+        if utf8 == true {
+            encoding = String.Encoding.utf8
+            
+            builder.append(SCBCodePageType.UTF8)
+        }
+        else {
+            encoding = String.Encoding.shiftJIS
+            
+            builder.append(SCBCodePageType.CP932)
+        }
+        
+        builder.append(SCBInternationalType.japan)
+        
+        builder.appendCharacterSpace(0)
+        
+        builder.appendUnitFeed(20 * 2)
+        
+        builder.appendMultipleHeight(2)
+        
+        builder.append("〒422-8654".data(using: encoding))
+        
+        builder.appendUnitFeed(64)
+        
+        builder.append("静岡県静岡市駿河区中吉田20番10号".data(using: encoding))
+        
+        builder.appendUnitFeed(64)
+        
+        builder.append("スター精密株式会社".data(using: encoding))
+        
+        builder.appendUnitFeed(64)
+        
+        builder.appendMultipleHeight(1)
+    }
+    
+    override func createPasteTextLabelString() -> String {
+        return "〒422-8654\n" +
+               "静岡県静岡市駿河区中吉田20番10号\n" +
+               "スター精密株式会社"
+    }
+    
+    override func appendPasteTextLabelData(_ builder: ISCBBuilder, pasteText: String, utf8: Bool) {
+        let encoding: String.Encoding
+        
+        if utf8 == true {
+            encoding = String.Encoding.utf8
+            
+            builder.append(SCBCodePageType.UTF8)
+        }
+        else {
+            encoding = String.Encoding.shiftJIS
+            
+            builder.append(SCBCodePageType.CP932)
+        }
+        
+        builder.append(SCBInternationalType.japan)
+        
+        builder.appendCharacterSpace(0)
+        
+        builder.append(pasteText.data(using: encoding))
     }
 }

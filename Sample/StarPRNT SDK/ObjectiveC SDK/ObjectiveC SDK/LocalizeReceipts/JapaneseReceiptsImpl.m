@@ -19,6 +19,8 @@
     
     self.languageCode = @"Ja";
     
+    self.characterCode = StarIoExtCharacterCodeJapanese;
+    
     return self;
 }
 
@@ -490,6 +492,70 @@
                           "                       合計       \\ 37,590\n"
                           "\n"
                           "　お問合わせ番号　　12345-67890\n" dataUsingEncoding:encoding]];
+}
+
+- (void)appendTextLabelData:(ISCBBuilder *)builder utf8:(BOOL)utf8 {
+    NSStringEncoding encoding;
+    
+    if (utf8 == YES) {
+        encoding = NSUTF8StringEncoding;
+        
+        [builder appendCodePage:SCBCodePageTypeUTF8];
+    }
+    else {
+        encoding = NSShiftJISStringEncoding;
+        
+        [builder appendCodePage:SCBCodePageTypeCP932];
+    }
+    
+    [builder appendInternational:SCBInternationalTypeJapan];
+    
+    [builder appendCharacterSpace:0];
+    
+    [builder appendUnitFeed:20 * 2];
+    
+    [builder appendMultipleHeight:2];
+    
+    [builder appendData:[@"〒422-8654" dataUsingEncoding:encoding]];
+    
+    [builder appendUnitFeed:64];
+    
+    [builder appendData:[@"静岡県静岡市駿河区中吉田20番10号" dataUsingEncoding:encoding]];
+    
+    [builder appendUnitFeed:64];
+    
+    [builder appendData:[@"スター精密株式会社" dataUsingEncoding:encoding]];
+    
+    [builder appendUnitFeed:64];
+    
+    [builder appendMultipleHeight:1];
+}
+
+- (NSString *)createPasteTextLabelString {
+    return @"〒422-8654\n"
+            "静岡県静岡市駿河区中吉田20番10号\n"
+            "スター精密株式会社";
+}
+
+- (void)appendPasteTextLabelData:(ISCBBuilder *)builder pasteText:(NSString *)pasteText utf8:(BOOL)utf8 {
+    NSStringEncoding encoding;
+    
+    if (utf8 == YES) {
+        encoding = NSUTF8StringEncoding;
+        
+        [builder appendCodePage:SCBCodePageTypeUTF8];
+    }
+    else {
+        encoding = NSShiftJISStringEncoding;
+        
+        [builder appendCodePage:SCBCodePageTypeCP932];
+    }
+    
+    [builder appendInternational:SCBInternationalTypeJapan];
+    
+    [builder appendCharacterSpace:0];
+    
+    [builder appendData:[pasteText dataUsingEncoding:encoding]];
 }
 
 @end

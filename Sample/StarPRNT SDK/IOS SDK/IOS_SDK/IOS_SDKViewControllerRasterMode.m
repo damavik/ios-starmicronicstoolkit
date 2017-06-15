@@ -317,7 +317,10 @@ typedef enum SMActionType {
             case 2: // Bluetooth
                 array = [[SMPort searchPrinter:@"BT:"] retain];
                 break;
-            case 3: // All
+            case 3: // USB
+                array = [[SMPort searchPrinter:@"USB:"] retain];
+                break;
+            case 4: // All
                 array = [[SMPort searchPrinter] retain];
                 break;
         }
@@ -360,7 +363,7 @@ typedef enum SMActionType {
                                                     message:@""
                                                    delegate:self
                                           cancelButtonTitle:@"Cancel"
-                                          otherButtonTitles:@"LAN", @"Bluetooth", @"All", nil];
+                                          otherButtonTitles:@"LAN", @"Bluetooth", @"USB", @"All", nil];
     alert.tag = SMActionTypeSearchPrinter;
     
     [alert show];

@@ -768,8 +768,8 @@
     
     [builder appendData:[@"\n*Right90*\n"   dataUsingEncoding:NSASCIIStringEncoding]];
     [builder appendBitmap:starLogoImage diffusion:YES rotation:SCBBitmapConverterRotationRight90];
-    [builder appendData:[@"\n*Rotate180*\n" dataUsingEncoding:NSASCIIStringEncoding]];
-    [builder appendBitmap:starLogoImage diffusion:YES rotation:SCBBitmapConverterRotationRotate180];
+//  [builder appendData:[@"\n*Rotate180*\n" dataUsingEncoding:NSASCIIStringEncoding]];
+//  [builder appendBitmap:starLogoImage diffusion:YES rotation:SCBBitmapConverterRotationRotate180];
 //  [builder appendData:[@"\n*Left90*\n"    dataUsingEncoding:NSASCIIStringEncoding]];
 //  [builder appendBitmap:starLogoImage diffusion:YES rotation:SCBBitmapConverterRotationLeft90];
     
@@ -1107,6 +1107,183 @@
 //  [builder appendData:[@"\n*Alignment:Right*\n"  dataUsingEncoding:NSASCIIStringEncoding]];
 //  [builder appendQrCodeBytesWithAlignment:bytes length:length model:SCBQrCodeModelNo2 level:SCBQrCodeLevelL cell:4 position:SCBAlignmentPositionRight];
 //  [builder appendUnitFeed:32];
+    
+    [builder appendCutPaper:SCBCutPaperActionPartialCutWithFeed];
+    
+    [builder endDocument];
+    
+    return [builder.commands copy];
+}
+
++ (NSData *)createBlackMarkData:(StarIoExtEmulation)emulation type:(SCBBlackMarkType)type {
+    NSData *otherData = [@"Hello World.\n" dataUsingEncoding:NSASCIIStringEncoding];
+    
+    ISCBBuilder *builder = [StarIoExt createCommandBuilder:emulation];
+    
+    [builder beginDocument];
+    
+    [builder appendBlackMark:type];
+    
+    [builder appendData:otherData];
+    
+    [builder appendCutPaper:SCBCutPaperActionPartialCutWithFeed];
+    
+//  [builder appendBlackMark:SCBBlackMarkTypeInvalid];
+    
+    [builder endDocument];
+    
+    return [builder.commands copy];
+}
+
++ (NSData *)createPageModeData:(StarIoExtEmulation)emulation width:(NSInteger)width {
+    NSData *otherData = [@"Hello World.\n" dataUsingEncoding:NSASCIIStringEncoding];
+    
+    UIImage *starLogoImage = [UIImage imageNamed:@"StarLogoImage"];
+    
+    int height = 30 * 8;     // 30mm!!!
+    
+    CGRect rect;
+    
+    ISCBBuilder *builder = [StarIoExt createCommandBuilder:emulation];
+    
+    [builder beginDocument];
+    
+    [builder appendData:[@"\n*Normal*\n" dataUsingEncoding:NSASCIIStringEncoding]];
+    
+    rect = CGRectMake(0, 0, width, height);
+    
+    [builder beginPageMode:rect rotation:SCBBitmapConverterRotationNormal];
+    
+    [builder appendData:otherData];
+    
+    [builder appendPageModeVerticalAbsolutePosition:160];
+    
+    [builder appendData:otherData];
+    
+    [builder appendPageModeVerticalAbsolutePosition:80];
+    
+    [builder appendDataWithAbsolutePosition:otherData position:40];
+    
+    [builder endPageMode];
+    
+    [builder appendData:[@"\n*Right90*\n" dataUsingEncoding:NSASCIIStringEncoding]];
+    
+////rect = CGRectMake(0, 0, width,  height);
+//  rect = CGRectMake(0, 0, height, width);
+    rect = CGRectMake(0, 0, width,  width);
+    
+    [builder beginPageMode:rect rotation:SCBBitmapConverterRotationRight90];
+    
+    [builder appendData:otherData];
+    
+    [builder appendPageModeVerticalAbsolutePosition:160];
+    
+    [builder appendData:otherData];
+    
+    [builder appendPageModeVerticalAbsolutePosition:80];
+    
+    [builder appendDataWithAbsolutePosition:otherData position:40];
+    
+    [builder endPageMode];
+    
+//  [builder appendData:[@"\n*Rotate180*\n" dataUsingEncoding:NSASCIIStringEncoding]];
+//
+//  rect = CGRectMake(0, 0, width, height);
+//
+//  [builder beginPageMode:rect rotation:SCBBitmapConverterRotationRotate180];
+//
+//  [builder appendData:otherData];
+//
+//  [builder appendPageModeVerticalAbsolutePosition:160];
+//
+//  [builder appendData:otherData];
+//
+//  [builder appendPageModeVerticalAbsolutePosition:80];
+//
+//  [builder appendDataWithAbsolutePosition:otherData position:40];
+//
+//  [builder endPageMode];
+//
+//  [builder appendData:[@"\n*Left90*\n" dataUsingEncoding:NSASCIIStringEncoding]];
+//
+////rect = CGRectMake(0, 0, width,  height);
+//  rect = CGRectMake(0, 0, height, width);
+//
+//  [builder beginPageMode:rect rotation:SCBBitmapConverterRotationLeft90];
+//
+//  [builder appendData:otherData];
+//
+//  [builder appendPageModeVerticalAbsolutePosition:160];
+//
+//  [builder appendData:otherData];
+//
+//  [builder appendPageModeVerticalAbsolutePosition:80];
+//
+//  [builder appendDataWithAbsolutePosition:otherData position:40];
+//
+//  [builder endPageMode];
+    
+    [builder appendData:[@"\n*Mixed Text*\n" dataUsingEncoding:NSASCIIStringEncoding]];
+    
+//  rect = CGRectMake(0, 0, width,  height);
+    rect = CGRectMake(0, 0, width,  width);
+    
+    [builder beginPageMode:rect rotation:SCBBitmapConverterRotationNormal];
+    
+    [builder appendPageModeVerticalAbsolutePosition:width / 2];
+    
+    [builder appendDataWithAbsolutePosition:otherData position:width / 2];
+    
+    [builder appendPageModeRotation:SCBBitmapConverterRotationRight90];
+    
+    [builder appendPageModeVerticalAbsolutePosition:width / 2];
+    
+    [builder appendDataWithAbsolutePosition:otherData position:width / 2];
+    
+    [builder appendPageModeRotation:SCBBitmapConverterRotationRotate180];
+    
+    [builder appendPageModeVerticalAbsolutePosition:width / 2];
+    
+    [builder appendDataWithAbsolutePosition:otherData position:width / 2];
+    
+    [builder appendPageModeRotation:SCBBitmapConverterRotationLeft90];
+    
+    [builder appendPageModeVerticalAbsolutePosition:width / 2];
+    
+    [builder appendDataWithAbsolutePosition:otherData position:width / 2];
+    
+    [builder endPageMode];
+    
+    [builder appendData:[@"\n*Mixed Bitmap*\n" dataUsingEncoding:NSASCIIStringEncoding]];
+    
+//  rect = CGRectMake(0, 0, width,  height);
+    rect = CGRectMake(0, 0, width,  width);
+    
+    [builder beginPageMode:rect rotation:SCBBitmapConverterRotationNormal];
+    
+    [builder appendPageModeVerticalAbsolutePosition:width / 2];
+    
+    [builder appendBitmapWithAbsolutePosition:starLogoImage diffusion:YES position:width / 2];
+    
+    [builder appendPageModeRotation:SCBBitmapConverterRotationRight90];
+    
+    [builder appendPageModeVerticalAbsolutePosition:width / 2];
+    
+    [builder appendBitmapWithAbsolutePosition:starLogoImage diffusion:YES position:width / 2];
+    
+    [builder appendPageModeRotation:SCBBitmapConverterRotationRotate180];
+    
+    [builder appendPageModeVerticalAbsolutePosition:width / 2];
+    
+    [builder appendBitmapWithAbsolutePosition:starLogoImage diffusion:YES position:width / 2];
+    
+    [builder appendPageModeRotation:SCBBitmapConverterRotationLeft90];
+    
+    [builder appendPageModeVerticalAbsolutePosition:width / 2];
+    
+    [builder appendBitmapWithAbsolutePosition:starLogoImage diffusion:YES position:width / 2];
+    
+    [builder endPageMode];
     
     [builder appendCutPaper:SCBCutPaperActionPartialCutWithFeed];
     

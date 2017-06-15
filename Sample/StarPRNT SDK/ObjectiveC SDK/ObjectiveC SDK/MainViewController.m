@@ -19,6 +19,8 @@ typedef NS_ENUM(NSInteger, SectionIndex) {
     SectionIndexPrinter,
     SectionIndexCashDrawer,
     SectionIndexBarcodeReader,
+    SectionIndexDisplay,
+    SectionIndexScale,
     SectionIndexCombination,
     SectionIndexApi,
     SectionIndexAllReceipts,
@@ -82,6 +84,8 @@ typedef NS_ENUM(NSInteger, AlertViewIndex) {
 //  return SectionIndexPrinter           + 1;
 //  return SectionIndexCashDrawer        + 1;
 //  return SectionIndexBarcodeReader     + 1;
+//  return SectionIndexDisplay           + 1;
+//  return SectionIndexScale             + 1;
 //  return SectionIndexCombination       + 1;
 //  return SectionIndexApi               + 1;
 //  return SectionIndexAllReceipts       + 1;
@@ -92,11 +96,15 @@ typedef NS_ENUM(NSInteger, AlertViewIndex) {
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     // Return the number of rows in the section.
     
-    if (section != 8) {
-        return 1;
+    if (section == SectionIndexPrinter) {
+        return 4;
     }
     
-    return 2;
+    if (section == SectionIndexAppendixBluetooth) {
+        return 2;
+    }
+    
+    return 1;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -185,8 +193,35 @@ typedef NS_ENUM(NSInteger, AlertViewIndex) {
             switch (indexPath.section) {
                 default                       :
 //              case SectionIndexPrinter      :
-//              case SectionIndexCashDrawer   :
-//              case SectionIndexDeviceStatus :
+                    cell.backgroundColor = [UIColor whiteColor];
+                    
+                    switch (indexPath.row) {
+                        default :
+                        case 0  :
+                            cell      .textLabel.text = @"Sample";
+                            cell.detailTextLabel.text = @"";
+                            break;
+                        case 1 :
+                            cell      .textLabel.text = @"Black Mark Sample";
+                            cell.detailTextLabel.text = @"";
+                            break;
+                        case 2 :
+                            cell      .textLabel.text = @"Black Mark Sample (Paste)";
+                            cell.detailTextLabel.text = @"";
+                            break;
+                        case 3 :
+                            cell      .textLabel.text = @"Page Mode Sample";
+                            cell.detailTextLabel.text = @"";
+                            break;
+                    }
+                    
+                    cell      .textLabel.textColor = [UIColor colorWithRed:0.0 green:0.5 blue:1.0 alpha:1.0];
+                    cell.detailTextLabel.textColor = [UIColor colorWithRed:0.0 green:0.5 blue:1.0 alpha:1.0];
+                    break;
+                case SectionIndexCashDrawer   :
+                case SectionIndexDisplay      :
+                case SectionIndexScale        :
+                case SectionIndexDeviceStatus :
                     cell.backgroundColor = [UIColor whiteColor];
                     
                     cell.      textLabel.text = @"Sample";
@@ -248,10 +283,30 @@ typedef NS_ENUM(NSInteger, AlertViewIndex) {
             
             StarIoExtEmulation emulation = [AppDelegate getEmulation];
             
+            if (emulation == StarIoExtEmulationStarGraphic) {
+                if (indexPath.section == SectionIndexPrinter) {
+                    if (indexPath.row == 1 ||     // Black Mark Sample
+                        indexPath.row == 2) {     // Black Mark Sample (Paste)
+                        userInteractionEnabled = NO;
+                    }
+                }
+            }
+            
+            if (emulation == StarIoExtEmulationStarGraphic ||
+                emulation == StarIoExtEmulationStarDotImpact) {
+                if (indexPath.section == SectionIndexPrinter) {
+                    if (indexPath.row == 3) {     // Page Mode Sample
+                        userInteractionEnabled = NO;
+                    }
+                }
+            }
+            
             if (emulation == StarIoExtEmulationStarLine    ||
                 emulation == StarIoExtEmulationStarGraphic ||
                 emulation == StarIoExtEmulationEscPos) {
                 if (indexPath.section == SectionIndexBarcodeReader ||
+                    indexPath.section == SectionIndexDisplay       ||
+                    indexPath.section == SectionIndexScale         ||
                     indexPath.section == SectionIndexCombination) {
                     userInteractionEnabled = NO;
                 }
@@ -260,6 +315,8 @@ typedef NS_ENUM(NSInteger, AlertViewIndex) {
             if (emulation == StarIoExtEmulationEscPosMobile) {
                 if (indexPath.section == SectionIndexCashDrawer    ||
                     indexPath.section == SectionIndexBarcodeReader ||
+                    indexPath.section == SectionIndexDisplay       ||
+                    indexPath.section == SectionIndexScale         ||
                     indexPath.section == SectionIndexCombination) {
                     userInteractionEnabled = NO;
                 }
@@ -267,6 +324,8 @@ typedef NS_ENUM(NSInteger, AlertViewIndex) {
             
             if (emulation == StarIoExtEmulationStarDotImpact) {
                 if (indexPath.section == SectionIndexBarcodeReader ||
+                    indexPath.section == SectionIndexDisplay       ||
+                    indexPath.section == SectionIndexScale         ||
                     indexPath.section == SectionIndexCombination   ||
                     indexPath.section == SectionIndexAllReceipts) {
                     userInteractionEnabled = NO;
@@ -320,6 +379,12 @@ typedef NS_ENUM(NSInteger, AlertViewIndex) {
         case SectionIndexBarcodeReader :
             title = @"Barcode Reader (for mPOP)";
             break;
+        case SectionIndexDisplay :
+            title = @"Display (for mPOP)";
+            break;
+        case SectionIndexScale :
+            title = @"Scale (for mPOP)";
+            break;
         case SectionIndexCombination :
             title = @"Combination (for mPOP)";
             break;
@@ -353,18 +418,45 @@ typedef NS_ENUM(NSInteger, AlertViewIndex) {
             [self performSegueWithIdentifier:@"PushSearchPortViewController" sender:nil];
             break;
         case SectionIndexPrinter :
-            alertView = [[UIAlertView alloc] initWithTitle:@"Select language."
-                                                   message:@""
-                                                  delegate:self
-                                         cancelButtonTitle:@"Cancel"
-                                         otherButtonTitles:@"English", @"Japanese", @"French", @"Portuguese", @"Spanish", @"German", @"Russian", @"Simplified Chinese", @"Traditional Chinese", nil];
-            
-            if ([AppDelegate getEmulation] == StarIoExtEmulationEscPos ||
-                [AppDelegate getEmulation] == StarIoExtEmulationStarDotImpact) {
-                alertView.tag = AlertViewIndexLanguageFixedPaperSize;
-            }
-            else {
-                alertView.tag = AlertViewIndexLanguage;
+            switch (_selectedIndexPath.row) {
+                default :
+//              case 0  :
+                    alertView = [[UIAlertView alloc] initWithTitle:@"Select language."
+                                                           message:@""
+                                                          delegate:self
+                                                 cancelButtonTitle:@"Cancel"
+                                                 otherButtonTitles:@"English", @"Japanese", @"French", @"Portuguese", @"Spanish", @"German", @"Russian", @"Simplified Chinese", @"Traditional Chinese", nil];
+                    
+                    if ([AppDelegate getEmulation] == StarIoExtEmulationEscPos ||
+                        [AppDelegate getEmulation] == StarIoExtEmulationStarDotImpact) {
+                        alertView.tag = AlertViewIndexLanguageFixedPaperSize;
+                    }
+                    else {
+                        alertView.tag = AlertViewIndexLanguage;
+                    }
+                    
+                    break;
+                case 1 :
+                case 2 :
+                    alertView = [[UIAlertView alloc] initWithTitle:@"Select language."
+                                                           message:@""
+                                                          delegate:self
+                                                 cancelButtonTitle:@"Cancel"
+//                                               otherButtonTitles:@"English", @"Japanese", @"French", @"Portuguese", @"Spanish", @"German", @"Russian", @"Simplified Chinese", @"Traditional Chinese", nil];
+                                                 otherButtonTitles:@"English", @"Japanese",                                                                                                             nil];
+                    
+                    alertView.tag = AlertViewIndexLanguageFixedPaperSize;
+                    break;
+                case 3 :
+                    alertView = [[UIAlertView alloc] initWithTitle:@"Select language."
+                                                           message:@""
+                                                          delegate:self
+                                                 cancelButtonTitle:@"Cancel"
+//                                               otherButtonTitles:@"English", @"Japanese", @"French", @"Portuguese", @"Spanish", @"German", @"Russian", @"Simplified Chinese", @"Traditional Chinese", nil];
+                                                 otherButtonTitles:@"English", @"Japanese",                                                                                                             nil];
+                    
+                    alertView.tag = AlertViewIndexLanguage;
+                    break;
             }
             
             [alertView show];
@@ -373,6 +465,8 @@ typedef NS_ENUM(NSInteger, AlertViewIndex) {
             [self performSegueWithIdentifier:@"PushCashDrawerViewController" sender:nil];
             break;
         case SectionIndexBarcodeReader :
+        case SectionIndexDisplay       :
+        case SectionIndexScale         :
         case SectionIndexCombination   :
             alertView = [[UIAlertView alloc] initWithTitle:@"This menu is for mPOP."
                                                    message:@""
@@ -430,12 +524,27 @@ typedef NS_ENUM(NSInteger, AlertViewIndex) {
             break;
         case SectionIndexAppendixBluetooth :
             if (_selectedIndexPath.row == 0) {
-                [Communication connectBluetooth];
+                [Communication connectBluetooth:^(BOOL result, NSString *title, NSString *message) {
+                    if (title   != nil ||
+                        message != nil) {
+                        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:title message:message delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+                        
+                        [alertView show];
+                    }
+                }];
             }
             else {
                 self.blind = YES;
                 
-                [Communication disconnectBluetooth:[AppDelegate getModelName] portName:[AppDelegate getPortName] portSettings:[AppDelegate getPortSettings] timeout:10000];     // 10000mS!!!
+                NSString *modelName    = [AppDelegate getModelName];
+                NSString *portName     = [AppDelegate getPortName];
+                NSString *portSettings = [AppDelegate getPortSettings];
+                
+                [Communication disconnectBluetooth:modelName portName:portName portSettings:portSettings timeout:10000 completionHandler:^(BOOL result, NSString *title, NSString *message) {     // 10000mS!!!
+                    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:title message:message delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+                    
+                    [alertView show];
+                }];
                 
                 self.blind = NO;
             }
@@ -469,14 +578,30 @@ typedef NS_ENUM(NSInteger, AlertViewIndex) {
                 switch (_selectedIndexPath.section) {
                     default                  :
 //                  case SectionIndexPrinter :
-                        if ([AppDelegate getEmulation] == StarIoExtEmulationEscPos) {
-                            [AppDelegate setSelectedPaperSize:PaperSizeIndexEscPosThreeInch];
-                        }
-                        else {
-                            [AppDelegate setSelectedPaperSize:PaperSizeIndexDotImpactThreeInch];
+                        switch (_selectedIndexPath.row) {
+                            default :
+//                          case 0  :
+                                if ([AppDelegate getEmulation] == StarIoExtEmulationEscPos) {
+                                    [AppDelegate setSelectedPaperSize:PaperSizeIndexEscPosThreeInch];
+                                }
+                                else {
+                                    [AppDelegate setSelectedPaperSize:PaperSizeIndexDotImpactThreeInch];
+                                }
+                                
+                                [self performSegueWithIdentifier:@"PushPrinterViewController"        sender:nil];
+                                break;
+                            case 1 :
+                                [AppDelegate setSelectedPaperSize:PaperSizeIndexThreeInch];
+                                
+                                [self performSegueWithIdentifier:@"PushBlackMarkViewController"      sender: nil];
+                                break;
+                            case 2 :
+                                [AppDelegate setSelectedPaperSize:PaperSizeIndexThreeInch];
+                                
+                                [self performSegueWithIdentifier:@"PushBlackMarkPasteViewController" sender: nil];
+                                break;
                         }
                         
-                        [self performSegueWithIdentifier:@"PushPrinterViewController"     sender:nil];
                         break;
                     case SectionIndexCombination :
                         [AppDelegate setSelectedPaperSize:PaperSizeIndexTwoInch];
@@ -508,7 +633,16 @@ typedef NS_ENUM(NSInteger, AlertViewIndex) {
                 switch (_selectedIndexPath.section) {
                     default                  :
 //                  case SectionIndexPrinter :
-                        [self performSegueWithIdentifier:@"PushPrinterViewController"     sender:nil];
+                        switch (_selectedIndexPath.row) {
+                            default :
+//                          case 0  :
+                                [self performSegueWithIdentifier:@"PushPrinterViewController"  sender: nil];
+                                break;
+                            case 3 :
+                                [self performSegueWithIdentifier:@"PushPageModeViewController" sender: nil];
+                                break;
+                        }
+                        
                         break;
                     case SectionIndexApi :
                         [self performSegueWithIdentifier:@"PushApiViewController"         sender:nil];
@@ -524,6 +658,12 @@ typedef NS_ENUM(NSInteger, AlertViewIndex) {
                     default                        :
 //                  case SectionIndexBarcodeReader :
                         [self performSegueWithIdentifier:@"PushBarcodeReaderExtViewController" sender:nil];
+                        break;
+                    case SectionIndexDisplay :
+                        [self performSegueWithIdentifier:@"PushDisplayViewController"          sender:nil];
+                        break;
+                    case SectionIndexScale :
+                        [self performSegueWithIdentifier:@"PushScaleViewController"            sender:nil];
                         break;
                     case SectionIndexCombination :
                         nestAlertView = [[UIAlertView alloc] initWithTitle:@"Select language."

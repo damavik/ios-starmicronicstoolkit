@@ -124,15 +124,29 @@
         
         self.blind = YES;
         
+        NSString  *portName     = [AppDelegate getPortName];
+        NSString  *portSettings = [AppDelegate getPortSettings];
+        NSInteger  timeout      = 10000;                             // 10000mS!!!
+        
         switch (indexPath.row) {
             default :
 //          case 0  :
 //          case 2  :
-                [Communication sendCommands                   :commands portName:[AppDelegate getPortName] portSettings:[AppDelegate getPortSettings] timeout:10000];     // 10000mS!!!
+                [Communication sendCommands:commands portName:portName portSettings:portSettings timeout:timeout completionHandler:^(BOOL result, NSString *title, NSString *message) {
+                    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:title message:message delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+                    
+                    [alertView show];
+                }];
+                
                 break;
             case 1 :
             case 3 :
-                [Communication sendCommandsDoNotCheckCondition:commands portName:[AppDelegate getPortName] portSettings:[AppDelegate getPortSettings] timeout:10000];     // 10000mS!!!
+                [Communication sendCommandsDoNotCheckCondition:commands portName:portName portSettings:portSettings timeout:timeout completionHandler:^(BOOL result, NSString *title, NSString *message) {
+                    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:title message:message delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+                    
+                    [alertView show];
+                }];
+                
                 break;
         }
         

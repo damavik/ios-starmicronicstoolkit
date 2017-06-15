@@ -29,8 +29,7 @@ typedef enum {
     NarrowWide_4_8 = 8
 } NarrowWide;
 
-typedef enum 
-{
+typedef enum {
     NarrowWideV2_2_5 = 0,
     NarrowWideV2_4_10 = 1,
     NarrowWideV2_6_15 = 2,
@@ -49,8 +48,7 @@ typedef enum {
     Adds_Characters_Without_Line_Feed = 3
 } BarCodeOptions;
 
-typedef enum
-{
+typedef enum {
     _2_dots = 0,
     _3_dots = 1,
     _4_dots = 2
@@ -63,7 +61,8 @@ typedef enum
 
 #pragma mark Show Firmware Information
 
-+ (void)showFirmwareVersion:(NSString *)portName portSettings:(NSString *)portSettings;
++ (void)showFirmwareVersion:(NSString *)portName
+               portSettings:(NSString *)portSettings;
 
 #pragma mark Check whether supporting Bluetooth setting
 /*!
@@ -90,28 +89,28 @@ typedef enum
 
 + (void)PrintCode39WithPortname:(NSString *)portName
                    portSettings:(NSString *)portSettings
-                    barcodeData:(unsigned char*)barcodeData
+                    barcodeData:(unsigned char *)barcodeData
                 barcodeDataSize:(unsigned int)barcodeDataSize
                  barcodeOptions:(BarCodeOptions)option
                          height:(unsigned char)height
                      narrowWide:(NarrowWide)width;
 + (void)PrintCode93WithPortname:(NSString *)portName
                    portSettings:(NSString *)portSettings
-                    barcodeData:(unsigned char*)barcodeData
+                    barcodeData:(unsigned char *)barcodeData
                 barcodeDataSize:(unsigned int)barcodeDataSize
                  barcodeOptions:(BarCodeOptions)option
                          height:(unsigned char)height
-                min_module_dots:(Min_Mod_Size) width;
-+ (void)PrintCodeITFWithPortname:(NSString*)portName
-                    portSettings:(NSString*)portSettings
-                     barcodeData:(unsigned char*)barcodeData
+                min_module_dots:(Min_Mod_Size)width;
++ (void)PrintCodeITFWithPortname:(NSString *)portName
+                    portSettings:(NSString *)portSettings
+                     barcodeData:(unsigned char *)barcodeData
                  barcodeDataSize:(unsigned int)barcodeDataSize
                   barcodeOptions:(BarCodeOptions)option
                           height:(unsigned char)height
-                      narrowWide:(NarrowWideV2) width;
-+ (void)PrintCode128WithPortname:(NSString*)portName
-                    portSettings:(NSString*)portSettings
-                     barcodeData:(unsigned char*)barcodeData
+                      narrowWide:(NarrowWideV2)width;
++ (void)PrintCode128WithPortname:(NSString *)portName
+                    portSettings:(NSString *)portSettings
+                     barcodeData:(unsigned char *)barcodeData
                  barcodeDataSize:(unsigned int)barcodeDataSize
                   barcodeOptions:(BarCodeOptions)option
                           height:(unsigned char)height
@@ -119,12 +118,12 @@ typedef enum
 
 #pragma mark 2D Barcode
 
-+ (void)PrintQrcodeWithPortname:(NSString*)portName
-                   portSettings:(NSString*)portSettings
-                correctionLevel:(CorrectionLevelOption) correctionLevel
++ (void)PrintQrcodeWithPortname:(NSString *)portName
+                   portSettings:(NSString *)portSettings
+                correctionLevel:(CorrectionLevelOption)correctionLevel
                           model:(Model)model
                        cellSize:(unsigned char)cellSize
-                    barcodeData:(unsigned char*)barCodeData
+                    barcodeData:(unsigned char *)barCodeData
                 barcodeDataSize:(unsigned int)barCodeDataSize;
 + (void)PrintPDF417CodeWithPortname:(NSString *)portName
                        portSettings:(NSString *)portSettings
@@ -134,19 +133,19 @@ typedef enum
                       securityLevel:(unsigned char)securityLevel
                          xDirection:(unsigned char)xDirection
                         aspectRatio:(unsigned char)aspectRatio
-                        barcodeData:(unsigned char[])barcodeDat
+                        barcodeData:(unsigned char *)barcodeData
                     barcodeDataSize:(unsigned int)barcodeDataSize;
 
 #pragma mark Cut
 
 + (void)PerformCutWithPortname:(NSString *)portName
-                  portSettings:(NSString*)portSettings
+                  portSettings:(NSString *)portSettings
                        cutType:(CutType)cuttype;
 
 #pragma mark TextFormatting
 
 + (void)PrintTextWithPortname:(NSString *)portName
-                 portSettings:(NSString*)portSettings
+                 portSettings:(NSString *)portSettings
                   slashedZero:(bool)slashedZero
                     underline:(bool)underline
                   invertColor:(bool)invertColor
@@ -156,7 +155,7 @@ typedef enum
               heightExpansion:(int)heightExpansion
                widthExpansion:(int)widthExpansion
                    leftMargin:(unsigned char)leftMargin
-                    alignment:(Alignment) alignment
+                    alignment:(Alignment)alignment
                      textData:(unsigned char *)textData
                  textDataSize:(unsigned int)textDataSize;
 
@@ -185,12 +184,12 @@ typedef enum
                  heightExpansion:(int)heightExpansion
                   widthExpansion:(int)widthExpansion
                       leftMargin:(unsigned char)leftMargin
-                       alignment:(Alignment) alignment
+                       alignment:(Alignment)alignment
                         textData:(unsigned char *)textData
                     textDataSize:(unsigned int)textDataSize;
 
 + (void)PrintCHTTextWithPortname:(NSString *)portName
-                    portSettings:(NSString*)portSettings
+                    portSettings:(NSString *)portSettings
                        underline:(bool)underline
                      invertColor:(bool)invertColor
                       emphasized:(bool)emphasized
@@ -204,20 +203,20 @@ typedef enum
                     textDataSize:(unsigned int)textDataSize;
 
 + (void)PrintUtf8TextWithPortname:(NSString *)portName
-                 portSettings:(NSString*)portSettings
-                    ambiguity:(int)ambiguity
-                  slashedZero:(bool)slashedZero
-                    underline:(bool)underline
-                  invertColor:(bool)invertColor
-                   emphasized:(bool)emphasized
-                    upperline:(bool)upperline
-                   upsideDown:(bool)upsideDown
-              heightExpansion:(int)heightExpansion
-               widthExpansion:(int)widthExpansion
-                   leftMargin:(unsigned char)leftMargin
-                    alignment:(Alignment) alignment
-                     textData:(unsigned char *)textData
-                 textDataSize:(unsigned int)textDataSize;
+                     portSettings:(NSString *)portSettings
+                        ambiguity:(int)ambiguity
+                      slashedZero:(bool)slashedZero
+                        underline:(bool)underline
+                      invertColor:(bool)invertColor
+                       emphasized:(bool)emphasized
+                        upperline:(bool)upperline
+                       upsideDown:(bool)upsideDown
+                  heightExpansion:(int)heightExpansion
+                   widthExpansion:(int)widthExpansion
+                       leftMargin:(unsigned char)leftMargin
+                        alignment:(Alignment)alignment
+                         textData:(unsigned char *)textData
+                     textDataSize:(unsigned int)textDataSize;
 
 #pragma mark common
 

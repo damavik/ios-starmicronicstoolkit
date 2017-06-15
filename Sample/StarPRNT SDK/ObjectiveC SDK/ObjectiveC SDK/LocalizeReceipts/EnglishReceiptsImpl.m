@@ -19,6 +19,8 @@
     
     self.languageCode = @"En";
     
+    self.characterCode = StarIoExtCharacterCodeStandard;
+    
     return self;
 }
 
@@ -508,6 +510,70 @@
     [builder appendDataWithUnderLine:[@" 30 days" dataUsingEncoding:encoding]];
     
     [builder appendData:[@" with receipt\n" dataUsingEncoding:encoding]];
+}
+
+- (void)appendTextLabelData:(ISCBBuilder *)builder utf8:(BOOL)utf8 {
+    NSStringEncoding encoding;
+    
+    if (utf8 == YES) {
+        encoding = NSUTF8StringEncoding;
+        
+        [builder appendCodePage:SCBCodePageTypeUTF8];
+    }
+    else {
+        encoding = NSASCIIStringEncoding;
+        
+        [builder appendCodePage:SCBCodePageTypeCP998];
+    }
+    
+    [builder appendInternational:SCBInternationalTypeUSA];
+    
+    [builder appendCharacterSpace:0];
+    
+    [builder appendUnitFeed:20 * 2];
+    
+    [builder appendMultipleHeight:2];
+    
+    [builder appendData:[@"Star Micronics America, Inc." dataUsingEncoding:encoding]];
+    
+    [builder appendUnitFeed:64];
+    
+    [builder appendData:[@"65 Clyde Road Suite G" dataUsingEncoding:encoding]];
+    
+    [builder appendUnitFeed:64];
+    
+    [builder appendData:[@"Somerset, NJ 08873-9997 U.S.A" dataUsingEncoding:encoding]];
+    
+    [builder appendUnitFeed:64];
+    
+    [builder appendMultipleHeight:1];
+}
+
+- (NSString *)createPasteTextLabelString {
+    return @"Star Micronics America, Inc.\n"
+            "65 Clyde Road Suite G\n"
+            "Somerset, NJ 08873-9997 U.S.A";
+}
+
+- (void)appendPasteTextLabelData:(ISCBBuilder *)builder pasteText:(NSString *)pasteText utf8:(BOOL)utf8 {
+    NSStringEncoding encoding;
+    
+    if (utf8 == YES) {
+        encoding = NSUTF8StringEncoding;
+        
+        [builder appendCodePage:SCBCodePageTypeUTF8];
+    }
+    else {
+        encoding = NSASCIIStringEncoding;
+        
+        [builder appendCodePage:SCBCodePageTypeCP998];
+    }
+    
+    [builder appendInternational:SCBInternationalTypeUSA];
+    
+    [builder appendCharacterSpace:0];
+    
+    [builder appendData:[pasteText dataUsingEncoding:encoding]];
 }
 
 @end

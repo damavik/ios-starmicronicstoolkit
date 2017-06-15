@@ -139,7 +139,7 @@
             image = [self createEscPos3inchRasterReceiptImage];
             break;
         case PaperSizeIndexDotImpactThreeInch :
-            image = [self createCouponImage];
+            image = nil;
             break;
     }
     
@@ -162,7 +162,7 @@
             image = [self create3inchRasterReceiptImage];      // 3inch -> 4inch
             break;
         case PaperSizeIndexDotImpactThreeInch :
-            image = [self createCouponImage];
+            image = nil;
             break;
     }
     
@@ -202,6 +202,16 @@
 }
 
 - (void)appendDotImpact3inchTextReceiptData:(ISCBBuilder *)builder utf8:(BOOL)utf8 {     // abstract!!!
+}
+
+- (void)appendTextLabelData:(ISCBBuilder *)builder utf8:(BOOL)utf8 {     // abstract!!!
+}
+
+- (NSString *)createPasteTextLabelString {     // abstract!!!
+    return nil;
+}
+
+- (void)appendPasteTextLabelData:(ISCBBuilder *)builder pasteText:(NSString *)pasteText utf8:(BOOL)utf8 {     // abstract!!!
 }
 
 + (UIImage *)imageWithString:(NSString *)string font:(UIFont *)font width:(CGFloat)width {

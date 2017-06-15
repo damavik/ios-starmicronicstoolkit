@@ -268,7 +268,14 @@
         
         self.blind = YES;
         
-        [Communication sendCommands:commands portName:[AppDelegate getPortName] portSettings:[AppDelegate getPortSettings] timeout:10000];     // 10000mS!!!
+        NSString *portName     = [AppDelegate getPortName];
+        NSString *portSettings = [AppDelegate getPortSettings];
+        
+        [Communication sendCommands:commands portName:portName portSettings:portSettings timeout:10000 completionHandler:^(BOOL result, NSString *title, NSString *message) {     // 10000mS!!!
+            UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:title message:message delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+            
+            [alertView show];
+        }];
         
         self.blind = NO;
     }
@@ -300,7 +307,7 @@
     }
 }
 
--(void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info {
+- (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info {
     UIImage *image = (UIImage *)[info objectForKey:UIImagePickerControllerOriginalImage];
     
     [self dismissViewControllerAnimated:YES completion:nil];
@@ -321,7 +328,14 @@
     
     self.blind = YES;
     
-    [Communication sendCommands:commands portName:[AppDelegate getPortName] portSettings:[AppDelegate getPortSettings] timeout:10000];     // 10000mS!!!
+    NSString *portName     = [AppDelegate getPortName];
+    NSString *portSettings = [AppDelegate getPortSettings];
+    
+    [Communication sendCommands:commands portName:portName portSettings:portSettings timeout:10000 completionHandler:^(BOOL result, NSString *title, NSString *message) {     // 10000mS!!!
+        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:title message:message delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+        
+        [alertView show];
+    }];
     
     self.blind = NO;
 }

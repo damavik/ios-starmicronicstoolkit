@@ -21,21 +21,21 @@ class CashDrawerViewController: CommonViewController, UITableViewDelegate, UITab
         // Dispose of any resources that can be recreated.
     }
     
-    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+    func numberOfSections(in tableView: UITableView) -> Int {
         return 2
     }
     
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return 4
     }
     
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cellIdentifier: String = "UITableViewCellStyleValue1"
         
-        var cell: UITableViewCell! = self.tableView.dequeueReusableCellWithIdentifier(cellIdentifier)
+        var cell: UITableViewCell! = self.tableView.dequeueReusableCell(withIdentifier: cellIdentifier)
         
         if cell == nil {
-            cell = UITableViewCell(style: UITableViewCellStyle.Value1, reuseIdentifier: cellIdentifier)
+            cell = UITableViewCell(style: UITableViewCellStyle.value1, reuseIdentifier: cellIdentifier)
         }
         
         if cell != nil {
@@ -56,13 +56,13 @@ class CashDrawerViewController: CommonViewController, UITableViewDelegate, UITab
             cell      .textLabel!.textColor = UIColor(red: 0.0, green: 0.5, blue: 1.0, alpha: 1.0)
             cell.detailTextLabel!.textColor = UIColor(red: 0.0, green: 0.5, blue: 1.0, alpha: 1.0)
             
-            cell.accessoryType = UITableViewCellAccessoryType.DisclosureIndicator
+            cell.accessoryType = UITableViewCellAccessoryType.disclosureIndicator
         }
         
         return cell
     }
     
-    func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         let title: String
         
         if section == 0 {
@@ -75,18 +75,18 @@ class CashDrawerViewController: CommonViewController, UITableViewDelegate, UITab
         return title
     }
     
-    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        self.tableView.deselectRowAtIndexPath(indexPath, animated: true)
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        self.tableView.deselectRow(at: indexPath, animated: true)
         
         if indexPath.section == 0 {
-            let commands: NSData
+            let commands: Data
             
             switch indexPath.row {
             case 0, 1 :
-                commands = CashDrawerFunctions.createData(AppDelegate.getEmulation(), channel: SCBPeripheralChannel.No1)
+                commands = CashDrawerFunctions.createData(AppDelegate.getEmulation(), channel: SCBPeripheralChannel.no1)
 //          case 2, 3 :
             default   :
-                commands = CashDrawerFunctions.createData(AppDelegate.getEmulation(), channel: SCBPeripheralChannel.No2)
+                commands = CashDrawerFunctions.createData(AppDelegate.getEmulation(), channel: SCBPeripheralChannel.no2)
             }
             
             self.blind = true
@@ -101,16 +101,24 @@ class CashDrawerViewController: CommonViewController, UITableViewDelegate, UITab
             
             switch indexPath.row {
             case 0, 2 :
-                Communication.sendCommands                   (commands, portName: portName, portSettings: portSettings, timeout: timeout)
+                _ = Communication.sendCommands(commands, portName: portName, portSettings: portSettings, timeout: timeout, completionHandler: { (result: Bool, title: String, message: String) in
+                    let alertView: UIAlertView = UIAlertView(title: title, message: message, delegate: nil, cancelButtonTitle: "OK")
+                    
+                    alertView.show()
+                })
 //          case 1, 3 :
             default   :
-                Communication.sendCommandsDoNotCheckCondition(commands, portName: portName, portSettings: portSettings, timeout: timeout)
+                _ = Communication.sendCommandsDoNotCheckCondition(commands, portName: portName, portSettings: portSettings, timeout: timeout, completionHandler: { (result: Bool, title: String, message: String) in
+                    let alertView: UIAlertView = UIAlertView(title: title, message: message, delegate: nil, cancelButtonTitle: "OK")
+                    
+                    alertView.show()
+                })
             }
         }
         else {
             AppDelegate.setSelectedIndex(indexPath.row)
             
-            self.performSegueWithIdentifier("PushCashDrawerExtViewController", sender: nil)
+            self.performSegue(withIdentifier: "PushCashDrawerExtViewController", sender: nil)
         }
     }
 }

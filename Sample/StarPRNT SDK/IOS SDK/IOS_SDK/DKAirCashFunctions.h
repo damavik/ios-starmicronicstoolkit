@@ -12,11 +12,13 @@
 
 #pragma mark Show F/W Information
 
-+ (void)showFirmwareInformation:(NSString *)portName portSettings:(NSString *)portSettings;
++ (void)showFirmwareInformation:(NSString *)portName
+                   portSettings:(NSString *)portSettings;
 
 #pragma mark Show Dip-SW Information
 
-+ (void)showDipSwitchInformation:(NSString *)portName portSettings:(NSString *)portSettings;
++ (void)showDipSwitchInformation:(NSString *)portName
+                    portSettings:(NSString *)portSettings;
 
 #pragma mark Open Cash Drawer
 
@@ -35,7 +37,8 @@
 
 #pragma show alert
 
-+ (void)showCommonProgressDialogWithTitle:(NSString *)title message:(NSString *)message;
++ (void)showCommonProgressDialogWithTitle:(NSString *)title
+                                  message:(NSString *)message;
 
 + (void)dismissCommonProgressDialog;
 @end

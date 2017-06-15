@@ -10,7 +10,7 @@ import UIKit
 
 class BarcodeReaderExtViewController: CommonViewController, StarIoExtManagerDelegate, UITableViewDelegate, UITableViewDataSource, UIAlertViewDelegate {
     enum CellParamIndex: Int {
-        case BarcodeData = 0
+        case barcodeData = 0
     }
     
     @IBOutlet weak var tableView: UITableView!
@@ -29,12 +29,11 @@ class BarcodeReaderExtViewController: CommonViewController, StarIoExtManagerDele
         
         self.commentLabel.adjustsFontSizeToFitWidth = true
         
-//      self.appendRefreshButton                                        ("refreshBarcodeReader")
         self.appendRefreshButton(#selector(BarcodeReaderExtViewController.refreshBarcodeReader))
         
         self.cellArray = NSMutableArray()
         
-        self.starIoExtManager = StarIoExtManager(type: StarIoExtManagerType.OnlyBarcodeReader,
+        self.starIoExtManager = StarIoExtManager(type: StarIoExtManagerType.onlyBarcodeReader,
                                              portName: AppDelegate.getPortName(),
                                          portSettings: AppDelegate.getPortSettings(),
                                       ioTimeoutMillis: 10000)                                      // 10000mS!!!
@@ -49,13 +48,11 @@ class BarcodeReaderExtViewController: CommonViewController, StarIoExtManagerDele
         // Dispose of any resources that can be recreated.
     }
     
-    override func viewWillAppear(animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-//      NSNotificationCenter.defaultCenter().addObserver(self, selector:                                   "applicationWillResignActive", name: "UIApplicationWillResignActiveNotification", object: nil)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(PrinterExtViewController.applicationWillResignActive), name: "UIApplicationWillResignActiveNotification", object: nil)
-//      NSNotificationCenter.defaultCenter().addObserver(self, selector:                                   "applicationDidBecomeActive",  name: "UIApplicationDidBecomeActiveNotification",  object: nil)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(PrinterExtViewController.applicationDidBecomeActive),  name: "UIApplicationDidBecomeActiveNotification",  object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(PrinterExtViewController.applicationWillResignActive), name: NSNotification.Name(rawValue: "UIApplicationWillResignActiveNotification"), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(PrinterExtViewController.applicationDidBecomeActive),  name: NSNotification.Name(rawValue: "UIApplicationDidBecomeActiveNotification"),  object: nil)
         
 //      self.refreshBarcodeReader()
         
@@ -78,13 +75,13 @@ class BarcodeReaderExtViewController: CommonViewController, StarIoExtManagerDele
         self.tableView.reloadData()
     }
     
-    override func viewWillDisappear(animated: Bool) {
+    override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         
         self.starIoExtManager.disconnect()
         
-        NSNotificationCenter.defaultCenter().removeObserver(self, name: "UIApplicationWillResignActiveNotification", object: nil)
-        NSNotificationCenter.defaultCenter().removeObserver(self, name: "UIApplicationDidBecomeActiveNotification",  object: nil)
+        NotificationCenter.default.removeObserver(self, name: NSNotification.Name(rawValue: "UIApplicationWillResignActiveNotification"), object: nil)
+        NotificationCenter.default.removeObserver(self, name: NSNotification.Name(rawValue: "UIApplicationDidBecomeActiveNotification"),  object: nil)
     }
     
     func applicationDidBecomeActive() {
@@ -97,40 +94,40 @@ class BarcodeReaderExtViewController: CommonViewController, StarIoExtManagerDele
         self.starIoExtManager.disconnect()
     }
     
-    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+    func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
     
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return self.cellArray.count
     }
     
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cellParam: [String] = self.cellArray[indexPath.row] as! [String]
         
         let cellIdentifier: String = "UITableViewCellStyleValue1"
         
-//      var cell: UITableViewCell! = self.tableView.dequeueReusableCellWithIdentifier(cellIdentifier, forIndexPath: indexPath)
-        var cell: UITableViewCell! = self.tableView.dequeueReusableCellWithIdentifier(cellIdentifier)
+//      var cell: UITableViewCell! = self.tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath)
+        var cell: UITableViewCell! = self.tableView.dequeueReusableCell(withIdentifier: cellIdentifier)
         
         if cell == nil {
-            cell = UITableViewCell(style: UITableViewCellStyle.Value1, reuseIdentifier: cellIdentifier)
+            cell = UITableViewCell(style: UITableViewCellStyle.value1, reuseIdentifier: cellIdentifier)
         }
         
         if cell != nil {
-            cell      .textLabel!.text = cellParam[CellParamIndex.BarcodeData.rawValue]
+            cell      .textLabel!.text = cellParam[CellParamIndex.barcodeData.rawValue]
             cell.detailTextLabel!.text = ""
         }
         
         return cell
     }
     
-    func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         return "Contents"
     }
     
-    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        self.tableView.deselectRowAtIndexPath(indexPath, animated: true)
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        self.tableView.deselectRow(at: indexPath, animated: true)
     }
     
     func refreshBarcodeReader() {
@@ -153,24 +150,24 @@ class BarcodeReaderExtViewController: CommonViewController, StarIoExtManagerDele
         self.tableView.reloadData()
     }
     
-    func alertView(alertView: UIAlertView, clickedButtonAtIndex buttonIndex: Int) {
+    func alertView(_ alertView: UIAlertView, clickedButtonAt buttonIndex: Int) {
         self.commentLabel.text = "Check the device. (Power and Bluetooth pairing)\nThen touch up the Refresh button."
         
-        self.commentLabel.textColor = UIColor.redColor()
+        self.commentLabel.textColor = UIColor.red
         
         self.beginAnimationCommantLabel()
     }
     
-    func didBarcodeDataReceive(manager: StarIoExtManager!, data: NSData!) {
+    func didBarcodeDataReceive(_ manager: StarIoExtManager!, data: Data!) {
         NSLog("%@", MakePrettyFunction())
         
         var text: String = ""
         
-        var buffer: Array<UInt8> = Array<UInt8>(count: data.length, repeatedValue: 0)
+        var buffer: Array<UInt8> = Array<UInt8>(repeating: 0, count: data.count)
         
-        data.getBytes(&buffer, length: data.length)
+        data.copyBytes(to: &buffer, count: data.count)
         
-        for i: Int in 0 ..< data.length {
+        for i: Int in 0 ..< data.count {
             let ch: UInt8 = buffer[i]
             
             if ch >= 0x20 && ch <= 0x7f {
@@ -178,12 +175,12 @@ class BarcodeReaderExtViewController: CommonViewController, StarIoExtManagerDele
             }
             else if ch == 0x0d {
                 if self.cellArray.count > 30 {     // Max.30Line
-                    self.cellArray.removeObjectAtIndex(0)
+                    self.cellArray.removeObject(at: 0)
                     
                     self.tableView.reloadData()
                 }
                 
-                self.cellArray.addObject([text])
+                self.cellArray.add([text])
                 
                 text = ""
             }
@@ -191,85 +188,85 @@ class BarcodeReaderExtViewController: CommonViewController, StarIoExtManagerDele
         
         self.tableView.reloadData()
         
-        let indexPath: NSIndexPath = NSIndexPath(forRow: self.cellArray.count - 1, inSection: 0)
+        let indexPath: IndexPath = IndexPath(row: self.cellArray.count - 1, section: 0)
         
-//      self.tableView.selectRowAtIndexPath(indexPath, animated:false, scrollPosition: UITableViewScrollPosition.Bottom)
-        self.tableView.selectRowAtIndexPath(indexPath, animated:true,  scrollPosition: UITableViewScrollPosition.Bottom)
+//      self.tableView.selectRow(at: indexPath, animated:false, scrollPosition: UITableViewScrollPosition.bottom)
+        self.tableView.selectRow(at: indexPath, animated:true,  scrollPosition: UITableViewScrollPosition.bottom)
         
-        self.tableView.deselectRowAtIndexPath(indexPath, animated:true)
+        self.tableView.deselectRow(at: indexPath, animated:true)
     }
     
-    func didBarcodeReaderImpossible(manager: StarIoExtManager!) {
+    func didBarcodeReaderImpossible(_ manager: StarIoExtManager!) {
         NSLog("%@", MakePrettyFunction())
         
         self.commentLabel.text = "Barcode Reader Impossible."
         
-        self.commentLabel.textColor = UIColor.redColor()
+        self.commentLabel.textColor = UIColor.red
         
         self.beginAnimationCommantLabel()
     }
     
-    func didBarcodeReaderConnect(manager: StarIoExtManager!) {
+    func didBarcodeReaderConnect(_ manager: StarIoExtManager!) {
         NSLog("%@", MakePrettyFunction())
         
         self.commentLabel.text = "Barcode Reader Connect."
         
-        self.commentLabel.textColor = UIColor.blueColor()
+        self.commentLabel.textColor = UIColor.blue
         
         self.beginAnimationCommantLabel()
     }
     
-    func didBarcodeReaderDisconnect(manager: StarIoExtManager!) {
+    func didBarcodeReaderDisconnect(_ manager: StarIoExtManager!) {
         NSLog("%@", MakePrettyFunction())
         
         self.commentLabel.text = "Barcode Reader Disconnect."
         
-        self.commentLabel.textColor = UIColor.redColor()
+        self.commentLabel.textColor = UIColor.red
         
         self.beginAnimationCommantLabel()
     }
     
-    func didAccessoryConnectSuccess(manager: StarIoExtManager!) {
+    func didAccessoryConnectSuccess(_ manager: StarIoExtManager!) {
         NSLog("%@", MakePrettyFunction())
         
         self.commentLabel.text = "Accessory Connect Success."
         
-        self.commentLabel.textColor = UIColor.blueColor()
+        self.commentLabel.textColor = UIColor.blue
         
         self.beginAnimationCommantLabel()
     }
     
-    func didAccessoryConnectFailure(manager: StarIoExtManager!) {
+    func didAccessoryConnectFailure(_ manager: StarIoExtManager!) {
         NSLog("%@", MakePrettyFunction())
         
         self.commentLabel.text = "Accessory Connect Failure."
         
-        self.commentLabel.textColor = UIColor.redColor()
+        self.commentLabel.textColor = UIColor.red
         
         self.beginAnimationCommantLabel()
     }
     
-    func didAccessoryDisconnect(manager: StarIoExtManager!) {
+    func didAccessoryDisconnect(_ manager: StarIoExtManager!) {
         NSLog("%@", MakePrettyFunction())
         
         self.commentLabel.text = "Accessory Disconnect."
         
-        self.commentLabel.textColor = UIColor.redColor()
+        self.commentLabel.textColor = UIColor.red
         
         self.beginAnimationCommantLabel()
     }
     
-    func didStatusUpdate(manager: StarIoExtManager!, status: String!) {
+    func didStatusUpdate(_ manager: StarIoExtManager!, status: String!) {
         NSLog("%@", MakePrettyFunction())
         
 //      self.commentLabel.text = status
 //
-//      self.commentLabel.textColor = UIColor.greenColor()
+//      self.commentLabel.textColor = UIColor.green
 //
 //      self.beginAnimationCommantLabel()
     }
     
-    private func beginAnimationCommantLabel() {
+    fileprivate func beginAnimationCommantLabel() {
         UIView.beginAnimations(nil, context: nil)
         
         self.commentLabel.alpha = 0.0
@@ -278,7 +275,7 @@ class BarcodeReaderExtViewController: CommonViewController, StarIoExtManagerDele
         UIView.setAnimationDuration          (0.6)                             // 600mS!!!
         UIView.setAnimationRepeatCount       (Float(UINT32_MAX))
         UIView.setAnimationRepeatAutoreverses(true)
-        UIView.setAnimationCurve             (UIViewAnimationCurve.EaseIn)
+        UIView.setAnimationCurve             (UIViewAnimationCurve.easeIn)
         
         self.commentLabel.alpha = 1.0
         

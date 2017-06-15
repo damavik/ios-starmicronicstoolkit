@@ -155,7 +155,11 @@
     
     [_starIoExtManager.lock lock];
     
-    [Communication sendCommands:commands port:[_starIoExtManager port]];
+    [Communication sendCommands:commands port:_starIoExtManager.port completionHandler:^(BOOL result, NSString *title, NSString *message) {
+        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:title message:message delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+        
+        [alertView show];
+    }];
     
     [_starIoExtManager.lock unlock];
     

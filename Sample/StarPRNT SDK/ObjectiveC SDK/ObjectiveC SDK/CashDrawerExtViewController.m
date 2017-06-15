@@ -138,11 +138,21 @@
         default :
 //      case 0  :
 //      case 2  :
-            [Communication sendCommands                   :commands port:[_starIoExtManager port]];
+            [Communication sendCommands:commands port:_starIoExtManager.port completionHandler:^(BOOL result, NSString *title, NSString *message) {
+                UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:title message:message delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+                
+                [alertView show];
+            }];
+            
             break;
         case 1 :
         case 3 :
-            [Communication sendCommandsDoNotCheckCondition:commands port:[_starIoExtManager port]];
+            [Communication sendCommandsDoNotCheckCondition:commands port:_starIoExtManager.port completionHandler:^(BOOL result, NSString *title, NSString *message) {
+                UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:title message:message delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+                
+                [alertView show];
+            }];
+            
             break;
     }
     

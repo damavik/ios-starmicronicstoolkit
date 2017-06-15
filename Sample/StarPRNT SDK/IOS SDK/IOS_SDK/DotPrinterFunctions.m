@@ -808,17 +808,14 @@
     // [commands appendData:[@"[If loaded.. Logo1 goes here]\r\n" dataUsingEncoding:ENCODING]];
     
     // [commands appendBytes:"\x1b\x1c\x70\x01\x00\r\n" length:sizeof("\x1b\x1c\x70\x01\x00\r\n") - 1]; // Stored Logo Printing
-    [commands appendBytes:"\x1b\x57\x01" length:sizeof("\x1b\x57\x01") - 1];
     
     [commands appendBytes:"\x1b\x68\x01" length:sizeof("\x1b\x68\x01") - 1];
     
-    [commands appendData:[@"\nORANGE\r\n" dataUsingEncoding:ENCODING]];
-    
-    [commands appendBytes:"\x1b\x57\x00" length:sizeof("\x1b\x57\x00") - 1];
+    [commands appendData:[@"\nStar Micronics Communications\r\n" dataUsingEncoding:ENCODING]];
     
     [commands appendBytes:"\x1b\x68\x00" length:sizeof("\x1b\x68\x00") - 1];
     
-    [commands appendData:[@"36 AVENUE LA MOTTE PICQUET\r\n\r\n" dataUsingEncoding:ENCODING]];
+    [commands appendData:[@"AVENUE LA MOTTE PICQUET\r\n\r\n" dataUsingEncoding:ENCODING]];
     
     [commands appendBytes:"\x1b\x44\x02\x06\x0a\x10\x14\x1a\x22\x00"
                    length:sizeof("\x1b\x44\x02\x06\x0a\x10\x14\x1a\x22\x00") - 1]; // Set horizontal tab
@@ -832,10 +829,10 @@
     [commands appendBytes:"\x1b\x1d\x61\x00" length:sizeof("\x1b\x1d\x61\x00") - 1]; // Alignment
     
     [commands appendData:[@"Vous avez été servi par : Souad\r\n\r\n"
-                           "CAC IPHONE ORANGE\r\n"
+                           "CAC IPHONE\r\n"
                            "3700615033581 \t1\t X\t 19.99€\t  19.99€\r\n\r\n"    
                            "dont contribution environnementale :\r\n"
-                           "CAC IPHONE ORANGE\t\t  0.01€\r\n"
+                           "CAC IPHONE       \t\t  0.01€\r\n"
                            "------------------------------------------\r\n"
                            "1 Piéce(s) Total :\t\t\t  19.99€\r\n"
                            "Mastercard Visa  :\t\t\t  19.99€\r\n\r\n" dataUsingEncoding:ENCODING]];
@@ -876,11 +873,11 @@
     // Character expansion
     [commands appendBytes:"\x1b\x68\x01" length:sizeof("\x1b\x68\x01") - 1];
     
-    [commands appendData:[@"\nCOMERCIAL DE ALIMENTOS CARREFOUR LTDA.\r\n" dataUsingEncoding:ENCODING]];
+    [commands appendData:[@"\nCOMERCIAL DE ALIMENTOS STAR LTDA.\r\n" dataUsingEncoding:ENCODING]];
     
     [commands appendBytes:"\x1b\x68\x00" length:sizeof("\x1b\x68\x00") - 1];
     
-    [commands appendData:[@"Avenida Moyses Roysen, S/N　Vila Guilherme\r\n"
+    [commands appendData:[@"Avenida Moyses Roysen, S/N Vila Guilherme\r\n"
                            "Cep: 02049-010 – Sao Paulo – SP\r\n"
                            "CNPJ: 62.545.579/0013-69\r\n"
                            "IE:110.819.138.118  IM: 9.041.041-5\r\n" dataUsingEncoding:ENCODING]];
@@ -979,8 +976,8 @@
     [commands appendBytes:"\x1b\x1d\x61\x00" length:sizeof("\x1b\x1d\x61\x00") - 1]; // Alignment
     
     [commands appendData:[@"------------------------------------------\r\n" 
-                           " 4\t 3,00\t JARRA  CERVESA \t\t 12,00\r\n"
-                           " 1\t 1,60\t COPA DE CERVESA\t\t  1,60\r\n"
+                           " 4\t 3,00\t JARRA  CERVEZA \t\t 12,00\r\n"
+                           " 1\t 1,60\t COPA DE CERVEZA\t\t  1,60\r\n"
                            "------------------------------------------\r\n"
                            "\t\t\t\t\t SUB TOTAL :\t\t 13,60\r\n" dataUsingEncoding:ENCODING]];
     

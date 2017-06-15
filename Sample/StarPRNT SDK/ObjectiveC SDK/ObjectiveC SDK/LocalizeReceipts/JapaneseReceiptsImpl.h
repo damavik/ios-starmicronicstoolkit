@@ -25,4 +25,10 @@
 - (void)appendEscPos3inchTextReceiptData   :(ISCBBuilder *)builder utf8:(BOOL)utf8;
 - (void)appendDotImpact3inchTextReceiptData:(ISCBBuilder *)builder utf8:(BOOL)utf8;
 
+- (void)appendTextLabelData:(ISCBBuilder *)builder utf8:(BOOL)utf8;
+
+- (NSString *)createPasteTextLabelString;
+
+- (void)appendPasteTextLabelData:(ISCBBuilder *)builder pasteText:(NSString *)pasteText utf8:(BOOL)utf8;
+
 @end

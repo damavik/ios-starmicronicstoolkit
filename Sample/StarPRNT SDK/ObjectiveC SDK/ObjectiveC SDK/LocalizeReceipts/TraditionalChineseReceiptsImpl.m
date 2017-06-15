@@ -19,6 +19,8 @@
     
     self.languageCode = @"zh-TW";
     
+    self.characterCode = StarIoExtCharacterCodeTraditionalChinese;
+    
     return self;
 }
 

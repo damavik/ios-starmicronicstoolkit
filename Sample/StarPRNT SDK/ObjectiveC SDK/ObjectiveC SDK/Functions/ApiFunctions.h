@@ -56,4 +56,8 @@
 
 + (NSData *)createQrCodeData:(StarIoExtEmulation)emulation;
 
++ (NSData *)createBlackMarkData:(StarIoExtEmulation)emulation type:(SCBBlackMarkType)type;
+
++ (NSData *)createPageModeData:(StarIoExtEmulation)emulation width:(NSInteger)width;
+
 @end

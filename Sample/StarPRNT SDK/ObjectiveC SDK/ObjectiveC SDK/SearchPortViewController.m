@@ -209,6 +209,7 @@ typedef NS_ENUM(NSInteger, AlertViewIndex) {
 //      ModelIndex modelIndex = ModelIndexSM_T400I_StarPRNT;
 //      ModelIndex modelIndex = ModelIndexSM_L200;
 //      ModelIndex modelIndex = ModelIndexSP700;
+//      ModelIndex modelIndex = ModelIndexSM_L300;
 //
 //      NSString           *portSettings = [ModelCapability portSettingsAtModelIndex:modelIndex];
 //      StarIoExtEmulation  emulation    = [ModelCapability emulationAtModelIndex   :modelIndex];
@@ -266,7 +267,7 @@ typedef NS_ENUM(NSInteger, AlertViewIndex) {
                                                         message:@""
                                                        delegate:self
                                               cancelButtonTitle:@"Cancel"
-                                              otherButtonTitles:@"LAN", @"Bluetooth", @"Bluetooth Low Energy", @"All", @"Manual", nil];
+                                              otherButtonTitles:@"LAN", @"Bluetooth", @"Bluetooth Low Energy", @"USB", @"All", @"Manual", nil];
     
     alertView.tag = AlertViewIndexRefreshPort;
     
@@ -475,7 +476,7 @@ typedef NS_ENUM(NSInteger, AlertViewIndex) {
             
             [self.navigationController popViewControllerAnimated:YES];
         }
-        else if (buttonIndex == 5) {     // Manual
+        else if (buttonIndex == 6) {     // Manual
             UIAlertView *nestAlertView = [[UIAlertView alloc] initWithTitle:@"Please enter the port name." message:nil delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"OK", nil];
             
             nestAlertView.tag            = AlertViewIndexPortName;
@@ -505,7 +506,10 @@ typedef NS_ENUM(NSInteger, AlertViewIndex) {
                 case 3  :     // Bluetooth Low Energy
                     portInfoArray = [SMPort searchPrinter:@"BLE:"];
                     break;
-                case 4  :     // All
+                case 4  :     // USB
+                    portInfoArray = [SMPort searchPrinter:@"USB:"];
+                    break;
+                case 5  :     // All
                     portInfoArray = [SMPort searchPrinter];
                     break;
             }

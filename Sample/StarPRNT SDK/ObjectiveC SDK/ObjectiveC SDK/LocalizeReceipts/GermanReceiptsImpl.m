@@ -19,6 +19,8 @@
     
     self.languageCode = @"De";
     
+    self.characterCode = StarIoExtCharacterCodeStandard;
+    
     return self;
 }
 

@@ -33,4 +33,22 @@
                        width:(NSInteger)width
                     rotation:(SCBBitmapConverterRotation)rotation;
 
++ (NSData *)createTextBlackMarkData:(StarIoExtEmulation)emulation
+                   localizeReceipts:(ILocalizeReceipts *)localizeReceipts
+                               type:(SCBBlackMarkType)type
+                               utf8:(BOOL)utf8;
+
++ (NSData *)createPasteTextBlackMarkData:(StarIoExtEmulation)emulation
+                        localizeReceipts:(ILocalizeReceipts *)localizeReceipts
+                               pasteText:(NSString *)pasteText
+                            doubleHeight:(BOOL)doubleHeight
+                                    type:(SCBBlackMarkType)type
+                                    utf8:(BOOL)utf8;
+
++ (NSData *)createTextPageModeData:(StarIoExtEmulation)emulation
+                  localizeReceipts:(ILocalizeReceipts *)localizeReceipts
+                              rect:(CGRect)rect
+                          rotation:(SCBBitmapConverterRotation)rotation
+                              utf8:(BOOL)utf8;
+
 @end

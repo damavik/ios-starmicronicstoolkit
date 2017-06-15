@@ -32,4 +32,13 @@
                                   qrCode:(BOOL)qrCode
                               completion:(void (^)(NSInteger statusCode, NSError *error))completion;
 
++ (NSData *)createTextReceiptData:(StarIoExtEmulation)emulation
+                 localizeReceipts:(ILocalizeReceipts *)localizeReceipts
+                             utf8:(BOOL)utf8
+                            width:(NSInteger)width
+                          receipt:(BOOL)receipt
+                             info:(BOOL)info
+                           qrCode:(BOOL)qrCode
+                       completion:(void (^)(NSInteger statusCode, NSError *error))completion;
+
 @end

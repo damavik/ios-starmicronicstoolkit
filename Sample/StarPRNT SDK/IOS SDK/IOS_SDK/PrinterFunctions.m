@@ -272,8 +272,8 @@
  *  @param  width           The Narrow wide width of the bar code.  This value should be between 1 to 9.  See section
  *                          3-42 (Rev. 1.12) for more information on the values.
  */
-+ (void)PrintCode39WithPortname:(NSString*)portName
-                   portSettings:(NSString*)portSettings
++ (void)PrintCode39WithPortname:(NSString *)portName
+                   portSettings:(NSString *)portSettings
                     barcodeData:(unsigned char *)barcodeData
                 barcodeDataSize:(unsigned int)barcodeDataSize
                  barcodeOptions:(BarCodeOptions)option
@@ -329,7 +329,7 @@
     }
     unsigned char n4 = height;
     
-    unsigned char *command = (unsigned char*)malloc(6 + barcodeDataSize + 1);
+    unsigned char *command = (unsigned char *)malloc(6 + barcodeDataSize + 1);
     command[0] = 0x1b;
     command[1] = 0x62;
     command[2] = n1;
@@ -371,9 +371,9 @@
  * @param   width           This is the number of dots per module.  This value should be between 1 to 3.  See section
  *                          3-42 (Rev. 1.12) for more information on the values.
  */
-+ (void)PrintCode93WithPortname:(NSString*)portName
-                   portSettings:(NSString*)portSettings
-                    barcodeData: (unsigned char *)barcodeData
++ (void)PrintCode93WithPortname:(NSString *)portName
+                   portSettings:(NSString *)portSettings
+                    barcodeData:(unsigned char *)barcodeData
                 barcodeDataSize:(unsigned int)barcodeDataSize
                  barcodeOptions:(BarCodeOptions)option
                          height:(unsigned char)height
@@ -410,7 +410,7 @@
             break;
     }
     unsigned char n4 = height;
-    unsigned char *command = (unsigned char*)malloc(6 + barcodeDataSize + 1);
+    unsigned char *command = (unsigned char *)malloc(6 + barcodeDataSize + 1);
     command[0] = 0x1b;
     command[1] = 0x62;
     command[2] = n1;
@@ -452,8 +452,8 @@
  *  @param  width           This is the number of dots per module.  This value should be between 1 to 3.  See section
  *                          3-42 (Rev. 1.12) for more information on the values.
  */
-+ (void)PrintCodeITFWithPortname:(NSString*)portName
-                    portSettings:(NSString*)portSettings
++ (void)PrintCodeITFWithPortname:(NSString *)portName
+                    portSettings:(NSString *)portSettings
                      barcodeData:(unsigned char *)barcodeData
                  barcodeDataSize:(unsigned int)barcodeDataSize
                   barcodeOptions:(BarCodeOptions)option
@@ -510,7 +510,7 @@
     }
     
     unsigned char n4 = height;
-    unsigned char *command = (unsigned char*)malloc(6 + barcodeDataSize + 1);
+    unsigned char *command = (unsigned char *)malloc(6 + barcodeDataSize + 1);
     command[0] = 0x1b;
     command[1] = 0x62;
     command[2] = n1;
@@ -551,8 +551,8 @@
  *  @param  width           This is the number of dots per module.  This value should be between 1 to 3.  See section
  *                          3-42 (Rev. 1.12) for more information on the values.
  */
-+ (void)PrintCode128WithPortname:(NSString*)portName
-                    portSettings:(NSString*)portSettings
++ (void)PrintCode128WithPortname:(NSString *)portName
+                    portSettings:(NSString *)portSettings
                      barcodeData:(unsigned char *)barcodeData
                  barcodeDataSize:(unsigned int)barcodeDataSize
                   barcodeOptions:(BarCodeOptions)option
@@ -590,7 +590,7 @@
             break;
     }
     unsigned char n4 = height;
-    unsigned char *command = (unsigned char*)malloc(6 + barcodeDataSize + 1);
+    unsigned char *command = (unsigned char *)malloc(6 + barcodeDataSize + 1);
     command[0] = 0x1b;
     command[1] = 0x62;
     command[2] = n1;
@@ -632,12 +632,12 @@
  *  @param  barcodeDataSize This is the number of characters that will be written into the QR Code. This is the size of
  *                          the preceding parameter
  */
-+ (void)PrintQrcodeWithPortname:(NSString*)portName
-                   portSettings:(NSString*)portSettings
++ (void)PrintQrcodeWithPortname:(NSString *)portName
+                   portSettings:(NSString *)portSettings
                 correctionLevel:(CorrectionLevelOption)correctionLevel
                           model:(Model)model
                        cellSize:(unsigned char)cellSize
-                    barcodeData:(unsigned char*)barCodeData
+                    barcodeData:(unsigned char *)barCodeData
                 barcodeDataSize:(unsigned int)barCodeDataSize
 {
     NSMutableData *commands = [[NSMutableData alloc] init];
@@ -726,7 +726,7 @@
                       securityLevel:(unsigned char)securityLevel
                          xDirection:(unsigned char)xDirection
                         aspectRatio:(unsigned char)aspectRatio
-                        barcodeData:(unsigned char[])barcodeData
+                        barcodeData:(unsigned char *)barcodeData
                     barcodeDataSize:(unsigned int)barcodeDataSize
 {
     NSMutableData *commands = [[NSMutableData alloc] init];
@@ -758,7 +758,7 @@
     setAspectRatio[5] = aspectRatio;
     [commands appendBytes:setAspectRatio length:6];
     
-    unsigned char *setBarcodeData = (unsigned char*)malloc(6 + barcodeDataSize);
+    unsigned char *setBarcodeData = (unsigned char *)malloc(6 + barcodeDataSize);
     setBarcodeData[0] = 0x1b;
     setBarcodeData[1] = 0x1d;
     setBarcodeData[2] = 0x78;
@@ -795,7 +795,7 @@
  *                          partial cut with feed
  */
 + (void)PerformCutWithPortname:(NSString *)portName
-                  portSettings:(NSString*)portSettings
+                  portSettings:(NSString *)portSettings
                        cutType:(CutType)cuttype
 {
     unsigned char autocutCommand[] = {0x1b, 0x64, 0x00};
@@ -856,7 +856,7 @@
  *  @param  textDataSize    The amount of text to send to the printer
  */
 + (void)PrintTextWithPortname:(NSString *)portName
-                 portSettings:(NSString*)portSettings
+                 portSettings:(NSString *)portSettings
                   slashedZero:(bool)slashedZero
                     underline:(bool)underline
                   invertColor:(bool)invertColor
@@ -866,7 +866,7 @@
               heightExpansion:(int)heightExpansion
                widthExpansion:(int)widthExpansion
                    leftMargin:(unsigned char)leftMargin
-                    alignment: (Alignment)alignment
+                    alignment:(Alignment)alignment
                      textData:(unsigned char *)textData
                  textDataSize:(unsigned int)textDataSize
 {
@@ -1005,7 +1005,7 @@
  *  @param  textDataSize    The amount of text to send to the printer
  */
 + (void)PrintKanjiTextWithPortname:(NSString *)portName
-                      portSettings:(NSString*)portSettings
+                      portSettings:(NSString *)portSettings
                          kanjiMode:(int)kanjiMode
                          underline:(bool)underline
                        invertColor:(bool)invertColor
@@ -1016,7 +1016,7 @@
                     widthExpansion:(int)widthExpansion
                         leftMargin:(unsigned char)leftMargin
                          alignment:(Alignment)alignment
-                          textData:(unsigned char*)textData
+                          textData:(unsigned char *)textData
                       textDataSize:(unsigned int)textDataSize
 {
     NSMutableData *commands = [[NSMutableData alloc] init];
@@ -1155,7 +1155,7 @@
  *  @param  textDataSize    The amount of text to send to the printer
  */
 + (void)PrintCHSTextWithPortname:(NSString *)portName
-                    portSettings:(NSString*)portSettings
+                    portSettings:(NSString *)portSettings
                        underline:(bool)underline
                      invertColor:(bool)invertColor
                       emphasized:(bool)emphasized
@@ -1165,7 +1165,7 @@
                   widthExpansion:(int)widthExpansion
                       leftMargin:(unsigned char)leftMargin
                        alignment:(Alignment)alignment
-                        textData:(unsigned char*)textData
+                        textData:(unsigned char *)textData
                     textDataSize:(unsigned int)textDataSize
 {
     NSMutableData *commands = [[NSMutableData alloc] init];
@@ -1291,7 +1291,7 @@
  *  @param  textDataSize    The amount of text to send to the printer
  */
 + (void)PrintCHTTextWithPortname:(NSString *)portName
-                    portSettings:(NSString*)portSettings
+                    portSettings:(NSString *)portSettings
                        underline:(bool)underline
                      invertColor:(bool)invertColor
                       emphasized:(bool)emphasized
@@ -1301,7 +1301,7 @@
                   widthExpansion:(int)widthExpansion
                       leftMargin:(unsigned char)leftMargin
                        alignment:(Alignment)alignment
-                        textData:(unsigned char*)textData
+                        textData:(unsigned char *)textData
                     textDataSize:(unsigned int)textDataSize
 {
     NSMutableData *commands = [[NSMutableData alloc] init];
@@ -1430,7 +1430,7 @@
  *  @param  textDataSize    The amount of text to send to the printer
  */
 + (void)PrintUtf8TextWithPortname:(NSString *)portName
-                     portSettings:(NSString*)portSettings
+                     portSettings:(NSString *)portSettings
                         ambiguity:(int)ambiguity
                       slashedZero:(bool)slashedZero
                         underline:(bool)underline
@@ -1441,7 +1441,7 @@
                   heightExpansion:(int)heightExpansion
                    widthExpansion:(int)widthExpansion
                        leftMargin:(unsigned char)leftMargin
-                        alignment: (Alignment)alignment
+                        alignment:(Alignment)alignment
                          textData:(unsigned char *)textData
                      textDataSize:(unsigned int)textDataSize
 {
@@ -1585,8 +1585,8 @@
  *                          image exceeds the maximum width then the image is scaled down. The ratio is maintained.
  */
 + (void)PrintImageWithPortname:(NSString *)portName
-                  portSettings:(NSString*)portSettings
-                  imageToPrint:(UIImage*)imageToPrint
+                  portSettings:(NSString *)portSettings
+                  imageToPrint:(UIImage *)imageToPrint
                       maxWidth:(int)maxWidth
              compressionEnable:(BOOL)compressionEnable
                 withDrawerKick:(BOOL)drawerKick
@@ -1631,7 +1631,10 @@
     [commandsToPrint release];
 }
 
-+ (void)sendCommand:(NSData *)commandsToPrint portName:(NSString *)portName portSettings:(NSString *)portSettings timeoutMillis:(u_int32_t)timeoutMillis
++ (void)sendCommand:(NSData *)commandsToPrint
+           portName:(NSString *)portName
+       portSettings:(NSString *)portSettings
+      timeoutMillis:(u_int32_t)timeoutMillis
 {
     int commandSize = (int)commandsToPrint.length;
     unsigned char *dataToSentToPrinter = (unsigned char *)malloc(commandSize);
@@ -2106,12 +2109,12 @@
     // [commands appendBytes:"\x1b\x1c\x70\x01\x00\r// \n" length:sizeof("\x1b\x1c\x70\x01\x00\r// \n") - 1]; // Stored Logo Printing
     
     // Character expansion
-    [commands appendBytes:"\x06\x09\x1b\x69\x01\x01" length:sizeof("\x06\x09\x1b\x69\x01\x01") - 1];
+    [commands appendBytes:"\x06\x09\x1b\x69\x01\x00" length:sizeof("\x06\x09\x1b\x69\x01\x00") - 1];
 
-    [commands appendData:[@"\nORANGE\r\n" dataUsingEncoding:ENCODING]];
+    [commands appendData:[@"\nStar Micronics\nCommunications\r\n" dataUsingEncoding:ENCODING]];
     [commands appendBytes:"\x1b\x69\x00\x00" length:sizeof("\x1b\x69\x00\x00") - 1]; // Cancel Character Expansion
     
-    [commands appendData:[@"36 AVENUE LA MOTTE PICQUET\r\n\r\n" dataUsingEncoding:ENCODING]];
+    [commands appendData:[@"AVENUE LA MOTTE PICQUET\r\n\r\n" dataUsingEncoding:ENCODING]];
     
     [commands appendBytes:"\x1b\x1d\x61\x00" length:sizeof("\x1b\x1d\x61\x00") - 1]; // Alignment
     
@@ -2124,10 +2127,10 @@
                            "Conseiller: 002970  Ticket: 3881\r\n"
                            "--------------------------------\r\n\r\n"
                            "Vous avez été servi par : Souad\r\n\r\n"
-                           "CAC IPHONE ORANGE\r\n"
+                           "CAC IPHONE\r\n"
                            "3700615033581 1 X 19.99€  19.99€\r\n\r\n"
                            "dont contribution\r\n environnementale :\r\n"
-                           "CAC IPHONE ORANGE	          0.01€\r\n"
+                           "CAC IPHONE       	          0.01€\r\n"
                            "--------------------------------\r\n"
                            "    1 Piéce(s)   Total : 	 19.99€\r\n"
                            "      Mastercard Visa  :  19.99€\r\n\r\n"
@@ -2169,13 +2172,13 @@
      // [commands appendBytes:"\x1b\x1c\x70\x01\x00\r// \n" length:sizeof("\x1b\x1c\x70\x01\x00\r// \n") - 1]; // Stored Logo Printing
     
      // Character expansion
-     [commands appendBytes:"\x06\x09\x1b\x69\x01\x01" length:sizeof("\x06\x09\x1b\x69\x01\x01") - 1];
+     [commands appendBytes:"\x06\x09\x1b\x69\x01\x00" length:sizeof("\x06\x09\x1b\x69\x01\x00") - 1];
 
 
-    [commands appendData:[@"\nORANGE\r\n" dataUsingEncoding:ENCODING]];
+    [commands appendData:[@"\nStar Micronics Communications\r\n" dataUsingEncoding:ENCODING]];
      [commands appendBytes:"\x1b\x69\x00\x00" length:sizeof("\x1b\x69\x00\x00") - 1]; // Cancel Character Expansion
      
-     [commands appendData:[@"36 AVENUE LA MOTTE PICQUET\r\n\r\n" dataUsingEncoding:ENCODING]];
+     [commands appendData:[@"AVENUE LA MOTTE PICQUET\r\n\r\n" dataUsingEncoding:ENCODING]];
      
      [commands appendBytes:"\x1b\x44\x02\x06\x0a\x10\x14\x1a\x22\x00" length:sizeof("\x1b\x44\x02\x06\x0a\x10\x14\x1a\x22\x00") - 1]; // Set horizontal tab
      
@@ -2188,10 +2191,10 @@
      [commands appendBytes:"\x1b\x1d\x61\x00" length:sizeof("\x1b\x1d\x61\x00") - 1]; // Alignment
      
      [commands appendData:[@"Vous avez été servi par : Souad\r\n\r\n"
-                            "CAC IPHONE ORANGE\r\n"
+                            "CAC IPHONE\r\n"
                             "3700615033581 \t1\t X\t 19.99€\t  19.99€\r\n\r\n"
                             "dont contribution environnementale :\r\n"
-                            "CAC IPHONE ORANGE\t\t  0.01€\r\n"
+                            "CAC IPHONE       \t\t  0.01€\r\n"
                             "------------------------------------------------\r\n"
                             "1 Piéce(s) Total :\t\t\t  19.99€\r\n"
                             "Mastercard Visa  :\t\t\t  19.99€\r\n\r\n" dataUsingEncoding:ENCODING]];
@@ -2230,13 +2233,13 @@
     // [commands appendBytes:"\x1b\x1c\x70\x01\x00\r// \n" length:sizeof("\x1b\x1c\x70\x01\x00\r// \n") - 1]; // Stored Logo Printing
     
     // Character expansion
-    [commands appendBytes:"\x06\x09\x1b\x69\x01\x01" length:sizeof("\x06\x09\x1b\x69\x01\x01") - 1];
+    [commands appendBytes:"\x06\x09\x1b\x69\x01\x00" length:sizeof("\x06\x09\x1b\x69\x01\x00") - 1];
     
     
-    [commands appendData:[@"\nORANGE\r\n" dataUsingEncoding:ENCODING]];
+    [commands appendData:[@"\nStar Micronics Communications\r\n" dataUsingEncoding:ENCODING]];
     [commands appendBytes:"\x1b\x69\x00\x00" length:sizeof("\x1b\x69\x00\x00") - 1]; // Cancel Character Expansion
     
-    [commands appendData:[@"36 AVENUE LA MOTTE PICQUET\r\n\r\n" dataUsingEncoding:ENCODING]];
+    [commands appendData:[@"AVENUE LA MOTTE PICQUET\r\n\r\n" dataUsingEncoding:ENCODING]];
     
     [commands appendBytes:"\x1b\x44\x02\x06\x0a\x10\x14\x1a\x22\x00" length:sizeof("\x1b\x44\x02\x06\x0a\x10\x14\x1a\x22\x00") - 1]; // Set horizontal tab
     
@@ -2249,10 +2252,10 @@
     [commands appendBytes:"\x1b\x1d\x61\x00" length:sizeof("\x1b\x1d\x61\x00") - 1]; // Alignment
     
     [commands appendData:[@"Vous avez été servi par : Souad\r\n\r\n"
-                          "CAC IPHONE ORANGE\r\n"
+                          "CAC IPHONE\r\n"
                           "3700615033581 \t1\t X\t 19.99€\t  19.99€\r\n\r\n"
                           "dont contribution environnementale :\r\n"
-                          "CAC IPHONE ORANGE\t\t  0.01€\r\n"
+                          "CAC IPHONE       \t\t  0.01€\r\n"
                           "------------------------------------------------\r\n"
                           "1 Piéce(s) Total :\t\t\t  19.99€\r\n"
                           "Mastercard Visa  :\t\t\t  19.99€\r\n\r\n" dataUsingEncoding:ENCODING]];
@@ -2292,12 +2295,12 @@
     // [commands appendBytes:"\x1b\x1c\x70\x01\x00\r// \n" length:sizeof("\x1b\x1c\x70\x01\x00\r// \n") - 1]; // Stored Logo Printing
     
     // Character expansion
-    [commands appendBytes:"\x06\x09\x1b\x69\x01\x01" length:sizeof("\x06\x09\x1b\x69\x01\x01") - 1];
+    [commands appendBytes:"\x06\x09\x1b\x69\x01\x00" length:sizeof("\x06\x09\x1b\x69\x01\x00") - 1];
 
-    [commands appendData:[@"\nORANGE\r\n" dataUsingEncoding:ENCODING]];
+    [commands appendData:[@"\nStar Micronics Communications\r\n" dataUsingEncoding:ENCODING]];
     [commands appendBytes:"\x1b\x69\x00\x00" length:sizeof("\x1b\x69\x00\x00") - 1]; // Cancel Character Expansion
     
-    [commands appendData:[@"36 AVENUE LA MOTTE PICQUET\r\n\r\n" dataUsingEncoding:ENCODING]];
+    [commands appendData:[@"AVENUE LA MOTTE PICQUET\r\n\r\n" dataUsingEncoding:ENCODING]];
     
     [commands appendBytes:"\x1b\x44\x02\x06\x0a\x10\x14\x1a\x22\x24\x28\x3c\x00"
                    length:sizeof("\x1b\x44\x02\x06\x0a\x10\x14\x1a\x22\x24\x28\x3c\x00") - 1]; // Set horizontal tab
@@ -2312,10 +2315,10 @@
     [commands appendBytes:"\x1b\x1d\x61\x00" length:sizeof("\x1b\x1d\x61\x00") - 1]; // Alignment
     
     [commands appendData:[@"Vous avez été servi par : Souad\r\n\r\n"
-                           "CAC IPHONE ORANGE\r\n"
+                           "CAC IPHONE\r\n"
                            "3700615033581 \t1\t X\t 19.99€\t\t\t\t  19.99€\r\n\r\n"
                            "dont contribution environnementale :\r\n"
-                           "CAC IPHONE ORANGE\t\t  0.01€\r\n"
+                           "CAC IPHONE       \t\t  0.01€\r\n"
                            "---------------------------------------------------------------------\r\n"
                            "1 Piéce(s) Total :\t\t\t\t\t\t  19.99€\r\n"
                            "Mastercard Visa  :\t\t\t\t\t\t  19.99€\r\n\r\n" dataUsingEncoding:ENCODING]];
@@ -2359,7 +2362,7 @@
     [commands appendBytes:"\x06\x09\x1b\x69\x01\x00" length:sizeof("\x06\x09\x1b\x69\x01\x00") - 1];
 
     [commands appendData:[@"\nCOMERCIAL DE ALIMENTOS\r\n"
-                           "CARREFOUR LTDA.\r\n" dataUsingEncoding:ENCODING]];
+                           "STAR LTDA.\r\n" dataUsingEncoding:ENCODING]];
     
     [commands appendBytes:"\x1b\x69\x00\x00" length:sizeof("\x1b\x69\x00\x00") - 1]; // Cancel Character Expansion
     
@@ -2469,7 +2472,7 @@
     // Character expansion
     [commands appendBytes:"\x06\x09\x1b\x69\x01\x00" length:sizeof("\x06\x09\x1b\x69\x01\x00") - 1];
 
-    [commands appendData:[@"\nCOMERCIAL DE ALIMENTOS CARREFOUR LTDA.\r\n" dataUsingEncoding:ENCODING]];
+    [commands appendData:[@"\nCOMERCIAL DE ALIMENTOS STAR LTDA.\r\n" dataUsingEncoding:ENCODING]];
     
     [commands appendBytes:"\x1b\x69\x00\x00" length:sizeof("\x1b\x69\x00\x00") - 1]; // Cancel Character Expansion
     
@@ -2564,7 +2567,7 @@
     // Character expansion
     [commands appendBytes:"\x06\x09\x1b\x69\x01\x00" length:sizeof("\x06\x09\x1b\x69\x01\x00") - 1];
     
-    [commands appendData:[@"\nCOMERCIAL DE ALIMENTOS CARREFOUR LTDA.\r\n" dataUsingEncoding:ENCODING]];
+    [commands appendData:[@"\nCOMERCIAL DE ALIMENTOS STAR LTDA.\r\n" dataUsingEncoding:ENCODING]];
     
     [commands appendBytes:"\x1b\x69\x00\x00" length:sizeof("\x1b\x69\x00\x00") - 1]; // Cancel Character Expansion
     
@@ -2659,7 +2662,7 @@
     // Character expansion
     [commands appendBytes:"\x06\x09\x1b\x69\x01\x00" length:sizeof("\x06\x09\x1b\x69\x01\x00") - 1];
 
-    [commands appendData:[@"\nCOMERCIAL DE ALIMENTOS CARREFOUR LTDA.\r\n" dataUsingEncoding:ENCODING]];
+    [commands appendData:[@"\nCOMERCIAL DE ALIMENTOS STAR LTDA.\r\n" dataUsingEncoding:ENCODING]];
     
     [commands appendBytes:"\x1b\x69\x00\x00" length:sizeof("\x1b\x69\x00\x00") - 1]; // Cancel Character Expansion
     
@@ -2768,8 +2771,8 @@
                            "MESA: 100 P: - FECHA: YYYY-MM-DD\r\n"
                            "CAN P/U DESCRIPCION  SUMA\r\n"
                            "--------------------------------\r\n"
-                           " 4  3,00  JARRA  CERVESA   12,00\r\n"
-                           " 1  1,60  COPA DE CERVESA   1,60\r\n"
+                           " 4  3,00  JARRA  CERVEZA   12,00\r\n"
+                           " 1  1,60  COPA DE CERVEZA   1,60\r\n"
                            "--------------------------------\r\n"
                            "               SUB TOTAL : 13,60\r\n" dataUsingEncoding:ENCODING]];
     
@@ -2831,8 +2834,8 @@
     [commands appendBytes:"\x1b\x1d\x61\x00" length:sizeof("\x1b\x1d\x61\x00") - 1]; // Alignment
     
     [commands appendData:[@"------------------------------------------------\r\n"
-                           " 4\t 3,00\t JARRA  CERVESA \t\t 12,00\r\n"
-                           " 1\t 1,60\t COPA DE CERVESA\t\t  1,60\r\n"
+                           " 4\t 3,00\t JARRA  CERVEZA \t\t 12,00\r\n"
+                           " 1\t 1,60\t COPA DE CERVEZA\t\t  1,60\r\n"
                            "------------------------------------------------\r\n"
                            "\t\t\t\t\t SUB TOTAL :\t\t 13,60\r\n" dataUsingEncoding:ENCODING]];
     
@@ -2894,8 +2897,8 @@
     [commands appendBytes:"\x1b\x1d\x61\x00" length:sizeof("\x1b\x1d\x61\x00") - 1]; // Alignment
     
     [commands appendData:[@"------------------------------------------------\r\n"
-                          " 4\t 3,00\t JARRA  CERVESA \t\t 12,00\r\n"
-                          " 1\t 1,60\t COPA DE CERVESA\t\t  1,60\r\n"
+                          " 4\t 3,00\t JARRA  CERVEZA \t\t 12,00\r\n"
+                          " 1\t 1,60\t COPA DE CERVEZA\t\t  1,60\r\n"
                           "------------------------------------------------\r\n"
                           "\t\t\t\t\t SUB TOTAL :\t\t 13,60\r\n" dataUsingEncoding:ENCODING]];
     
@@ -2958,8 +2961,8 @@
     [commands appendBytes:"\x1b\x1d\x61\x00" length:sizeof("\x1b\x1d\x61\x00") - 1]; // Alignment
     
     [commands appendData:[@"---------------------------------------------------------------------\r\n"
-                           " 4\t 3,00\t\t JARRA  CERVESA \t\t\t 12,00\r\n"
-                           " 1\t 1,60\t\t COPA DE CERVESA\t\t\t  1,60\r\n"
+                           " 4\t 3,00\t\t JARRA  CERVEZA \t\t\t 12,00\r\n"
+                           " 1\t 1,60\t\t COPA DE CERVEZA\t\t\t  1,60\r\n"
                            "---------------------------------------------------------------------\r\n"
                            "\t\t\t\t\t\t\t\t SUB TOTAL :\t 13,60\r\n" dataUsingEncoding:ENCODING]];
     
@@ -4815,8 +4818,9 @@
  *  Create Raster French sample receipt image (2inch)
  */
 + (UIImage *)french2inchRasterSampleReceipt {
-    NSString *textToPrint = @"          ORANGE          \n"
-                             "    36 AVENUE LA MOTTE    \n"
+    NSString *textToPrint = @"      Star Micronics      \n"
+                             "      Communications      \n"
+                             "      AVENUE LA MOTTE     \n"
                              " PICQUET City, State 12345\n\n"
                              "--------------------------\n"
                              "Date: MM/DD/YYYY          \n"
@@ -4828,12 +4832,12 @@
                              "--------------------------\n"
                              "Vous avez été servi par : \n"
                              "                     Souad\n"
-                             "CAC IPHONE ORANGE         \n"
+                             "CAC IPHONE                \n"
                              "3700615033581 1 X 19.99€  \n"
                              "                  19.99€  \n"
                              "dont contribution         \n"
                              " environnementale :       \n"
-                             "CAC IPHONE ORANGE 0.01€   \n"
+                             "CAC IPHONE        0.01€   \n"
                              "--------------------------\n"
                              " 1 Piéce(s) Total : 19.99€\n\n"
                              "  Mastercard Visa : 19.99€\n"
@@ -4859,8 +4863,8 @@
  *  Create Raster French sample receipt image. (3inch)
  */
 + (UIImage *)french3inchRasterSampleReceipt {
-    NSString *textToPrint = @"                ORANGE                \n"
-                             "           36 AVENUE LA MOTTE         \n"
+    NSString *textToPrint = @"    Star Micronics Communications     \n"
+                             "            AVENUE LA MOTTE           \n"
                              "        PICQUET City, State 12345     \n\n"
                              "--------------------------------------\n"
                              "     Date: MM/DD/YYYY    Time:HH:MM PM\n"
@@ -4868,10 +4872,10 @@
                              "      Conseiller: 002970  Ticket: 3881\n"
                              "--------------------------------------\n"
                              "Vous avez été servi par : Souad       \n"
-                             "CAC IPHONE ORANGE                     \n"
+                             "CAC IPHONE                            \n"
                              "3700615033581   1 X 19.99€      19.99€\n"
                              "dont contribution environnementale :  \n"
-                             "CAC IPHONE ORANGE                0.01€\n"
+                             "CAC IPHONE                       0.01€\n"
                              "--------------------------------------\n"
                              "  1 Piéce(s)    Total :         19.99€\n\n"
                              "        Mastercard Visa  :      19.99€\n"
@@ -4893,18 +4897,18 @@
  *  Create Raster French sample receipt image. (4inch)
  */
 + (UIImage *)french4inchRasterSampleReceipt {
-    NSString *textToPrint = @"                        ORANGE                         \n"
-                             "     36 AVENUE LA MOTTE PICQUET City, State 12345      \n\n"
+    NSString *textToPrint = @"             Star Micronics Communications             \n"
+                             "       AVENUE LA MOTTE PICQUET City, State 12345       \n\n"
                              "-------------------------------------------------------\n"
                              "                      Date: MM/DD/YYYY    Time:HH:MM PM\n"
                              "                  Boutique: OLUA23         Caisse: 0001\n"
                              "                Conseiller: 002970         Ticket: 3881\n"
                              "-------------------------------------------------------\n"
                              "Vous avez été servi par : Souad                        \n"
-                             "CAC IPHONE ORANGE                                      \n"
+                             "CAC IPHONE                                             \n"
                              "3700615033581      1  X  19.99€                  19.99€\n"
                              "dont contribution environnementale :                   \n"
-                             "CAC IPHONE ORANGE                                 0.01€\n"
+                             "CAC IPHONE                                        0.01€\n"
                              "-------------------------------------------------------\n"
                              "        1 Piéce(s)    Total :                    19.99€\n\n"
                              "        Mastercard Visa  :                       19.99€\n"
@@ -4927,7 +4931,7 @@
  */
 + (UIImage *)portuguese2inchRasterSampleReceipt {
     NSString *textToPrint = @"COMERCIAL DE ALIMENTOS    \n"
-                             "       CARREFOUR LTDA.    \n"
+                             "            STAR LTDA.    \n"
                              "Avenida Moyses Roysen,    \n"
                              "S/N Vila Guilherme        \n"
                              "Cep: 02049-010 – Sao Paulo\n"
@@ -4991,7 +4995,7 @@
  */
 + (UIImage *)portuguese3inchRasterSampleReceipt {
     NSString *textToPrint = @"         COMERCIAL DE ALIMENTOS        \n"
-                             "            CARREFOUR LTDA.            \n"
+                             "                 STAR LTDA.            \n"
                              "        Avenida Moyses Roysen,         \n"
                              "          S/N Vila Guilherme           \n"
                              "     Cep: 02049-010 – Sao Paulo – SP   \n"
@@ -5040,7 +5044,7 @@
  * This function create the Raster Portuguese sample receipt image. (4inch)
  */
 + (UIImage *)portuguese4inchRasterSampleReceipt {
-    NSString *textToPrint = @"          COMERCIAL DE ALIMENTOS CARREFOUR LTDA.         \n"
+    NSString *textToPrint = @"          COMERCIAL DE ALIMENTOS STAR LTDA.              \n"
                              "         Avenida Moyses Roysen, S/N Vila Guilherme       \n"
                              "              Cep: 02049-010 – Sao Paulo – SP            \n"
                              "                  CNPJ: 62.545.579/0013-69               \n"
@@ -5098,8 +5102,8 @@
                               "    FECHA: YYYY-MM-DD     \n"
                               "CAN P/U DESCRIPCION  SUMA \n"
                               "--------------------------\n"
-                              "3,00 JARRA CERVESA   12,00\n"
-                              "1,60 COPA DE CERVESA  1,60\n"
+                              "3,00 JARRA CERVEZA   12,00\n"
+                              "1,60 COPA DE CERVEZA  1,60\n"
                               "--------------------------\n"
                               "         SUB TOTAL : 13,60\n"
                               "TOTAL:         13,60 EUROS\n"
@@ -5131,8 +5135,8 @@
                               "MESA: 100 P: - FECHA: YYYY-MM-DD      \n"
                               "CAN P/U DESCRIPCION  SUMA             \n"
                               "--------------------------------------\n"
-                              "4 3,00 JARRA  CERVESA   12,00         \n"
-                              "1 1,60 COPA DE CERVESA  1,60          \n"
+                              "4 3,00 JARRA  CERVEZA   12,00         \n"
+                              "1 1,60 COPA DE CERVEZA  1,60          \n"
                               "--------------------------------------\n"
                               "                     SUB TOTAL : 13,60\n"
                               "TOTAL:               13,60 EUROS      \n"
@@ -5159,8 +5163,8 @@
                              "MESA: 100 P: - FECHA: YYYY-MM-DD                         \n"
                              "CAN P/U DESCRIPCION  SUMA                                \n"
                              "---------------------------------------------------------\n"
-                             "4    3,00    JARRA  CERVESA                         12,00\n"
-                             "1    1,60    COPA DE CERVESA                         1,60\n"
+                             "4    3,00    JARRA  CERVEZA                         12,00\n"
+                             "1    1,60    COPA DE CERVEZA                         1,60\n"
                              "---------------------------------------------------------\n"
                              "                                  SUB TOTAL :       13,60\n"
                              "                                 TOTAL :      13,60 EUROS\n"
@@ -5850,8 +5854,8 @@
  *                          - Portable Printer (Star Line Mode)  : @"portable"
  *                          - Others                             : @"" (blank)
  */
-- (void)MCRStartWithPortName:(NSString*)portName
-                portSettings:(NSString*)portSettings
+- (void)MCRStartWithPortName:(NSString *)portName
+                portSettings:(NSString *)portSettings
 {
     starPort = nil;
     @try
@@ -5939,13 +5943,13 @@
     if (buttonIndex != alertView.cancelButtonIndex) {
         @try
         {
-            unsigned char dataToRead[100];
+            unsigned char dataToRead[1024];
             
-            int readSize = [starPort readPort:dataToRead :0 :100];
-            
+            int readSize = [starPort readPort:dataToRead :0 :1024];
+
             NSString *MCRData = nil;
             if (readSize > 0) {
-                MCRData = [NSString stringWithFormat:@"%s",dataToRead];
+                MCRData = [NSString stringWithFormat:@"%s", dataToRead];
             } else {
                 MCRData = @"NO DATA";
             }

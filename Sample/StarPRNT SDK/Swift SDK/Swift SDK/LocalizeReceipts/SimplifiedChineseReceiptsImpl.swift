@@ -13,18 +13,20 @@ class SimplifiedChineseReceiptsImpl: ILocalizeReceipts {
         super.init()
         
         languageCode = "zh-CN"
+        
+        characterCode = StarIoExtCharacterCode.simplifiedChinese
     }
     
-    override func append2inchTextReceiptData(builder: ISCBBuilder, utf8: Bool) {
-        let encoding: NSStringEncoding
+    override func append2inchTextReceiptData(_ builder: ISCBBuilder, utf8: Bool) {
+        let encoding: String.Encoding
         
         if utf8 == true {
-            encoding = NSUTF8StringEncoding
+            encoding = String.Encoding.utf8
             
-            builder.appendCodePage(SCBCodePageType.UTF8)
+            builder.append(SCBCodePageType.UTF8)
         }
         else {
-            encoding = CFStringConvertEncodingToNSStringEncoding(CFStringEncoding(CFStringEncodings.GB_18030_2000.rawValue))
+            encoding = String.Encoding(rawValue: CFStringConvertEncodingToNSStringEncoding(CFStringEncoding(CFStringEncodings.GB_18030_2000.rawValue)))
             
 //          builder.appendCodePage(SCBCodePageType.CP1252)
         }
@@ -33,28 +35,28 @@ class SimplifiedChineseReceiptsImpl: ILocalizeReceipts {
         
         builder.appendCharacterSpace(0)
         
-        builder.appendAlignment(SCBAlignmentPosition.Center)
+        builder.appendAlignment(SCBAlignmentPosition.center)
         
         builder.appendEmphasis(true)
         
-        builder.appendDataWithMultipleHeight("STAR便利店\n".dataUsingEncoding(encoding), height: 3)
+        builder.appendData(withMultipleHeight: "STAR便利店\n".data(using: encoding), height: 3)
         
-        builder.appendDataWithMultipleHeight("欢迎光临\n".dataUsingEncoding(encoding), height: 2)
+        builder.appendData(withMultipleHeight: "欢迎光临\n".data(using: encoding), height: 2)
         
         builder.appendEmphasis(false)
         
-        builder.appendData((
+        builder.append((
             "Unit 1906-08, 19/F,\n" +
             "Enterprise Square 2,\n" +
             "3 Sheung Yuet Road,\n" +
             "Kowloon Bay, KLN\n" +
             "\n" +
             "Tel : (852) 2795 2335\n" +
-            "\n").dataUsingEncoding(encoding))
+            "\n").data(using: encoding))
         
-        builder.appendAlignment(SCBAlignmentPosition.Left)
+        builder.appendAlignment(SCBAlignmentPosition.left)
         
-        builder.appendData((
+        builder.append((
             "货品名称           数量     价格\n" +
             "--------------------------------\n" +
             "\n" +
@@ -79,28 +81,28 @@ class SimplifiedChineseReceiptsImpl: ILocalizeReceipts {
             "\n" +
             "DD/MM/YYYY  HH:MM:SS\n" +
             "交易编号 : 88888\n" +
-            "\n").dataUsingEncoding(encoding))
+            "\n").data(using: encoding))
         
-        builder.appendAlignment(SCBAlignmentPosition.Center)
+        builder.appendAlignment(SCBAlignmentPosition.center)
         
-        builder.appendData((
+        builder.append((
             "收银机 : 001  收银员 : 180\n" +
-            "\n").dataUsingEncoding(encoding))
+            "\n").data(using: encoding))
         
-//      builder.appendBarcodeData("{BStar.".dataUsingEncoding(encoding),              symbology: SCBBarcodeSymbology.Code128, width: SCBBarcodeWidth.Mode2, height: 40, hri: true)
-        builder.appendBarcodeData("{BStar.".dataUsingEncoding(NSASCIIStringEncoding), symbology: SCBBarcodeSymbology.Code128, width: SCBBarcodeWidth.Mode2, height: 40, hri: true)
+//      builder.appendBarcodeData("{BStar.".data(using: encoding),              symbology: SCBBarcodeSymbology.Code128, width: SCBBarcodeWidth.Mode2, height: 40, hri: true)
+        builder.appendBarcodeData("{BStar.".data(using: String.Encoding.ascii), symbology: SCBBarcodeSymbology.code128, width: SCBBarcodeWidth.mode2, height: 40, hri: true)
     }
     
-    override func append3inchTextReceiptData(builder: ISCBBuilder, utf8: Bool) {
-        let encoding: NSStringEncoding
+    override func append3inchTextReceiptData(_ builder: ISCBBuilder, utf8: Bool) {
+        let encoding: String.Encoding
         
         if utf8 == true {
-            encoding = NSUTF8StringEncoding
+            encoding = String.Encoding.utf8
             
-            builder.appendCodePage(SCBCodePageType.UTF8)
+            builder.append(SCBCodePageType.UTF8)
         }
         else {
-            encoding = CFStringConvertEncodingToNSStringEncoding(CFStringEncoding(CFStringEncodings.GB_18030_2000.rawValue))
+            encoding = String.Encoding(rawValue: CFStringConvertEncodingToNSStringEncoding(CFStringEncoding(CFStringEncodings.GB_18030_2000.rawValue)))
             
 //          builder.appendCodePage(SCBCodePageType.CP1252)
         }
@@ -109,26 +111,26 @@ class SimplifiedChineseReceiptsImpl: ILocalizeReceipts {
         
         builder.appendCharacterSpace(0)
         
-        builder.appendAlignment(SCBAlignmentPosition.Center)
+        builder.appendAlignment(SCBAlignmentPosition.center)
         
         builder.appendEmphasis(true)
         
-        builder.appendDataWithMultipleHeight("STAR便利店\n".dataUsingEncoding(encoding), height: 3)
+        builder.appendData(withMultipleHeight: "STAR便利店\n".data(using: encoding), height: 3)
         
-        builder.appendDataWithMultipleHeight("欢迎光临\n".dataUsingEncoding(encoding), height: 2)
+        builder.appendData(withMultipleHeight: "欢迎光临\n".data(using: encoding), height: 2)
         
         builder.appendEmphasis(false)
         
-        builder.appendData((
+        builder.append((
             "Unit 1906-08, 19/F, Enterprise Square 2,\n" +
                 "　3 Sheung Yuet Road, Kowloon Bay, KLN\n" +
                 "\n" +
                 "Tel : (852) 2795 2335\n" +
-            "\n").dataUsingEncoding(encoding))
+            "\n").data(using: encoding))
         
-        builder.appendAlignment(SCBAlignmentPosition.Left)
+        builder.appendAlignment(SCBAlignmentPosition.left)
         
-        builder.appendData((
+        builder.append((
             "货品名称   　            数量   　   价格\n" +
             "------------------------------------------------\n" +
             "\n" +
@@ -152,26 +154,26 @@ class SimplifiedChineseReceiptsImpl: ILocalizeReceipts {
             "\n" +
             "\n" +
             "DD/MM/YYYY  HH:MM:SS  交易编号 : 88888\n" +
-            "\n").dataUsingEncoding(encoding))
+            "\n").data(using: encoding))
         
-        builder.appendAlignment(SCBAlignmentPosition.Center)
+        builder.appendAlignment(SCBAlignmentPosition.center)
         
-        builder.appendData("收银机 : 001  收银员 : 180\n".dataUsingEncoding(encoding))
+        builder.append("收银机 : 001  收银员 : 180\n".data(using: encoding))
         
-//      builder.appendBarcodeData("{BStar.".dataUsingEncoding(encoding),              symbology: SCBBarcodeSymbology.Code128, width: SCBBarcodeWidth.Mode2, height: 40, hri: true)
-        builder.appendBarcodeData("{BStar.".dataUsingEncoding(NSASCIIStringEncoding), symbology: SCBBarcodeSymbology.Code128, width: SCBBarcodeWidth.Mode2, height: 40, hri: true)
+//      builder.appendBarcodeData("{BStar.".data(using: encoding),              symbology: SCBBarcodeSymbology.Code128, width: SCBBarcodeWidth.Mode2, height: 40, hri: true)
+        builder.appendBarcodeData("{BStar.".data(using: String.Encoding.ascii), symbology: SCBBarcodeSymbology.code128, width: SCBBarcodeWidth.mode2, height: 40, hri: true)
     }
     
-    override func append4inchTextReceiptData(builder: ISCBBuilder, utf8: Bool) {
-        let encoding: NSStringEncoding
+    override func append4inchTextReceiptData(_ builder: ISCBBuilder, utf8: Bool) {
+        let encoding: String.Encoding
         
         if utf8 == true {
-            encoding = NSUTF8StringEncoding
+            encoding = String.Encoding.utf8
             
-            builder.appendCodePage(SCBCodePageType.UTF8)
+            builder.append(SCBCodePageType.UTF8)
         }
         else {
-            encoding = CFStringConvertEncodingToNSStringEncoding(CFStringEncoding(CFStringEncodings.GB_18030_2000.rawValue))
+            encoding = String.Encoding(rawValue: CFStringConvertEncodingToNSStringEncoding(CFStringEncoding(CFStringEncodings.GB_18030_2000.rawValue)))
             
 //          builder.appendCodePage(SCBCodePageType.CP1252)
         }
@@ -180,26 +182,26 @@ class SimplifiedChineseReceiptsImpl: ILocalizeReceipts {
         
         builder.appendCharacterSpace(0)
         
-        builder.appendAlignment(SCBAlignmentPosition.Center)
+        builder.appendAlignment(SCBAlignmentPosition.center)
         
         builder.appendEmphasis(true)
         
-        builder.appendDataWithMultipleHeight("STAR便利店\n".dataUsingEncoding(encoding), height: 3)
+        builder.appendData(withMultipleHeight: "STAR便利店\n".data(using: encoding), height: 3)
         
-        builder.appendDataWithMultipleHeight("欢迎光临\n".dataUsingEncoding(encoding), height: 2)
+        builder.appendData(withMultipleHeight: "欢迎光临\n".data(using: encoding), height: 2)
         
         builder.appendEmphasis(false)
         
-        builder.appendData((
+        builder.append((
             "Unit 1906-08, 19/F, Enterprise Square 2,\n" +
             "　3 Sheung Yuet Road, Kowloon Bay, KLN\n" +
             "\n" +
             "Tel : (852) 2795 2335\n" +
-            "\n").dataUsingEncoding(encoding))
+            "\n").data(using: encoding))
         
-        builder.appendAlignment(SCBAlignmentPosition.Left)
+        builder.appendAlignment(SCBAlignmentPosition.left)
         
-        builder.appendData((
+        builder.append((
             "货品名称   　                      数量        　         价格\n" +
             "----------------------------------------------------------------\n" +
             "\n" +
@@ -223,14 +225,14 @@ class SimplifiedChineseReceiptsImpl: ILocalizeReceipts {
             "\n" +
             "\n" +
             "DD/MM/YYYY  HH:MM:SS        交易编号 : 88888\n" +
-            "\n").dataUsingEncoding(encoding))
+            "\n").data(using: encoding))
         
-        builder.appendAlignment(SCBAlignmentPosition.Center)
+        builder.appendAlignment(SCBAlignmentPosition.center)
         
-        builder.appendData("收银机 : 001  收银员 : 180\n".dataUsingEncoding(encoding))
+        builder.append("收银机 : 001  收银员 : 180\n".data(using: encoding))
         
-//      builder.appendBarcodeData("{BStar.".dataUsingEncoding(encoding),              symbology: SCBBarcodeSymbology.Code128, width: SCBBarcodeWidth.Mode2, height: 40, hri: true)
-        builder.appendBarcodeData("{BStar.".dataUsingEncoding(NSASCIIStringEncoding), symbology: SCBBarcodeSymbology.Code128, width: SCBBarcodeWidth.Mode2, height: 40, hri: true)
+//      builder.appendBarcodeData("{BStar.".data(using: encoding),              symbology: SCBBarcodeSymbology.Code128, width: SCBBarcodeWidth.Mode2, height: 40, hri: true)
+        builder.appendBarcodeData("{BStar.".data(using: String.Encoding.ascii), symbology: SCBBarcodeSymbology.code128, width: SCBBarcodeWidth.mode2, height: 40, hri: true)
     }
     
     override func create2inchRasterReceiptImage() -> UIImage {
@@ -399,16 +401,16 @@ class SimplifiedChineseReceiptsImpl: ILocalizeReceipts {
         return ILocalizeReceipts.imageWithString(textToPrint, font: font, width: 512)     // EscPos3inch(512dots)
     }
     
-    override func appendEscPos3inchTextReceiptData(builder: ISCBBuilder, utf8: Bool) {
-        let encoding: NSStringEncoding
+    override func appendEscPos3inchTextReceiptData(_ builder: ISCBBuilder, utf8: Bool) {
+        let encoding: String.Encoding
         
         if utf8 == true {
-            encoding = NSUTF8StringEncoding
+            encoding = String.Encoding.utf8
             
-            builder.appendCodePage(SCBCodePageType.UTF8)
+            builder.append(SCBCodePageType.UTF8)
         }
         else {
-            encoding = CFStringConvertEncodingToNSStringEncoding(CFStringEncoding(CFStringEncodings.GB_18030_2000.rawValue))
+            encoding = String.Encoding(rawValue: CFStringConvertEncodingToNSStringEncoding(CFStringEncoding(CFStringEncodings.GB_18030_2000.rawValue)))
             
 //          builder.appendCodePage(SCBCodePageType.CP1252)
         }
@@ -417,26 +419,26 @@ class SimplifiedChineseReceiptsImpl: ILocalizeReceipts {
         
         builder.appendCharacterSpace(0)
         
-        builder.appendAlignment(SCBAlignmentPosition.Center)
+        builder.appendAlignment(SCBAlignmentPosition.center)
         
         builder.appendEmphasis(true)
         
-        builder.appendDataWithMultipleHeight("STAR便利店\n".dataUsingEncoding(encoding), height: 3)
+        builder.appendData(withMultipleHeight: "STAR便利店\n".data(using: encoding), height: 3)
         
-        builder.appendDataWithMultipleHeight("欢迎光临\n".dataUsingEncoding(encoding), height: 2)
+        builder.appendData(withMultipleHeight: "欢迎光临\n".data(using: encoding), height: 2)
         
         builder.appendEmphasis(false)
         
-        builder.appendData((
+        builder.append((
             "Unit 1906-08, 19/F, Enterprise Square 2,\n" +
             "　3 Sheung Yuet Road, Kowloon Bay, KLN\n" +
             "\n" +
             "Tel : (852) 2795 2335\n" +
-            "\n").dataUsingEncoding(encoding))
+            "\n").data(using: encoding))
         
-        builder.appendAlignment(SCBAlignmentPosition.Left)
+        builder.appendAlignment(SCBAlignmentPosition.left)
         
-        builder.appendData((
+        builder.append((
             "货品名称   　        数量   　 价格\n" +
             "------------------------------------------\n" +
             "\n" +
@@ -460,52 +462,52 @@ class SimplifiedChineseReceiptsImpl: ILocalizeReceipts {
             "\n" +
             "\n" +
             "DD/MM/YYYY  HH:MM:SS  交易编号 : 88888\n" +
-            "\n").dataUsingEncoding(encoding))
+            "\n").data(using: encoding))
         
-        builder.appendAlignment(SCBAlignmentPosition.Center)
+        builder.appendAlignment(SCBAlignmentPosition.center)
         
-        builder.appendData("收银机 : 001  收银员 : 180\n".dataUsingEncoding(encoding))
+        builder.append("收银机 : 001  收银员 : 180\n".data(using: encoding))
         
-//      builder.appendBarcodeData("{BStar.".dataUsingEncoding(encoding),              symbology: SCBBarcodeSymbology.Code128, width: SCBBarcodeWidth.Mode2, height: 40, hri: true)
-        builder.appendBarcodeData("{BStar.".dataUsingEncoding(NSASCIIStringEncoding), symbology: SCBBarcodeSymbology.Code128, width: SCBBarcodeWidth.Mode2, height: 40, hri: true)
+//      builder.appendBarcodeData("{BStar.".data(using: encoding),              symbology: SCBBarcodeSymbology.Code128, width: SCBBarcodeWidth.Mode2, height: 40, hri: true)
+        builder.appendBarcodeData("{BStar.".data(using: String.Encoding.ascii), symbology: SCBBarcodeSymbology.code128, width: SCBBarcodeWidth.mode2, height: 40, hri: true)
     }
     
-    override func appendDotImpact3inchTextReceiptData(builder: ISCBBuilder, utf8: Bool) {
-        let encoding: NSStringEncoding
+    override func appendDotImpact3inchTextReceiptData(_ builder: ISCBBuilder, utf8: Bool) {
+        let encoding: String.Encoding
         
         if utf8 == true {
-            encoding = NSUTF8StringEncoding
+            encoding = String.Encoding.utf8
             
-            builder.appendCodePage(SCBCodePageType.UTF8)
+            builder.append(SCBCodePageType.UTF8)
         }
         else {
-            encoding = CFStringConvertEncodingToNSStringEncoding(CFStringEncoding(CFStringEncodings.GB_18030_2000.rawValue))
+            encoding = String.Encoding(rawValue: CFStringConvertEncodingToNSStringEncoding(CFStringEncoding(CFStringEncodings.GB_18030_2000.rawValue)))
             
 //          builder.appendCodePage(SCBCodePageType.CP1252)
         }
         
 //      builder.appendInternational(SCBInternationalType.UK)
         
-        builder.appendAlignment(SCBAlignmentPosition.Center)
+        builder.appendAlignment(SCBAlignmentPosition.center)
         
         builder.appendEmphasis(true)
         
-        builder.appendDataWithMultipleHeight((
+        builder.appendData(withMultipleHeight: (
             "STAR便利店\n" +
-            "欢迎光临\n").dataUsingEncoding(encoding), height: 2)
+            "欢迎光临\n").data(using: encoding), height: 2)
         
         builder.appendEmphasis(false)
         
-        builder.appendData((
+        builder.append((
             "Unit 1906-08, 19/F, Enterprise Square 2,\n" +
             "　3 Sheung Yuet Road, Kowloon Bay, KLN\n" +
             "\n" +
             "Tel : (852) 2795 2335\n" +
-            "\n").dataUsingEncoding(encoding))
+            "\n").data(using: encoding))
         
-        builder.appendAlignment(SCBAlignmentPosition.Left)
+        builder.appendAlignment(SCBAlignmentPosition.left)
         
-        builder.appendData((
+        builder.append((
             "货品名称   　          数量  　   价格\n" +
             "------------------------------------------\n" +
             "\n" +
@@ -529,10 +531,10 @@ class SimplifiedChineseReceiptsImpl: ILocalizeReceipts {
             "\n" +
             "\n" +
             "DD/MM/YYYY  HH:MM:SS  交易编号 : 88888\n" +
-            "\n").dataUsingEncoding(encoding))
+            "\n").data(using: encoding))
         
-        builder.appendAlignment(SCBAlignmentPosition.Center)
+        builder.appendAlignment(SCBAlignmentPosition.center)
         
-        builder.appendData("收银机 : 001  收银员 : 180\n".dataUsingEncoding(encoding))
+        builder.append("收银机 : 001  收银员 : 180\n".data(using: encoding))
     }
 }

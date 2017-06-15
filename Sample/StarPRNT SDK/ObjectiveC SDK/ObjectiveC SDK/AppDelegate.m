@@ -85,7 +85,7 @@
 }
 
 + (NSString *)getPortName {
-    AppDelegate *delegate = [[UIApplication sharedApplication] delegate];
+    AppDelegate *delegate = (AppDelegate *) [[UIApplication sharedApplication] delegate];
     
     return delegate.portName;
 }
@@ -93,7 +93,7 @@
 + (void)setPortName:(NSString *)portName {
     NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
     
-    AppDelegate *delegate = [[UIApplication sharedApplication] delegate];
+    AppDelegate *delegate = (AppDelegate *) [[UIApplication sharedApplication] delegate];
     
     delegate.portName = portName;
     
@@ -103,7 +103,7 @@
 }
 
 + (NSString*)getPortSettings {
-    AppDelegate *delegate = [[UIApplication sharedApplication] delegate];
+    AppDelegate *delegate = (AppDelegate *) [[UIApplication sharedApplication] delegate];
     
     return delegate.portSettings;
 }
@@ -111,7 +111,7 @@
 + (void)setPortSettings:(NSString *)portSettings {
     NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
     
-    AppDelegate *delegate = [[UIApplication sharedApplication] delegate];
+    AppDelegate *delegate = (AppDelegate *) [[UIApplication sharedApplication] delegate];
     
     delegate.portSettings = portSettings;
     
@@ -121,7 +121,7 @@
 }
 
 + (NSString *)getModelName {
-    AppDelegate *delegate = [[UIApplication sharedApplication] delegate];
+    AppDelegate *delegate = (AppDelegate *) [[UIApplication sharedApplication] delegate];
     
     return delegate.modelName;
 }
@@ -129,7 +129,7 @@
 + (void)setModelName:(NSString *)modelName {
     NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
     
-    AppDelegate *delegate = [[UIApplication sharedApplication] delegate];
+    AppDelegate *delegate = (AppDelegate *) [[UIApplication sharedApplication] delegate];
     
     delegate.modelName = modelName;
     
@@ -139,7 +139,7 @@
 }
 
 + (NSString *)getMacAddress {
-    AppDelegate *delegate = [[UIApplication sharedApplication] delegate];
+    AppDelegate *delegate = (AppDelegate *) [[UIApplication sharedApplication] delegate];
     
     return delegate.macAddress;
 }
@@ -147,7 +147,7 @@
 + (void)setMacAddress:(NSString *)macAddress {
     NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
     
-    AppDelegate *delegate = [[UIApplication sharedApplication] delegate];
+    AppDelegate *delegate = (AppDelegate *) [[UIApplication sharedApplication] delegate];
     
     delegate.macAddress = macAddress;
     
@@ -157,7 +157,7 @@
 }
 
 + (StarIoExtEmulation)getEmulation {
-    AppDelegate *delegate = [[UIApplication sharedApplication] delegate];
+    AppDelegate *delegate = (AppDelegate *) [[UIApplication sharedApplication] delegate];
     
     return delegate.emulation;
 }
@@ -165,7 +165,7 @@
 + (void)setEmulation:(StarIoExtEmulation)emulation {
     NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
     
-    AppDelegate *delegate = [[UIApplication sharedApplication] delegate];
+    AppDelegate *delegate = (AppDelegate *) [[UIApplication sharedApplication] delegate];
     
     delegate.emulation = emulation;
     
@@ -175,7 +175,7 @@
 }
 
 + (BOOL)getCashDrawerOpenActiveHigh {
-    AppDelegate *delegate = [[UIApplication sharedApplication] delegate];
+    AppDelegate *delegate = (AppDelegate *) [[UIApplication sharedApplication] delegate];
     
     return delegate.cashDrawerOpenActiveHigh;
 }
@@ -183,7 +183,7 @@
 + (void)setCashDrawerOpenActiveHigh:(BOOL)activeHigh {
     NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
     
-    AppDelegate *delegate = [[UIApplication sharedApplication] delegate];
+    AppDelegate *delegate = (AppDelegate *) [[UIApplication sharedApplication] delegate];
     
     delegate.cashDrawerOpenActiveHigh = activeHigh;
     
@@ -193,7 +193,7 @@
 }
 
 + (NSInteger)getAllReceiptsSettings {
-    AppDelegate *delegate = [[UIApplication sharedApplication] delegate];
+    AppDelegate *delegate = (AppDelegate *) [[UIApplication sharedApplication] delegate];
     
     return delegate.allReceiptsSettings;
 }
@@ -201,7 +201,7 @@
 + (void)setAllReceiptsSettings:(NSInteger)allReceiptsSettings {
     NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
     
-    AppDelegate *delegate = [[UIApplication sharedApplication] delegate];
+    AppDelegate *delegate = (AppDelegate *) [[UIApplication sharedApplication] delegate];
     
     delegate.allReceiptsSettings = allReceiptsSettings;
     
@@ -211,37 +211,37 @@
 }
 
 + (NSInteger)getSelectedIndex {
-    AppDelegate *delegate = [[UIApplication sharedApplication] delegate];
+    AppDelegate *delegate = (AppDelegate *) [[UIApplication sharedApplication] delegate];
     
     return delegate.selectedIndex;
 }
 
 + (void)setSelectedIndex:(NSInteger)index {
-    AppDelegate *delegate = [[UIApplication sharedApplication] delegate];
+    AppDelegate *delegate = (AppDelegate *) [[UIApplication sharedApplication] delegate];
     
     delegate.selectedIndex = index;
 }
 
 + (LanguageIndex)getSelectedLanguage {
-    AppDelegate *delegate = [[UIApplication sharedApplication] delegate];
+    AppDelegate *delegate = (AppDelegate *) [[UIApplication sharedApplication] delegate];
     
     return delegate.selectedLanguage;
 }
 
 + (void)setSelectedLanguage:(LanguageIndex)index {
-    AppDelegate *delegate = [[UIApplication sharedApplication] delegate];
+    AppDelegate *delegate = (AppDelegate *) [[UIApplication sharedApplication] delegate];
     
     delegate.selectedLanguage = index;
 }
 
 + (PaperSizeIndex)getSelectedPaperSize {
-    AppDelegate *delegate = [[UIApplication sharedApplication] delegate];
+    AppDelegate *delegate = (AppDelegate *) [[UIApplication sharedApplication] delegate];
     
     return delegate.selectedPaperSize;
 }
 
 + (void)setSelectedPaperSize:(PaperSizeIndex)index {
-    AppDelegate *delegate = [[UIApplication sharedApplication] delegate];
+    AppDelegate *delegate = (AppDelegate *) [[UIApplication sharedApplication] delegate];
     
     delegate.selectedPaperSize = index;
 }

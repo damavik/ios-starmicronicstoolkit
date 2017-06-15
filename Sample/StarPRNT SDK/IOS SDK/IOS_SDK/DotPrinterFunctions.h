@@ -3,7 +3,7 @@
 //  IOS_SDK
 //
 //  Created by u3237 on 8/27/2014.
-//  Copyright 2016 STAR MICRONICS CO., LTD. All rights reserved.
+//  Copyright 2017 STAR MICRONICS CO., LTD. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>

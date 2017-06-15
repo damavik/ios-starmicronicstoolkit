@@ -30,7 +30,10 @@ typedef NS_ENUM(NSInteger, ModelIndex) {     // Don't insert(Only addition)
     ModelIndexSM_T300I_StarPRNT,
     ModelIndexSM_T400I_StarPRNT,
     ModelIndexSM_L200,
-    ModelIndexSP700
+    ModelIndexSP700,
+    
+    // V5.3.0
+    ModelIndexSM_L300
 };
 
 @interface ModelCapability : NSObject

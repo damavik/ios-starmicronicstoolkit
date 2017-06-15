@@ -9,16 +9,16 @@
 import UIKit
 
 class CustomUIImagePickerController: UIImagePickerController {
-    override func shouldAutorotate() -> Bool {
+    override var shouldAutorotate : Bool {
         return true
     }
     
-    override func supportedInterfaceOrientations() -> UIInterfaceOrientationMask {
+    override var supportedInterfaceOrientations : UIInterfaceOrientationMask {
         if AppDelegate.isIPad() {
-            return UIInterfaceOrientationMask.All
+            return UIInterfaceOrientationMask.all
         }
         
-        return UIInterfaceOrientationMask.AllButUpsideDown
+        return UIInterfaceOrientationMask.allButUpsideDown
     }
 }
 
@@ -35,11 +35,11 @@ class PrinterViewController: CommonViewController, UITableViewDelegate, UITableV
         // Dispose of any resources that can be recreated.
     }
     
-    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+    func numberOfSections(in tableView: UITableView) -> Int {
         return 3
     }
     
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if section != 2 {
             return 7
         }
@@ -47,13 +47,13 @@ class PrinterViewController: CommonViewController, UITableViewDelegate, UITableV
         return 2
     }
     
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cellIdentifier: String = "UITableViewCellStyleValue1"
         
-        var cell: UITableViewCell! = self.tableView.dequeueReusableCellWithIdentifier(cellIdentifier)
+        var cell: UITableViewCell! = self.tableView.dequeueReusableCell(withIdentifier: cellIdentifier)
         
         if cell == nil {
-            cell = UITableViewCell(style: UITableViewCellStyle.Value1, reuseIdentifier: cellIdentifier)
+            cell = UITableViewCell(style: UITableViewCellStyle.value1, reuseIdentifier: cellIdentifier)
         }
         
         if cell != nil {
@@ -83,27 +83,27 @@ class PrinterViewController: CommonViewController, UITableViewDelegate, UITableV
                 cell      .textLabel!.textColor = UIColor(red: 0.0, green: 0.5, blue: 1.0, alpha: 1.0)
                 cell.detailTextLabel!.textColor = UIColor(red: 0.0, green: 0.5, blue: 1.0, alpha: 1.0)
                 
-//              cell.accessoryType = UITableViewCellAccessoryType.DisclosureIndicator
+//              cell.accessoryType = UITableViewCellAccessoryType.disclosureIndicator
                 
                 var userInteractionEnabled: Bool = true
                 
                 let emulation: StarIoExtEmulation = AppDelegate.getEmulation()
                 
-                if emulation == StarIoExtEmulation.StarGraphic {
+                if emulation == StarIoExtEmulation.starGraphic {
                     if indexPath.row == 0 ||     // Text Receipt
-                       indexPath.row == 1 {     // Text Receipt (UTF8)
+                       indexPath.row == 1 {      // Text Receipt (UTF8)
                         userInteractionEnabled = false
                     }
                 }
                 
-                if emulation == StarIoExtEmulation.EscPos ||
-                   emulation == StarIoExtEmulation.EscPosMobile {
+                if emulation == StarIoExtEmulation.escPos ||
+                   emulation == StarIoExtEmulation.escPosMobile {
                     if indexPath.row == 1 {     // Text Receipt (UTF8)
                         userInteractionEnabled = false
                     }
                 }
                 
-                if emulation == StarIoExtEmulation.StarDotImpact {
+                if emulation == StarIoExtEmulation.starDotImpact {
                     if indexPath.row == 2 ||     // Raster Receipt
                        indexPath.row == 3 ||     // Raster Receipt (Both Scale)
                        indexPath.row == 4 {      // Raster Receipt (Scale)
@@ -115,21 +115,21 @@ class PrinterViewController: CommonViewController, UITableViewDelegate, UITableV
                     cell      .textLabel!.alpha = 1.0
                     cell.detailTextLabel!.alpha = 1.0
                     
-                    cell.accessoryType = UITableViewCellAccessoryType.DisclosureIndicator
+                    cell.accessoryType = UITableViewCellAccessoryType.disclosureIndicator
                     
-                    cell.userInteractionEnabled = true
+                    cell.isUserInteractionEnabled = true
                 }
                 else {
                     cell      .textLabel!.alpha = 0.3
                     cell.detailTextLabel!.alpha = 0.3
                     
-                    cell.accessoryType = UITableViewCellAccessoryType.None
+                    cell.accessoryType = UITableViewCellAccessoryType.none
                     
-                    cell.userInteractionEnabled = false
+                    cell.isUserInteractionEnabled = false
                 }
             }
             else {
-                if (indexPath.row == 0) {
+                if indexPath.row == 0 {
                     cell.textLabel!.text = "Print Photo from Library"
                 }
                 else {
@@ -141,13 +141,13 @@ class PrinterViewController: CommonViewController, UITableViewDelegate, UITableV
                 cell      .textLabel!.textColor = UIColor(red: 0.0, green: 0.5, blue: 1.0, alpha: 1.0)
                 cell.detailTextLabel!.textColor = UIColor(red: 0.0, green: 0.5, blue: 1.0, alpha: 1.0)
                 
-//              cell.accessoryType = UITableViewCellAccessoryType.DisclosureIndicator
+//              cell.accessoryType = UITableViewCellAccessoryType.disclosureIndicator
                 
                 var userInteractionEnabled: Bool = true
                 
                 let emulation: StarIoExtEmulation = AppDelegate.getEmulation()
                 
-                if emulation == StarIoExtEmulation.StarDotImpact {
+                if emulation == StarIoExtEmulation.starDotImpact {
                     userInteractionEnabled = false
                 }
                 
@@ -155,17 +155,17 @@ class PrinterViewController: CommonViewController, UITableViewDelegate, UITableV
                     cell      .textLabel!.alpha = 1.0
                     cell.detailTextLabel!.alpha = 1.0
                     
-                    cell.accessoryType = UITableViewCellAccessoryType.DisclosureIndicator
+                    cell.accessoryType = UITableViewCellAccessoryType.disclosureIndicator
                     
-                    cell.userInteractionEnabled = true
+                    cell.isUserInteractionEnabled = true
                 }
                 else {
                     cell      .textLabel!.alpha = 0.3
                     cell.detailTextLabel!.alpha = 0.3
                     
-                    cell.accessoryType = UITableViewCellAccessoryType.None
+                    cell.accessoryType = UITableViewCellAccessoryType.none
                     
-                    cell.userInteractionEnabled = false
+                    cell.isUserInteractionEnabled = false
                 }
             }
         }
@@ -173,7 +173,7 @@ class PrinterViewController: CommonViewController, UITableViewDelegate, UITableV
         return cell
     }
     
-    func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         let title: String
         
         if section == 0 {
@@ -189,11 +189,11 @@ class PrinterViewController: CommonViewController, UITableViewDelegate, UITableV
         return title
     }
     
-    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        self.tableView.deselectRowAtIndexPath(indexPath, animated: true)
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        self.tableView.deselectRow(at: indexPath, animated: true)
         
         if indexPath.section == 0 {
-            let commands: NSData
+            let commands: Data
             
             let emulation: StarIoExtEmulation = AppDelegate.getEmulation()
             
@@ -213,10 +213,10 @@ class PrinterViewController: CommonViewController, UITableViewDelegate, UITableV
             case 4 :
                 commands = PrinterFunctions.createScaleRasterReceiptData(emulation, localizeReceipts: localizeReceipts, width: width, bothScale: false)
             case 5 :
-                commands = PrinterFunctions.createCouponData(emulation, localizeReceipts: localizeReceipts, width: width, rotation: SCBBitmapConverterRotation.Normal)
+                commands = PrinterFunctions.createCouponData(emulation, localizeReceipts: localizeReceipts, width: width, rotation: SCBBitmapConverterRotation.normal)
 //          case 6  :
             default :
-                commands = PrinterFunctions.createCouponData(emulation, localizeReceipts: localizeReceipts, width: width, rotation: SCBBitmapConverterRotation.Right90)
+                commands = PrinterFunctions.createCouponData(emulation, localizeReceipts: localizeReceipts, width: width, rotation: SCBBitmapConverterRotation.right90)
             }
             
             self.blind = true
@@ -225,43 +225,50 @@ class PrinterViewController: CommonViewController, UITableViewDelegate, UITableV
                 self.blind = false
             }
             
-            Communication.sendCommands(commands, portName: AppDelegate.getPortName(), portSettings: AppDelegate.getPortSettings(), timeout: 10000)     // 10000mS!!!
+            let portName:     String = AppDelegate.getPortName()
+            let portSettings: String = AppDelegate.getPortSettings()
+            
+            _ = Communication.sendCommands(commands, portName: portName, portSettings: portSettings, timeout: 10000, completionHandler: { (result: Bool, title: String, message: String) in     // 10000mS!!!
+                let alertView: UIAlertView = UIAlertView(title: title, message: message, delegate: nil, cancelButtonTitle: "OK")
+                
+                alertView.show()
+            })
         }
         else if indexPath.section == 1 {
             AppDelegate.setSelectedIndex(indexPath.row)
             
-            self.performSegueWithIdentifier("PushPrinterExtViewController", sender: nil)
+            self.performSegue(withIdentifier: "PushPrinterExtViewController", sender: nil)
         }
         else {
-            if (indexPath.row == 0) {
+            if indexPath.row == 0 {
 //              let imagePickerController:       UIImagePickerController =       UIImagePickerController()
                 let imagePickerController: CustomUIImagePickerController = CustomUIImagePickerController()
                 
-                imagePickerController.sourceType    = UIImagePickerControllerSourceType.PhotoLibrary
+                imagePickerController.sourceType    = UIImagePickerControllerSourceType.photoLibrary
                 imagePickerController.allowsEditing = false
                 imagePickerController.delegate      = self
                 
-                self.presentViewController(imagePickerController, animated: true, completion: nil)
+                self.present(imagePickerController, animated: true, completion: nil)
             }
             else {
                 let imagePickerController: UIImagePickerController = UIImagePickerController()
                 
-                imagePickerController.sourceType    = UIImagePickerControllerSourceType.Camera
+                imagePickerController.sourceType    = UIImagePickerControllerSourceType.camera
                 imagePickerController.allowsEditing = false
                 imagePickerController.delegate      = self
                 
-                self.presentViewController(imagePickerController, animated: true, completion: nil)
+                self.present(imagePickerController, animated: true, completion: nil)
             }
         }
     }
     
-    func imagePickerController(imagePicker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : AnyObject]) {
+    func imagePickerController(_ imagePicker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
         let image: UIImage = info[UIImagePickerControllerOriginalImage] as! UIImage
 //      let image: UIImage = info[UIImagePickerControllerEditedImage]   as! UIImage
         
-        self.dismissViewControllerAnimated(true, completion: nil)
+        self.dismiss(animated: true, completion: nil)
         
-        let commands: NSData
+        let commands: Data
         
         let builder: ISCBBuilder = StarIoExt.createCommandBuilder(AppDelegate.getEmulation())
         
@@ -269,11 +276,11 @@ class PrinterViewController: CommonViewController, UITableViewDelegate, UITableV
         
         builder.appendBitmap(image, diffusion: true, width: AppDelegate.getSelectedPaperSize().rawValue, bothScale: true)
         
-        builder.appendCutPaper(SCBCutPaperAction.PartialCutWithFeed)
+        builder.appendCutPaper(SCBCutPaperAction.partialCutWithFeed)
         
         builder.endDocument()
         
-        commands = builder.commands.copy() as! NSData
+        commands = builder.commands.copy() as! Data
         
         self.blind = true
         
@@ -281,6 +288,13 @@ class PrinterViewController: CommonViewController, UITableViewDelegate, UITableV
             self.blind = false
         }
         
-        Communication.sendCommands(commands, portName: AppDelegate.getPortName(), portSettings: AppDelegate.getPortSettings(), timeout: 10000)     // 10000mS!!!
+        let portName:     String = AppDelegate.getPortName()
+        let portSettings: String = AppDelegate.getPortSettings()
+        
+        _ = Communication.sendCommands(commands, portName: portName, portSettings: portSettings, timeout: 10000, completionHandler: { (result: Bool, title: String, message: String) in     // 10000mS!!!
+            let alertView: UIAlertView = UIAlertView(title: title, message: message, delegate: nil, cancelButtonTitle: "OK")
+            
+            alertView.show()
+        })
     }
 }

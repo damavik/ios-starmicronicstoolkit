@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ApiViewController: CommonViewController, UITableViewDelegate, UITableViewDataSource {
+class ApiViewController: CommonViewController, UITableViewDelegate, UITableViewDataSource, UIAlertViewDelegate {
     @IBOutlet weak var tableView: UITableView!
     
     override func viewDidLoad() {
@@ -21,21 +21,21 @@ class ApiViewController: CommonViewController, UITableViewDelegate, UITableViewD
         // Dispose of any resources that can be recreated.
     }
     
-    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+    func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
     
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 22
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return 24
     }
     
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cellIdentifier: String = "UITableViewCellStyleValue1"
         
-        var cell: UITableViewCell! = self.tableView.dequeueReusableCellWithIdentifier(cellIdentifier)
+        var cell: UITableViewCell! = self.tableView.dequeueReusableCell(withIdentifier: cellIdentifier)
         
         if cell == nil {
-            cell = UITableViewCell(style: UITableViewCellStyle.Value1, reuseIdentifier: cellIdentifier)
+            cell = UITableViewCell(style: UITableViewCellStyle.value1, reuseIdentifier: cellIdentifier)
         }
         
         if cell != nil {
@@ -82,9 +82,13 @@ class ApiViewController: CommonViewController, UITableViewDelegate, UITableViewD
                 cell.textLabel!.text = "Barcode"
             case 20 :
                 cell.textLabel!.text = "PDF417"
-//          case 21 :
-            default :
+            case 21 :
                 cell.textLabel!.text = "QR Code"
+            case 22 :
+                cell.textLabel!.text = "Black Mark"
+//          case 23 :
+            default :
+                cell.textLabel!.text = "Page Mode"
             }
             
             cell.detailTextLabel!.text = ""
@@ -92,24 +96,26 @@ class ApiViewController: CommonViewController, UITableViewDelegate, UITableViewD
             cell      .textLabel!.textColor = UIColor(red: 0.0, green: 0.5, blue: 1.0, alpha: 1.0)
             cell.detailTextLabel!.textColor = UIColor(red: 0.0, green: 0.5, blue: 1.0, alpha: 1.0)
             
-            cell.accessoryType = UITableViewCellAccessoryType.DisclosureIndicator
+            cell.accessoryType = UITableViewCellAccessoryType.disclosureIndicator
         }
         
         return cell
     }
     
-    func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         return "Sample"
     }
     
-    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        self.tableView.deselectRowAtIndexPath(indexPath, animated: true)
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        self.tableView.deselectRow(at: indexPath, animated: true)
         
-        let commands: NSData
+        var commands: Data? = nil
         
         let emulation: StarIoExtEmulation = AppDelegate.getEmulation()
         
         let width: Int = AppDelegate.getSelectedPaperSize().rawValue
+        
+        let alertView: UIAlertView
         
         switch indexPath.row {
         case 0  :
@@ -154,17 +160,69 @@ class ApiViewController: CommonViewController, UITableViewDelegate, UITableViewD
             commands = ApiFunctions.createBarcodeData(emulation)
         case 20 :
             commands = ApiFunctions.createPdf417Data(emulation)
-//      case 21 :
-        default :
+        case 21 :
             commands = ApiFunctions.createQrCodeData(emulation)
+        case 22 :
+            alertView = UIAlertView(title: "Select black mark type.",
+                                  message: "",
+                                 delegate: self,
+                        cancelButtonTitle: "Cancel",
+                        otherButtonTitles: "Invalid", "Valid", "Valid with Detection")
+            
+            alertView.show()
+//      case 23 :
+        default :
+            commands = ApiFunctions.createPageModeData(emulation, width: width)
         }
         
-        self.blind = true
-        
-        defer {
-            self.blind = false
+        if commands != nil {
+            self.blind = true
+            
+            defer {
+                self.blind = false
+            }
+            
+            let portName:     String = AppDelegate.getPortName()
+            let portSettings: String = AppDelegate.getPortSettings()
+            
+            _ = Communication.sendCommands(commands, portName: portName, portSettings: portSettings, timeout: 10000, completionHandler: { (result: Bool, title: String, message: String) in     // 10000mS!!!
+                let alertView: UIAlertView = UIAlertView(title: title, message: message, delegate: nil, cancelButtonTitle: "OK")
+                
+                alertView.show()
+            })
         }
-        
-        Communication.sendCommands(commands, portName: AppDelegate.getPortName(), portSettings: AppDelegate.getPortSettings(), timeout: 10000)     // 10000mS!!!
+    }
+    
+    func alertView(_ alertView: UIAlertView, didDismissWithButtonIndex buttonIndex: Int) {
+        if buttonIndex != alertView.cancelButtonIndex {
+            var commands: Data? = nil
+            
+            let emulation: StarIoExtEmulation = AppDelegate.getEmulation()
+            
+            switch (buttonIndex - 1) {
+            case 0 :      // Invalid
+                commands = ApiFunctions.createBlackMarkData(emulation, type: SCBBlackMarkType.invalid)
+            case 1 :      // Valid
+                commands = ApiFunctions.createBlackMarkData(emulation, type: SCBBlackMarkType.valid)
+//          case 2 :      // Valid with Detection
+            default :
+                commands = ApiFunctions.createBlackMarkData(emulation, type: SCBBlackMarkType.validWithDetection)
+            }
+            
+            self.blind = true
+            
+            defer {
+                self.blind = false
+            }
+            
+            let portName:     String = AppDelegate.getPortName()
+            let portSettings: String = AppDelegate.getPortSettings()
+            
+            _ = Communication.sendCommands(commands, portName: portName, portSettings: portSettings, timeout: 10000, completionHandler: { (result: Bool, title: String, message: String) in     // 10000mS!!!
+                let alertView: UIAlertView = UIAlertView(title: title, message: message, delegate: nil, cancelButtonTitle: "OK")
+                
+                alertView.show()
+            })
+        }
     }
 }

@@ -18,7 +18,8 @@
  *  @param  portName        Port name to use for communication
  *  @param  portSettings    The port settings to use
  */
-+ (void)showFirmwareInformation:(NSString *)portName portSettings:(NSString *)portSettings {
++ (void)showFirmwareInformation:(NSString *)portName
+                   portSettings:(NSString *)portSettings {
     SMPort *starPort = nil;
     NSDictionary *dict = nil;
     
@@ -70,7 +71,8 @@
  *  @param  portName        Port name to use for communication
  *  @param  portSettings    The port settings to use
  */
-+ (void)showDipSwitchInformation:(NSString *)portName portSettings:(NSString *)portSettings {
++ (void)showDipSwitchInformation:(NSString *)portName
+                    portSettings:(NSString *)portSettings {
     SMPort *starPort = nil;
     NSDictionary *dict = nil;
     
@@ -201,7 +203,9 @@
  *                          or (BLE:<Device Name>).
  *  @param  portSettings    Should be blank
  */
-+ (void)OpenCashDrawerWithPortname:(NSString *)portName portSettings:(NSString *)portSettings drawerNumber:(NSUInteger)drawerNumber
++ (void)OpenCashDrawerWithPortname:(NSString *)portName
+                      portSettings:(NSString *)portSettings
+                      drawerNumber:(NSUInteger)drawerNumber
 {
     unsigned char opencashdrawer_command = 0x00;
     
@@ -286,7 +290,10 @@
 
 #pragma mark Common
 
-+ (void)sendCommand:(NSData *)commandsToPrint portName:(NSString *)portName portSettings:(NSString *)portSettings timeoutMillis:(u_int32_t)timeoutMillis
++ (void)sendCommand:(NSData *)commandsToPrint
+           portName:(NSString *)portName
+       portSettings:(NSString *)portSettings
+      timeoutMillis:(u_int32_t)timeoutMillis
 {
     int commandSize = (int)commandsToPrint.length;
     unsigned char *dataToSentToPrinter = (unsigned char *)malloc(commandSize);
@@ -383,7 +390,9 @@
 /*!
  *  Open drawer / wait drawer open / wait drawer close
  */
-+ (BOOL)waitDrawerOpenAndCloseWithPortName:(NSString *)portName portSettings:(NSString *)portSettings drawerNumber:(NSUInteger)drawerNumber
++ (BOOL)waitDrawerOpenAndCloseWithPortName:(NSString *)portName
+                              portSettings:(NSString *)portSettings
+                              drawerNumber:(NSUInteger)drawerNumber
 {
     //
     // Create Drawer Open Command
@@ -410,7 +419,8 @@
         
         starPort = [SMPort getPort:portName :portSettings :10000];
         if (starPort == nil) {
-            [self showCommonErrorDialogWithTitle:@"Error" message:@"DK-AirCash is turned off or other host is using the DK-AirCash"];
+            [self showCommonErrorDialogWithTitle:@"Error"
+                                         message:@"DK-AirCash is turned off or other host is using the DK-AirCash"];
             return NO;
         }
         
@@ -418,13 +428,15 @@
         StarPrinterStatus_2 status;
         [starPort getParsedStatus:&status :2];
         if (status.compulsionSwitch == SM_TRUE) {
-            [self showCommonErrorDialogWithTitle:@"" message:@"Drawer was already opened."];
+            [self showCommonErrorDialogWithTitle:@""
+                                         message:@"Drawer was already opened."];
             return NO;
         }
         
         [starPort beginCheckedBlock:&status :2];
         if (status.offline == SM_TRUE) {
-            [self showCommonErrorDialogWithTitle:@"Error" message:@"Printer is offline"];
+            [self showCommonErrorDialogWithTitle:@"Error"
+                                         message:@"Printer is offline"];
             return NO;
         }
         
@@ -522,9 +534,10 @@
 }
 
 
-static UIAlertView* alert = nil;
+static UIAlertView *alert = nil;
 
-+ (void)showCommonProgressDialogWithTitle:(NSString *)title message:(NSString *)message
++ (void)showCommonProgressDialogWithTitle:(NSString *)title
+                                  message:(NSString *)message
 {
     dispatch_async(dispatch_get_main_queue(), ^() {
         if (alert != nil) {

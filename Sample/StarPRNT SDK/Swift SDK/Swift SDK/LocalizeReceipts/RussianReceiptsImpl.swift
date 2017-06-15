@@ -13,44 +13,46 @@ class RussianReceiptsImpl: ILocalizeReceipts {
         super.init()
         
         languageCode = "Ru"
+        
+        characterCode = StarIoExtCharacterCode.standard
     }
     
-    override func append2inchTextReceiptData(builder: ISCBBuilder, utf8: Bool) {
-        let encoding: NSStringEncoding
+    override func append2inchTextReceiptData(_ builder: ISCBBuilder, utf8: Bool) {
+        let encoding: String.Encoding
         
         if utf8 == true {
-            encoding = NSUTF8StringEncoding
+            encoding = String.Encoding.utf8
             
-            builder.appendCodePage(SCBCodePageType.UTF8)
+            builder.append(SCBCodePageType.UTF8)
         }
         else {
-            encoding = NSWindowsCP1251StringEncoding
+            encoding = String.Encoding.windowsCP1251
             
-            builder.appendCodePage(SCBCodePageType.CP1251)
+            builder.append(SCBCodePageType.CP1251)
         }
         
 //      builder.appendInternational(SCBInternationalType.UK)
         
         builder.appendCharacterSpace(0)
         
-        builder.appendAlignment(SCBAlignmentPosition.Center)
+        builder.appendAlignment(SCBAlignmentPosition.center)
         
-        builder.appendDataWithMultiple("Р Е Л А К С\n".dataUsingEncoding(encoding), width: 2, height: 2)
+        builder.appendData(withMultiple: "Р Е Л А К С\n".data(using: encoding), width: 2, height: 2)
         
-        builder.appendData((
+        builder.append((
             "ООО “РЕЛАКС”\n" +
                 "СПб., Малая Балканская, д. 38, лит. А\n" +
-            "тел. 307-07-12\n").dataUsingEncoding(encoding))
+            "тел. 307-07-12\n").data(using: encoding))
         
-        builder.appendAlignment(SCBAlignmentPosition.Left)
+        builder.appendAlignment(SCBAlignmentPosition.left)
         
-        builder.appendData((
+        builder.append((
             "РЕГ №322736     ИНН:123321\n" +
-            "01 Белякова И.А.КАССА: 0020 ОТД.01\n").dataUsingEncoding(encoding))
+            "01 Белякова И.А.КАССА: 0020 ОТД.01\n").data(using: encoding))
         
-        builder.appendDataWithAlignment("ЧЕК НА ПРОДАЖУ  No 84373\n".dataUsingEncoding(encoding), position: SCBAlignmentPosition.Center)
+        builder.appendData(withAlignment: "ЧЕК НА ПРОДАЖУ  No 84373\n".data(using: encoding), position: SCBAlignmentPosition.center)
         
-        builder.appendData((
+        builder.append((
             "--------------------------------\n" +
             " 1. Яблоки Айдаред, кг    144.50\n" +
             " 2. Соус соевый Sen So     36.40\n" +
@@ -73,72 +75,72 @@ class RussianReceiptsImpl: ILocalizeReceipts {
             "--------------------------------\n" +
             "ДИСКОНТНАЯ КАРТА\n" +
             "                No:2440012489765\n" +
-            "--------------------------------\n").dataUsingEncoding(encoding))
+            "--------------------------------\n").data(using: encoding))
         
-        builder.appendAlignment(SCBAlignmentPosition.Right)
+        builder.appendAlignment(SCBAlignmentPosition.right)
         
-        builder.appendData((
+        builder.append((
             "ИТОГО К ОПЛАТЕ = 1212.00\n" +
             "НАЛИЧНЫЕ = 1212.00\n" +
             "ВАША СКИДКА : 0.41\n" +
-            "\n").dataUsingEncoding(encoding))
+            "\n").data(using: encoding))
         
-        builder.appendDataWithAlignment((
+        builder.appendData(withAlignment: (
             "ЦЕНЫ УКАЗАНЫ С УЧЕТОМ СКИДКИ\n" +
-            "\n").dataUsingEncoding(encoding), position: SCBAlignmentPosition.Center)
+            "\n").data(using: encoding), position: SCBAlignmentPosition.center)
         
-        builder.appendData((
+        builder.append((
             "08-02-2015 09:49  0254.0130604\n" +
-            "00083213 #060127\n").dataUsingEncoding(encoding))
+            "00083213 #060127\n").data(using: encoding))
         
-        builder.appendAlignment(SCBAlignmentPosition.Center)
+        builder.appendAlignment(SCBAlignmentPosition.center)
         
-        builder.appendData((
+        builder.append((
             "СПАСИБО ЗА ПОКУПКУ !\n" +
             "МЫ  ОТКРЫТЫ ЕЖЕДНЕВНО С 9 ДО 23\n" +
             "СОХРАНЯЙТЕ, ПОЖАЛУЙСТА , ЧЕК\n" +
-            "\n").dataUsingEncoding(encoding))
+            "\n").data(using: encoding))
         
-//      builder.appendBarcodeData("{BStar.".dataUsingEncoding(encoding),              symbology: SCBBarcodeSymbology.Code128, width: SCBBarcodeWidth.Mode2, height: 40, hri: true)
-        builder.appendBarcodeData("{BStar.".dataUsingEncoding(NSASCIIStringEncoding), symbology: SCBBarcodeSymbology.Code128, width: SCBBarcodeWidth.Mode2, height: 40, hri: true)
+//      builder.appendBarcodeData("{BStar.".data(using: encoding),              symbology: SCBBarcodeSymbology.Code128, width: SCBBarcodeWidth.Mode2, height: 40, hri: true)
+        builder.appendBarcodeData("{BStar.".data(using: String.Encoding.ascii), symbology: SCBBarcodeSymbology.code128, width: SCBBarcodeWidth.mode2, height: 40, hri: true)
     }
     
-    override func append3inchTextReceiptData(builder: ISCBBuilder, utf8: Bool) {
-        let encoding: NSStringEncoding
+    override func append3inchTextReceiptData(_ builder: ISCBBuilder, utf8: Bool) {
+        let encoding: String.Encoding
         
         if utf8 == true {
-            encoding = NSUTF8StringEncoding
+            encoding = String.Encoding.utf8
             
-            builder.appendCodePage(SCBCodePageType.UTF8)
+            builder.append(SCBCodePageType.UTF8)
         }
         else {
-            encoding = NSWindowsCP1251StringEncoding
+            encoding = String.Encoding.windowsCP1251
             
-            builder.appendCodePage(SCBCodePageType.CP1251)
+            builder.append(SCBCodePageType.CP1251)
         }
         
 //      builder.appendInternational(SCBInternationalType.UK)
         
         builder.appendCharacterSpace(0)
         
-        builder.appendAlignment(SCBAlignmentPosition.Center)
+        builder.appendAlignment(SCBAlignmentPosition.center)
         
-        builder.appendDataWithMultiple("Р Е Л А К С\n".dataUsingEncoding(encoding), width: 2, height: 2)
+        builder.appendData(withMultiple: "Р Е Л А К С\n".data(using: encoding), width: 2, height: 2)
         
-        builder.appendData((
+        builder.append((
             "ООО “РЕЛАКС”\n" +
             "СПб., Малая Балканская, д. 38, лит. А\n" +
-            "тел. 307-07-12\n").dataUsingEncoding(encoding))
+            "тел. 307-07-12\n").data(using: encoding))
         
-        builder.appendAlignment(SCBAlignmentPosition.Left)
+        builder.appendAlignment(SCBAlignmentPosition.left)
         
-        builder.appendData((
+        builder.append((
             "РЕГ №322736 ИНН : 123321\n" +
-            "01  Белякова И.А.  КАССА: 0020 ОТД.01\n").dataUsingEncoding(encoding))
+            "01  Белякова И.А.  КАССА: 0020 ОТД.01\n").data(using: encoding))
         
-        builder.appendDataWithAlignment("ЧЕК НА ПРОДАЖУ  No 84373\n".dataUsingEncoding(encoding), position: SCBAlignmentPosition.Center)
+        builder.appendData(withAlignment: "ЧЕК НА ПРОДАЖУ  No 84373\n".data(using: encoding), position: SCBAlignmentPosition.center)
         
-        builder.appendData((
+        builder.append((
             "------------------------------------------------\n" +
             "1.     Яблоки Айдаред, кг                 144.50\n" +
             "2.     Соус соевый Sen So                  36.40\n" +
@@ -160,72 +162,72 @@ class RussianReceiptsImpl: ILocalizeReceipts {
             "------------------------------------------------\n" +
             "------------------------------------------------\n" +
             "ДИСКОНТНАЯ КАРТА  No: 2440012489765\n" +
-            "------------------------------------------------\n").dataUsingEncoding(encoding))
+            "------------------------------------------------\n").data(using: encoding))
         
-        builder.appendAlignment(SCBAlignmentPosition.Right)
+        builder.appendAlignment(SCBAlignmentPosition.right)
         
-        builder.appendData((
+        builder.append((
             "ИТОГО  К  ОПЛАТЕ     = 1212.00\n" +
             "НАЛИЧНЫЕ             = 1212.00\n" +
             "ВАША СКИДКА : 0.41\n" +
-            "\n").dataUsingEncoding(encoding))
+            "\n").data(using: encoding))
         
-        builder.appendDataWithAlignment((
+        builder.appendData(withAlignment: (
             "ЦЕНЫ УКАЗАНЫ С УЧЕТОМ СКИДКИ\n" +
-            "\n").dataUsingEncoding(encoding), position: SCBAlignmentPosition.Center)
+            "\n").data(using: encoding), position: SCBAlignmentPosition.center)
         
-        builder.appendData((
+        builder.append((
             "08-02-2015 09:49  0254.0130604\n" +
-            "00083213 #060127\n").dataUsingEncoding(encoding))
+            "00083213 #060127\n").data(using: encoding))
         
-        builder.appendAlignment(SCBAlignmentPosition.Center)
+        builder.appendAlignment(SCBAlignmentPosition.center)
         
-        builder.appendData((
+        builder.append((
             "СПАСИБО ЗА ПОКУПКУ !\n" +
             "МЫ  ОТКРЫТЫ ЕЖЕДНЕВНО С 9 ДО 23\n" +
             "СОХРАНЯЙТЕ, ПОЖАЛУЙСТА , ЧЕК\n" +
-            "\n").dataUsingEncoding(encoding))
+            "\n").data(using: encoding))
         
-//      builder.appendBarcodeData("{BStar.".dataUsingEncoding(encoding),              symbology:SCBBarcodeSymbology.Code128, width: SCBBarcodeWidth.Mode2, height: 40, hri: true)
-        builder.appendBarcodeData("{BStar.".dataUsingEncoding(NSASCIIStringEncoding), symbology:SCBBarcodeSymbology.Code128, width: SCBBarcodeWidth.Mode2, height: 40, hri: true)
+//      builder.appendBarcodeData("{BStar.".data(using: encoding),              symbology:SCBBarcodeSymbology.Code128, width: SCBBarcodeWidth.Mode2, height: 40, hri: true)
+        builder.appendBarcodeData("{BStar.".data(using: String.Encoding.ascii), symbology:SCBBarcodeSymbology.code128, width: SCBBarcodeWidth.mode2, height: 40, hri: true)
     }
     
-    override func append4inchTextReceiptData(builder: ISCBBuilder, utf8: Bool) {
-        let encoding: NSStringEncoding
+    override func append4inchTextReceiptData(_ builder: ISCBBuilder, utf8: Bool) {
+        let encoding: String.Encoding
         
         if utf8 == true {
-            encoding = NSUTF8StringEncoding
+            encoding = String.Encoding.utf8
             
-            builder.appendCodePage(SCBCodePageType.UTF8)
+            builder.append(SCBCodePageType.UTF8)
         }
         else {
-            encoding = NSWindowsCP1251StringEncoding
+            encoding = String.Encoding.windowsCP1251
             
-            builder.appendCodePage(SCBCodePageType.CP1251)
+            builder.append(SCBCodePageType.CP1251)
         }
         
 //      builder.appendInternational(SCBInternationalType.UK)
         
         builder.appendCharacterSpace(0)
         
-        builder.appendAlignment(SCBAlignmentPosition.Center)
+        builder.appendAlignment(SCBAlignmentPosition.center)
         
-        builder.appendDataWithMultiple("Р Е Л А К С\n".dataUsingEncoding(encoding), width: 2, height: 2)
+        builder.appendData(withMultiple: "Р Е Л А К С\n".data(using: encoding), width: 2, height: 2)
         
-        builder.appendData((
+        builder.append((
             "ООО “РЕЛАКС”\n" +
             "СПб., Малая Балканская, д. 38, лит. А\n" +
-            "тел. 307-07-12\n").dataUsingEncoding(encoding))
+            "тел. 307-07-12\n").data(using: encoding))
         
-        builder.appendAlignment(SCBAlignmentPosition.Left)
+        builder.appendAlignment(SCBAlignmentPosition.left)
         
-        builder.appendData((
+        builder.append((
             "РЕГ №322736 ИНН : 123321\n" +
-            "01  Белякова И.А.  КАССА: 0020 ОТД.01\n").dataUsingEncoding(encoding))
+            "01  Белякова И.А.  КАССА: 0020 ОТД.01\n").data(using: encoding))
         
-        builder.appendDataWithAlignment("ЧЕК НА ПРОДАЖУ  No 84373\n".dataUsingEncoding(encoding), position: SCBAlignmentPosition.Center)
+        builder.appendData(withAlignment: "ЧЕК НА ПРОДАЖУ  No 84373\n".data(using: encoding), position: SCBAlignmentPosition.center)
         
-        builder.appendData((
+        builder.append((
             "---------------------------------------------------------------------\n" +
             "1.     Яблоки Айдаред, кг                                      144.50\n" +
             "2.     Соус соевый Sen So                                       36.40\n" +
@@ -247,34 +249,34 @@ class RussianReceiptsImpl: ILocalizeReceipts {
             "---------------------------------------------------------------------\n" +
             "---------------------------------------------------------------------\n" +
             "ДИСКОНТНАЯ КАРТА  No: 2440012489765\n" +
-            "---------------------------------------------------------------------\n").dataUsingEncoding(encoding))
+            "---------------------------------------------------------------------\n").data(using: encoding))
         
-        builder.appendAlignment(SCBAlignmentPosition.Right)
+        builder.appendAlignment(SCBAlignmentPosition.right)
         
-        builder.appendData((
+        builder.append((
             "ИТОГО  К  ОПЛАТЕ           = 1212.00\n" +
             "НАЛИЧНЫЕ                   = 1212.00\n" +
             "ВАША СКИДКА : 0.41\n" +
-            "\n").dataUsingEncoding(encoding))
+            "\n").data(using: encoding))
         
-        builder.appendDataWithAlignment((
+        builder.appendData(withAlignment: (
             "ЦЕНЫ УКАЗАНЫ С УЧЕТОМ СКИДКИ\n" +
-            "\n").dataUsingEncoding(encoding), position: SCBAlignmentPosition.Center)
+            "\n").data(using: encoding), position: SCBAlignmentPosition.center)
         
-        builder.appendData((
+        builder.append((
             "08-02-2015 09:49  0254.0130604\n" +
-            "00083213 #060127\n").dataUsingEncoding(encoding))
+            "00083213 #060127\n").data(using: encoding))
         
-        builder.appendAlignment(SCBAlignmentPosition.Center)
+        builder.appendAlignment(SCBAlignmentPosition.center)
         
-        builder.appendData((
+        builder.append((
             "СПАСИБО ЗА ПОКУПКУ !\n" +
             "МЫ  ОТКРЫТЫ ЕЖЕДНЕВНО С 9 ДО 23\n" +
             "СОХРАНЯЙТЕ, ПОЖАЛУЙСТА , ЧЕК\n" +
-            "\n").dataUsingEncoding(encoding))
+            "\n").data(using: encoding))
         
-//      builder.appendBarcodeData("{BStar.".dataUsingEncoding(encoding),              symbology: SCBBarcodeSymbology.Code128, width: SCBBarcodeWidth.Mode2, height: 40, hri: true)
-        builder.appendBarcodeData("{BStar.".dataUsingEncoding(NSASCIIStringEncoding), symbology: SCBBarcodeSymbology.Code128, width: SCBBarcodeWidth.Mode2, height: 40, hri: true)
+//      builder.appendBarcodeData("{BStar.".data(using: encoding),              symbology: SCBBarcodeSymbology.Code128, width: SCBBarcodeWidth.Mode2, height: 40, hri: true)
+        builder.appendBarcodeData("{BStar.".data(using: String.Encoding.ascii), symbology: SCBBarcodeSymbology.code128, width: SCBBarcodeWidth.mode2, height: 40, hri: true)
     }
     
     override func create2inchRasterReceiptImage() -> UIImage {
@@ -480,42 +482,42 @@ class RussianReceiptsImpl: ILocalizeReceipts {
         return ILocalizeReceipts.imageWithString(textToPrint, font: font, width: 512)     // EscPos3inch(512dots)
     }
     
-    override func appendEscPos3inchTextReceiptData(builder: ISCBBuilder, utf8: Bool) {
-        let encoding: NSStringEncoding
+    override func appendEscPos3inchTextReceiptData(_ builder: ISCBBuilder, utf8: Bool) {
+        let encoding: String.Encoding
         
         if utf8 == true {
-            encoding = NSUTF8StringEncoding
+            encoding = String.Encoding.utf8
             
-            builder.appendCodePage(SCBCodePageType.UTF8)
+            builder.append(SCBCodePageType.UTF8)
         }
         else {
-            encoding = NSWindowsCP1251StringEncoding
+            encoding = String.Encoding.windowsCP1251
             
-            builder.appendCodePage(SCBCodePageType.CP1251)
+            builder.append(SCBCodePageType.CP1251)
         }
         
 //      builder.appendInternational(SCBInternationalType.UK)
         
         builder.appendCharacterSpace(0)
         
-        builder.appendAlignment(SCBAlignmentPosition.Center)
+        builder.appendAlignment(SCBAlignmentPosition.center)
         
-        builder.appendDataWithMultiple("Р Е Л А К С\n".dataUsingEncoding(encoding), width: 2, height: 2)
+        builder.appendData(withMultiple: "Р Е Л А К С\n".data(using: encoding), width: 2, height: 2)
         
-        builder.appendData((
+        builder.append((
             "ООО “РЕЛАКС”\n" +
             "СПб., Малая Балканская, д. 38, лит. А\n" +
-            "тел. 307-07-12\n").dataUsingEncoding(encoding))
+            "тел. 307-07-12\n").data(using: encoding))
         
-        builder.appendAlignment(SCBAlignmentPosition.Left)
+        builder.appendAlignment(SCBAlignmentPosition.left)
         
-        builder.appendData((
+        builder.append((
             "РЕГ №322736 ИНН : 123321\n" +
-            "01  Белякова И.А.  КАССА: 0020 ОТД.01\n").dataUsingEncoding(encoding))
+            "01  Белякова И.А.  КАССА: 0020 ОТД.01\n").data(using: encoding))
         
-        builder.appendDataWithAlignment("ЧЕК НА ПРОДАЖУ  No 84373\n".dataUsingEncoding(encoding), position: SCBAlignmentPosition.Center)
+        builder.appendData(withAlignment: "ЧЕК НА ПРОДАЖУ  No 84373\n".data(using: encoding), position: SCBAlignmentPosition.center)
         
-        builder.appendData((
+        builder.append((
             "------------------------------------------\n" +
             "1.     Яблоки Айдаред, кг           144.50\n" +
             "2.     Соус соевый Sen So            36.40\n" +
@@ -537,70 +539,70 @@ class RussianReceiptsImpl: ILocalizeReceipts {
             "------------------------------------------\n" +
             "------------------------------------------\n" +
             "ДИСКОНТНАЯ КАРТА  No: 2440012489765\n" +
-            "------------------------------------------\n").dataUsingEncoding(encoding))
+            "------------------------------------------\n").data(using: encoding))
         
-        builder.appendAlignment(SCBAlignmentPosition.Right)
+        builder.appendAlignment(SCBAlignmentPosition.right)
         
-        builder.appendData((
+        builder.append((
             "ИТОГО  К  ОПЛАТЕ     = 1212.00\n" +
             "НАЛИЧНЫЕ             = 1212.00\n" +
             "ВАША СКИДКА : 0.41\n" +
-            "\n").dataUsingEncoding(encoding))
+            "\n").data(using: encoding))
         
-        builder.appendDataWithAlignment((
+        builder.appendData(withAlignment: (
             "ЦЕНЫ УКАЗАНЫ С УЧЕТОМ СКИДКИ\n" +
-            "\n").dataUsingEncoding(encoding), position: SCBAlignmentPosition.Center)
+            "\n").data(using: encoding), position: SCBAlignmentPosition.center)
         
-        builder.appendData((
+        builder.append((
             "08-02-2015 09:49  0254.0130604\n" +
-            "00083213 #060127\n").dataUsingEncoding(encoding))
+            "00083213 #060127\n").data(using: encoding))
         
-        builder.appendAlignment(SCBAlignmentPosition.Center)
+        builder.appendAlignment(SCBAlignmentPosition.center)
         
-        builder.appendData((
+        builder.append((
             "СПАСИБО ЗА ПОКУПКУ !\n" +
             "МЫ  ОТКРЫТЫ ЕЖЕДНЕВНО С 9 ДО 23\n" +
             "СОХРАНЯЙТЕ, ПОЖАЛУЙСТА , ЧЕК\n" +
-            "\n").dataUsingEncoding(encoding))
+            "\n").data(using: encoding))
         
-//      builder.appendBarcodeData("{BStar.".dataUsingEncoding(encoding),              symbology:SCBBarcodeSymbology.Code128, width: SCBBarcodeWidth.Mode2, height: 40, hri: true)
-        builder.appendBarcodeData("{BStar.".dataUsingEncoding(NSASCIIStringEncoding), symbology:SCBBarcodeSymbology.Code128, width: SCBBarcodeWidth.Mode2, height: 40, hri: true)
+//      builder.appendBarcodeData("{BStar.".data(using: encoding),              symbology:SCBBarcodeSymbology.Code128, width: SCBBarcodeWidth.Mode2, height: 40, hri: true)
+        builder.appendBarcodeData("{BStar.".data(using: String.Encoding.ascii), symbology:SCBBarcodeSymbology.code128, width: SCBBarcodeWidth.mode2, height: 40, hri: true)
     }
     
-    override func appendDotImpact3inchTextReceiptData(builder: ISCBBuilder, utf8: Bool) {
-        let encoding: NSStringEncoding
+    override func appendDotImpact3inchTextReceiptData(_ builder: ISCBBuilder, utf8: Bool) {
+        let encoding: String.Encoding
         
         if utf8 == true {
-            encoding = NSUTF8StringEncoding
+            encoding = String.Encoding.utf8
             
-            builder.appendCodePage(SCBCodePageType.UTF8)
+            builder.append(SCBCodePageType.UTF8)
         }
         else {
-            encoding = NSWindowsCP1251StringEncoding
+            encoding = String.Encoding.windowsCP1251
             
-            builder.appendCodePage(SCBCodePageType.CP1251)
+            builder.append(SCBCodePageType.CP1251)
         }
         
 //      builder.appendInternational(SCBInternationalType.UK)
         
-        builder.appendAlignment(SCBAlignmentPosition.Center)
+        builder.appendAlignment(SCBAlignmentPosition.center)
         
-        builder.appendDataWithMultiple("Р  Е  Л  А  К  С\n".dataUsingEncoding(encoding), width: 2, height: 2)
+        builder.appendData(withMultiple: "Р  Е  Л  А  К  С\n".data(using: encoding), width: 2, height: 2)
         
-        builder.appendData((
+        builder.append((
             "ООО “РЕЛАКС”\n" +
             "СПб., Малая Балканская, д. 38, лит. А\n" +
-            "тел. 307-07-12\n").dataUsingEncoding(encoding))
+            "тел. 307-07-12\n").data(using: encoding))
         
-        builder.appendAlignment(SCBAlignmentPosition.Left)
+        builder.appendAlignment(SCBAlignmentPosition.left)
         
-        builder.appendData((
+        builder.append((
             "РЕГ №322736 ИНН : 123321\n" +
-            "01  Белякова И.А.  КАССА: 0020 ОТД.01\n").dataUsingEncoding(encoding))
+            "01  Белякова И.А.  КАССА: 0020 ОТД.01\n").data(using: encoding))
         
-        builder.appendDataWithAlignment("ЧЕК НА ПРОДАЖУ  No 84373\n".dataUsingEncoding(encoding), position: SCBAlignmentPosition.Center)
+        builder.appendData(withAlignment: "ЧЕК НА ПРОДАЖУ  No 84373\n".data(using: encoding), position: SCBAlignmentPosition.center)
         
-        builder.appendData((
+        builder.append((
             "------------------------------------------\n" +
             "1.     Яблоки Айдаред, кг           144.50\n" +
             "2.     Соус соевый Sen So            36.40\n" +
@@ -622,29 +624,29 @@ class RussianReceiptsImpl: ILocalizeReceipts {
             "------------------------------------------\n" +
             "------------------------------------------\n" +
             "ДИСКОНТНАЯ КАРТА  No: 2440012489765\n" +
-            "------------------------------------------\n").dataUsingEncoding(encoding))
+            "------------------------------------------\n").data(using: encoding))
         
-        builder.appendAlignment(SCBAlignmentPosition.Right)
+        builder.appendAlignment(SCBAlignmentPosition.right)
         
-        builder.appendData((
+        builder.append((
             "ИТОГО  К  ОПЛАТЕ  = 1212.00\n" +
             "НАЛИЧНЫЕ          = 1212.00\n" +
             "ВАША СКИДКА : 0.41\n" +
-            "\n").dataUsingEncoding(encoding))
+            "\n").data(using: encoding))
         
-        builder.appendDataWithAlignment((
+        builder.appendData(withAlignment: (
             "ЦЕНЫ УКАЗАНЫ С УЧЕТОМ СКИДКИ\n" +
-            "\n").dataUsingEncoding(encoding), position: SCBAlignmentPosition.Center)
+            "\n").data(using: encoding), position: SCBAlignmentPosition.center)
         
-        builder.appendData((
+        builder.append((
             "08-02-2015 09:49  0254.0130604\n" +
-            "00083213 #060127\n").dataUsingEncoding(encoding))
+            "00083213 #060127\n").data(using: encoding))
         
-        builder.appendAlignment(SCBAlignmentPosition.Center)
+        builder.appendAlignment(SCBAlignmentPosition.center)
         
-        builder.appendData((
+        builder.append((
             "СПАСИБО ЗА ПОКУПКУ !\n" +
             "МЫ  ОТКРЫТЫ ЕЖЕДНЕВНО С 9 ДО 23\n" +
-            "СОХРАНЯЙТЕ, ПОЖАЛУЙСТА , ЧЕК\n").dataUsingEncoding(encoding))
+            "СОХРАНЯЙТЕ, ПОЖАЛУЙСТА , ЧЕК\n").data(using: encoding))
     }
 }

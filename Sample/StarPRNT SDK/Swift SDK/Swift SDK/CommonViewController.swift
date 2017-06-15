@@ -32,32 +32,32 @@ class CommonViewController: UIViewController {
             if blind == true {
                 self.navigationItem.hidesBackButton = true
                 
-                self.navigationItem.rightBarButtonItem?.enabled = false
+                self.navigationItem.rightBarButtonItem?.isEnabled = false
                 
-                self.blindView            .hidden = false
-                self.activityIndicatorView.hidden = false
+                self.blindView            .isHidden = false
+                self.activityIndicatorView.isHidden = false
                 
                 self.activityIndicatorView.startAnimating()
                 
-                NSRunLoop.currentRunLoop().runUntilDate(NSDate(timeIntervalSinceNow: 0.1))     // Update View
+                RunLoop.current.run(until: Date(timeIntervalSinceNow: 0.1))     // Update View
             }
             else {
                 self.activityIndicatorView.stopAnimating()
                 
-                self.blindView            .hidden = true
-                self.activityIndicatorView.hidden = true
+                self.blindView            .isHidden = true
+                self.activityIndicatorView.isHidden = true
                 
-                self.navigationItem.rightBarButtonItem?.enabled = true
+                self.navigationItem.rightBarButtonItem?.isEnabled = true
                 
                 self.navigationItem.hidesBackButton = false
                 
-//              NSRunLoop.currentRunLoop().runUntilDate(NSDate(timeIntervalSinceNow: 0.1))     // Update View(No need)
+//                RunLoop.current.run(until: Date(timeIntervalSinceNow: 0.1))     // Update View(No need)
             }
         }
     }
     
-    func appendRefreshButton(action: Selector) {
-        let item: UIBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Refresh, target: self, action: action)
+    func appendRefreshButton(_ action: Selector) {
+        let item: UIBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.refresh, target: self, action: action)
         
         self.navigationItem.rightBarButtonItem = item
     }

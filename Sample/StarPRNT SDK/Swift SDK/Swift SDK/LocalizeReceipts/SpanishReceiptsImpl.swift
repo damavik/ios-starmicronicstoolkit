@@ -13,193 +13,195 @@ class SpanishReceiptsImpl: ILocalizeReceipts {
         super.init()
         
         languageCode = "Es"
+        
+        characterCode = StarIoExtCharacterCode.standard
     }
     
-    override func append2inchTextReceiptData(builder: ISCBBuilder, utf8: Bool) {
-        let encoding: NSStringEncoding
+    override func append2inchTextReceiptData(_ builder: ISCBBuilder, utf8: Bool) {
+        let encoding: String.Encoding
         
         if utf8 == true {
-            encoding = NSUTF8StringEncoding
+            encoding = String.Encoding.utf8
             
-            builder.appendCodePage(SCBCodePageType.UTF8)
+            builder.append(SCBCodePageType.UTF8)
         }
         else {
-            encoding = NSWindowsCP1252StringEncoding
+            encoding = String.Encoding.windowsCP1252
             
-            builder.appendCodePage(SCBCodePageType.CP1252)
+            builder.append(SCBCodePageType.CP1252)
         }
         
-        builder.appendInternational(SCBInternationalType.Spain)
+        builder.append(SCBInternationalType.spain)
         
         builder.appendCharacterSpace(0)
         
-        builder.appendAlignment(SCBAlignmentPosition.Center)
+        builder.appendAlignment(SCBAlignmentPosition.center)
         
-        builder.appendDataWithMultiple((
+        builder.appendData(withMultiple: (
             "BAR RESTAURANT\n" +
-            "EL POZO\n").dataUsingEncoding(encoding), width: 2, height: 2)
+            "EL POZO\n").data(using: encoding), width: 2, height: 2)
         
-        builder.appendData((
+        builder.append((
             "C/.ROCAFORT 187\n" +
             "08029 BARCELONA\n" +
             "\n" +
             "NIF :X-3856907Z\n" +
-            "TEL :934199465\n").dataUsingEncoding(encoding))
+            "TEL :934199465\n").data(using: encoding))
         
-        builder.appendAlignment(SCBAlignmentPosition.Left)
+        builder.appendAlignment(SCBAlignmentPosition.left)
         
-        builder.appendData((
+        builder.append((
             "--------------------------------\n" +
             "MESA: 100 P: - FECHA: YYYY-MM-DD\n" +
             "CAN P/U DESCRIPCION  SUMA\n" +
             "--------------------------------\n" +
-            " 4  3,00  JARRA  CERVESA   12,00\n" +
-            " 1  1,60  COPA DE CERVESA   1,60\n" +
+            " 4  3,00  JARRA  CERVEZA   12,00\n" +
+            " 1  1,60  COPA DE CERVEZA   1,60\n" +
             "--------------------------------\n" +
-            "               SUB TOTAL : 13,60\n").dataUsingEncoding(encoding))
+            "               SUB TOTAL : 13,60\n").data(using: encoding))
         
-        builder.appendAlignment(SCBAlignmentPosition.Right)
+        builder.appendAlignment(SCBAlignmentPosition.right)
         
-        builder.appendDataWithMultipleHeight("TOTAL:     13,60 EUROS\n".dataUsingEncoding(encoding), height: 2)
+        builder.appendData(withMultipleHeight: "TOTAL:     13,60 EUROS\n".data(using: encoding), height: 2)
         
-        builder.appendAlignment(SCBAlignmentPosition.Left)
+        builder.appendAlignment(SCBAlignmentPosition.left)
         
-        builder.appendData((
+        builder.append((
             "NO: 000018851     IVA INCLUIDO\n" +
-            "--------------------------------\n").dataUsingEncoding(encoding))
+            "--------------------------------\n").data(using: encoding))
         
-        builder.appendAlignment(SCBAlignmentPosition.Center)
+        builder.appendAlignment(SCBAlignmentPosition.center)
         
-        builder.appendData((
+        builder.append((
             "**** GRACIAS POR SU VISITA! ****\n" +
-            "\n").dataUsingEncoding(encoding))
+            "\n").data(using: encoding))
         
-//      builder.appendBarcodeData("{BStar.".dataUsingEncoding(encoding),              symbology: SCBBarcodeSymbology.Code128, width: SCBBarcodeWidth.Mode2, height: 40, hri: true)
-        builder.appendBarcodeData("{BStar.".dataUsingEncoding(NSASCIIStringEncoding), symbology: SCBBarcodeSymbology.Code128, width: SCBBarcodeWidth.Mode2, height: 40, hri: true)
+//      builder.appendBarcodeData("{BStar.".data(using: encoding),              symbology: SCBBarcodeSymbology.Code128, width: SCBBarcodeWidth.Mode2, height: 40, hri: true)
+        builder.appendBarcodeData("{BStar.".data(using: String.Encoding.ascii), symbology: SCBBarcodeSymbology.code128, width: SCBBarcodeWidth.mode2, height: 40, hri: true)
     }
     
-    override func append3inchTextReceiptData(builder: ISCBBuilder, utf8: Bool) {
-        let encoding: NSStringEncoding
+    override func append3inchTextReceiptData(_ builder: ISCBBuilder, utf8: Bool) {
+        let encoding: String.Encoding
         
         if utf8 == true {
-            encoding = NSUTF8StringEncoding
+            encoding = String.Encoding.utf8
             
-            builder.appendCodePage(SCBCodePageType.UTF8)
+            builder.append(SCBCodePageType.UTF8)
         }
         else {
-            encoding = NSWindowsCP1252StringEncoding
+            encoding = String.Encoding.windowsCP1252
             
-            builder.appendCodePage(SCBCodePageType.CP1252)
+            builder.append(SCBCodePageType.CP1252)
         }
         
-        builder.appendInternational(SCBInternationalType.Spain)
+        builder.append(SCBInternationalType.spain)
         
         builder.appendCharacterSpace(0)
         
-        builder.appendAlignment(SCBAlignmentPosition.Center)
+        builder.appendAlignment(SCBAlignmentPosition.center)
         
-//      builder.appendData("[If loaded.. Logo1 goes here]\n".dataUsingEncoding(encoding))
+//      builder.append("[If loaded.. Logo1 goes here]\n".data(using: encoding))
 //
-//      builder.appendLogo(SCBLogoSize.Normal, number: 1)
+//      builder.appendLogo(SCBLogoSize.normal, number: 1)
         
-        builder.appendDataWithMultiple("BAR RESTAURANT EL POZO\n".dataUsingEncoding(encoding), width: 2, height: 2)
+        builder.appendData(withMultiple: "BAR RESTAURANT EL POZO\n".data(using: encoding), width: 2, height: 2)
         
-        builder.appendData((
+        builder.append((
             "C/.ROCAFORT 187 08029 BARCELONA\n" +
-            "NIF :X-3856907Z  TEL :934199465\n").dataUsingEncoding(encoding))
+            "NIF :X-3856907Z  TEL :934199465\n").data(using: encoding))
         
-        builder.appendAlignment(SCBAlignmentPosition.Left)
+        builder.appendAlignment(SCBAlignmentPosition.left)
         
-        builder.appendData((
+        builder.append((
             "------------------------------------------------\n" +
             "MESA: 100 P: - FECHA: YYYY-MM-DD\n" +
             "CAN P/U DESCRIPCION  SUMA\n" +
             "------------------------------------------------\n" +
-            " 4     3,00      JARRA  CERVESA            12,00\n" +
-            " 1     1,60      COPA DE CERVESA            1,60\n" +
+            " 4     3,00      JARRA  CERVEZA            12,00\n" +
+            " 1     1,60      COPA DE CERVEZA            1,60\n" +
             "------------------------------------------------\n" +
-            "                           SUB TOTAL :     13,60\n").dataUsingEncoding(encoding))
+            "                           SUB TOTAL :     13,60\n").data(using: encoding))
         
-        builder.appendAlignment(SCBAlignmentPosition.Right)
+        builder.appendAlignment(SCBAlignmentPosition.right)
         
-        builder.appendDataWithMultipleHeight("TOTAL:     13,60 EUROS\n".dataUsingEncoding(encoding), height: 2)
+        builder.appendData(withMultipleHeight: "TOTAL:     13,60 EUROS\n".data(using: encoding), height: 2)
         
-        builder.appendAlignment(SCBAlignmentPosition.Left)
+        builder.appendAlignment(SCBAlignmentPosition.left)
         
-        builder.appendData((
+        builder.append((
             "NO: 000018851  IVA INCLUIDO\n" +
-            "------------------------------------------------\n").dataUsingEncoding(encoding))
+            "------------------------------------------------\n").data(using: encoding))
         
-        builder.appendAlignment(SCBAlignmentPosition.Center)
+        builder.appendAlignment(SCBAlignmentPosition.center)
         
-        builder.appendData((
+        builder.append((
             "**** GRACIAS POR SU VISITA! ****\n" +
-            "\n").dataUsingEncoding(encoding))
+            "\n").data(using: encoding))
         
-//      builder.appendBarcodeData("{BStar.".dataUsingEncoding(encoding),              symbology: SCBBarcodeSymbology.Code128, width: SCBBarcodeWidth.Mode2, height: 40, hri: true)
-        builder.appendBarcodeData("{BStar.".dataUsingEncoding(NSASCIIStringEncoding), symbology: SCBBarcodeSymbology.Code128, width: SCBBarcodeWidth.Mode2, height: 40, hri: true)
+//      builder.appendBarcodeData("{BStar.".data(using: encoding),              symbology: SCBBarcodeSymbology.Code128, width: SCBBarcodeWidth.Mode2, height: 40, hri: true)
+        builder.appendBarcodeData("{BStar.".data(using: String.Encoding.ascii), symbology: SCBBarcodeSymbology.code128, width: SCBBarcodeWidth.mode2, height: 40, hri: true)
     }
     
-    override func append4inchTextReceiptData(builder: ISCBBuilder, utf8: Bool) {
-        let encoding: NSStringEncoding
+    override func append4inchTextReceiptData(_ builder: ISCBBuilder, utf8: Bool) {
+        let encoding: String.Encoding
         
         if utf8 == true {
-            encoding = NSUTF8StringEncoding
+            encoding = String.Encoding.utf8
             
-            builder.appendCodePage(SCBCodePageType.UTF8)
+            builder.append(SCBCodePageType.UTF8)
         }
         else {
-            encoding = NSWindowsCP1252StringEncoding
+            encoding = String.Encoding.windowsCP1252
             
-            builder.appendCodePage(SCBCodePageType.CP1252)
+            builder.append(SCBCodePageType.CP1252)
         }
         
-        builder.appendInternational(SCBInternationalType.Spain)
+        builder.append(SCBInternationalType.spain)
         
         builder.appendCharacterSpace(0)
         
-        builder.appendAlignment(SCBAlignmentPosition.Center)
+        builder.appendAlignment(SCBAlignmentPosition.center)
         
-//      builder.appendData("[If loaded.. Logo1 goes here]\n".dataUsingEncoding(encoding))
+//      builder.append("[If loaded.. Logo1 goes here]\n".data(using: encoding))
 //
-//      builder.appendLogo(SCBLogoSize.Normal, number: 1)
+//      builder.appendLogo(SCBLogoSize.normal, number: 1)
         
-        builder.appendDataWithMultiple("BAR RESTAURANT EL POZO\n".dataUsingEncoding(encoding), width: 2, height: 2)
+        builder.appendData(withMultiple: "BAR RESTAURANT EL POZO\n".data(using: encoding), width: 2, height: 2)
         
-        builder.appendData((
+        builder.append((
             "C/.ROCAFORT 187 08029 BARCELONA\n" +
-            "NIF :X-3856907Z  TEL :934199465\n").dataUsingEncoding(encoding))
+            "NIF :X-3856907Z  TEL :934199465\n").data(using: encoding))
         
-        builder.appendAlignment(SCBAlignmentPosition.Left)
+        builder.appendAlignment(SCBAlignmentPosition.left)
         
-        builder.appendData((
+        builder.append((
             "---------------------------------------------------------------------\n" +
             "MESA: 100 P: - FECHA: YYYY-MM-DD\n" +
             "CAN P/U DESCRIPCION  SUMA\n" +
             "---------------------------------------------------------------------\n" +
-            " 4     3,00          JARRA  CERVESA                             12,00\n" +
-            " 1     1,60          COPA DE CERVESA                             1,60\n" +
+            " 4     3,00          JARRA  CERVEZA                             12,00\n" +
+            " 1     1,60          COPA DE CERVEZA                             1,60\n" +
             "---------------------------------------------------------------------\n" +
-            "                                         SUB TOTAL :            13,60\n").dataUsingEncoding(encoding))
+            "                                         SUB TOTAL :            13,60\n").data(using: encoding))
         
-        builder.appendAlignment(SCBAlignmentPosition.Right)
+        builder.appendAlignment(SCBAlignmentPosition.right)
         
-        builder.appendDataWithMultipleHeight("TOTAL:     13,60 EUROS\n".dataUsingEncoding(encoding), height: 2)
+        builder.appendData(withMultipleHeight: "TOTAL:     13,60 EUROS\n".data(using: encoding), height: 2)
         
-        builder.appendAlignment(SCBAlignmentPosition.Left)
+        builder.appendAlignment(SCBAlignmentPosition.left)
         
-        builder.appendData((
+        builder.append((
             "NO: 000018851  IVA INCLUIDO\n" +
-            "---------------------------------------------------------------------\n").dataUsingEncoding(encoding))
+            "---------------------------------------------------------------------\n").data(using: encoding))
         
-        builder.appendAlignment(SCBAlignmentPosition.Center)
+        builder.appendAlignment(SCBAlignmentPosition.center)
         
-        builder.appendData((
+        builder.append((
             "**** GRACIAS POR SU VISITA! ****\n" +
-            "\n").dataUsingEncoding(encoding))
+            "\n").data(using: encoding))
         
-//      builder.appendBarcodeData("{BStar.".dataUsingEncoding(encoding),              symbology: SCBBarcodeSymbology.Code128, width: SCBBarcodeWidth.Mode2, height: 40, hri: true)
-        builder.appendBarcodeData("{BStar.".dataUsingEncoding(NSASCIIStringEncoding), symbology: SCBBarcodeSymbology.Code128, width: SCBBarcodeWidth.Mode2, height: 40, hri: true)
+//      builder.appendBarcodeData("{BStar.".data(using: encoding),              symbology: SCBBarcodeSymbology.Code128, width: SCBBarcodeWidth.Mode2, height: 40, hri: true)
+        builder.appendBarcodeData("{BStar.".data(using: String.Encoding.ascii), symbology: SCBBarcodeSymbology.code128, width: SCBBarcodeWidth.mode2, height: 40, hri: true)
     }
     
     override func create2inchRasterReceiptImage() -> UIImage {
@@ -215,8 +217,8 @@ class SpanishReceiptsImpl: ILocalizeReceipts {
         "    FECHA: YYYY-MM-DD\n" +
         "CAN P/U DESCRIPCION  SUMA\n" +
         "--------------------------\n" +
-        "3,00 JARRA CERVESA   12,00\n" +
-        "1,60 COPA DE CERVESA  1,60\n" +
+        "3,00 JARRA  CERVEZA  12,00\n" +
+        "1,60 COPA DE CERVEZA  1,60\n" +
         "--------------------------\n" +
         "         SUB TOTAL : 13,60\n" +
         "TOTAL:         13,60 EUROS\n" +
@@ -242,8 +244,8 @@ class SpanishReceiptsImpl: ILocalizeReceipts {
         "MESA: 100 P: - FECHA: YYYY-MM-DD\n" +
         "CAN P/U DESCRIPCION  SUMA\n" +
         "--------------------------------------\n" +
-        "4 3,00 JARRA  CERVESA   12,00\n" +
-        "1 1,60 COPA DE CERVESA  1,60\n" +
+        "4 3,00 JARRA  CERVEZA   12,00\n" +
+        "1 1,60 COPA DE CERVEZA  1,60\n" +
         "--------------------------------------\n" +
         "                     SUB TOTAL : 13,60\n" +
         "TOTAL:               13,60 EUROS\n" +
@@ -266,8 +268,8 @@ class SpanishReceiptsImpl: ILocalizeReceipts {
         "MESA: 100 P: - FECHA: YYYY-MM-DD\n" +
         "CAN P/U DESCRIPCION  SUMA\n" +
         "---------------------------------------------------------\n" +
-        "4    3,00    JARRA  CERVESA                         12,00\n" +
-        "1    1,60    COPA DE CERVESA                         1,60\n" +
+        "4    3,00    JARRA  CERVEZA                         12,00\n" +
+        "1    1,60    COPA DE CERVEZA                         1,60\n" +
         "---------------------------------------------------------\n" +
         "                                  SUB TOTAL :       13,60\n" +
         "                                 TOTAL :      13,60 EUROS\n" +
@@ -297,8 +299,8 @@ class SpanishReceiptsImpl: ILocalizeReceipts {
         "MESA: 100 P: - FECHA: YYYY-MM-DD\n" +
         "CAN P/U DESCRIPCION  SUMA\n" +
         "-----------------------------------\n" +
-        "4 3,00 JARRA  CERVESA   12,00\n" +
-        "1 1,60 COPA DE CERVESA  1,60\n" +
+        "4 3,00 JARRA  CERVEZA   12,00\n" +
+        "1 1,60 COPA DE CERVEZA  1,60\n" +
         "-----------------------------------\n" +
         "                  SUB TOTAL : 13,60\n" +
         "TOTAL:               13,60 EUROS\n" +
@@ -312,113 +314,113 @@ class SpanishReceiptsImpl: ILocalizeReceipts {
         return ILocalizeReceipts.imageWithString(textToPrint, font: font, width: 512)     // EscPos3inch(512dots)
     }
     
-    override func appendEscPos3inchTextReceiptData(builder: ISCBBuilder, utf8: Bool) {
-        let encoding: NSStringEncoding
+    override func appendEscPos3inchTextReceiptData(_ builder: ISCBBuilder, utf8: Bool) {
+        let encoding: String.Encoding
         
         if utf8 == true {
-            encoding = NSUTF8StringEncoding
+            encoding = String.Encoding.utf8
             
-            builder.appendCodePage(SCBCodePageType.UTF8)
+            builder.append(SCBCodePageType.UTF8)
         }
         else {
-            encoding = NSWindowsCP1252StringEncoding
+            encoding = String.Encoding.windowsCP1252
             
-            builder.appendCodePage(SCBCodePageType.CP1252)
+            builder.append(SCBCodePageType.CP1252)
         }
         
-        builder.appendInternational(SCBInternationalType.Spain)
+        builder.append(SCBInternationalType.spain)
         
         builder.appendCharacterSpace(0)
         
-        builder.appendAlignment(SCBAlignmentPosition.Center)
+        builder.appendAlignment(SCBAlignmentPosition.center)
         
-//      builder.appendData("[If loaded.. Logo1 goes here]\n".dataUsingEncoding(encoding))
+//      builder.append("[If loaded.. Logo1 goes here]\n".data(using: encoding))
 //
-//      builder.appendLogo(SCBLogoSize.Normal, number: 1)
+//      builder.appendLogo(SCBLogoSize.normal, number: 1)
         
-        builder.appendDataWithMultipleHeight("BAR RESTAURANT EL POZO\n".dataUsingEncoding(encoding), height: 2)
+        builder.appendData(withMultipleHeight: "BAR RESTAURANT EL POZO\n".data(using: encoding), height: 2)
         
-        builder.appendData((
+        builder.append((
             "C/.ROCAFORT 187 08029 BARCELONA\n" +
-            "NIF :X-3856907Z  TEL :934199465\n").dataUsingEncoding(encoding))
+            "NIF :X-3856907Z  TEL :934199465\n").data(using: encoding))
         
-        builder.appendAlignment(SCBAlignmentPosition.Left)
+        builder.appendAlignment(SCBAlignmentPosition.left)
         
-        builder.appendData((
+        builder.append((
             "------------------------------------------\n" +
             "MESA: 100 P: - FECHA: YYYY-MM-DD\n" +
             "CAN P/U DESCRIPCION  SUMA\n" +
             "------------------------------------------\n" +
-            " 4    3,00    JARRA  CERVESA         12,00\n" +
-            " 1    1,60    COPA DE CERVESA         1,60\n" +
+            " 4    3,00    JARRA  CERVEZA         12,00\n" +
+            " 1    1,60    COPA DE CERVEZA         1,60\n" +
             "------------------------------------------\n" +
-            "                     SUB TOTAL :     13,60\n").dataUsingEncoding(encoding))
+            "                     SUB TOTAL :     13,60\n").data(using: encoding))
         
-        builder.appendAlignment(SCBAlignmentPosition.Right)
+        builder.appendAlignment(SCBAlignmentPosition.right)
         
-        builder.appendDataWithMultipleHeight("TOTAL:     13,60 EUROS\n".dataUsingEncoding(encoding), height: 2)
+        builder.appendData(withMultipleHeight: "TOTAL:     13,60 EUROS\n".data(using: encoding), height: 2)
         
-        builder.appendAlignment(SCBAlignmentPosition.Left)
+        builder.appendAlignment(SCBAlignmentPosition.left)
         
-        builder.appendData((
+        builder.append((
             "NO: 000018851  IVA INCLUIDO\n" +
-            "------------------------------------------\n").dataUsingEncoding(encoding))
+            "------------------------------------------\n").data(using: encoding))
         
-        builder.appendAlignment(SCBAlignmentPosition.Center)
+        builder.appendAlignment(SCBAlignmentPosition.center)
         
-        builder.appendData((
+        builder.append((
             "**** GRACIAS POR SU VISITA! ****\n" +
-            "\n").dataUsingEncoding(encoding))
+            "\n").data(using: encoding))
         
-//      builder.appendBarcodeData("{BStar.".dataUsingEncoding(encoding),              symbology: SCBBarcodeSymbology.Code128, width: SCBBarcodeWidth.Mode2, height: 40, hri: true)
-        builder.appendBarcodeData("{BStar.".dataUsingEncoding(NSASCIIStringEncoding), symbology: SCBBarcodeSymbology.Code128, width: SCBBarcodeWidth.Mode2, height: 40, hri: true)
+//      builder.appendBarcodeData("{BStar.".data(using: encoding),              symbology: SCBBarcodeSymbology.Code128, width: SCBBarcodeWidth.Mode2, height: 40, hri: true)
+        builder.appendBarcodeData("{BStar.".data(using: String.Encoding.ascii), symbology: SCBBarcodeSymbology.code128, width: SCBBarcodeWidth.mode2, height: 40, hri: true)
     }
     
-    override func appendDotImpact3inchTextReceiptData(builder: ISCBBuilder, utf8: Bool) {
-        let encoding: NSStringEncoding
+    override func appendDotImpact3inchTextReceiptData(_ builder: ISCBBuilder, utf8: Bool) {
+        let encoding: String.Encoding
         
         if utf8 == true {
-            encoding = NSUTF8StringEncoding
+            encoding = String.Encoding.utf8
             
-            builder.appendCodePage(SCBCodePageType.UTF8)
+            builder.append(SCBCodePageType.UTF8)
         }
         else {
-            encoding = NSWindowsCP1252StringEncoding
+            encoding = String.Encoding.windowsCP1252
             
-            builder.appendCodePage(SCBCodePageType.CP1252)
+            builder.append(SCBCodePageType.CP1252)
         }
         
-        builder.appendInternational(SCBInternationalType.Spain)
+        builder.append(SCBInternationalType.spain)
         
-        builder.appendAlignment(SCBAlignmentPosition.Center)
+        builder.appendAlignment(SCBAlignmentPosition.center)
         
-//      builder.appendData("[If loaded.. Logo1 goes here]\n".dataUsingEncoding(encoding))
+//      builder.append("[If loaded.. Logo1 goes here]\n".data(using: encoding))
 //
-//      builder.appendLogo(SCBLogoSize.Normal, number: 1)
+//      builder.appendLogo(SCBLogoSize.normal, number: 1)
         
-        builder.appendDataWithMultipleHeight("BAR RESTAURANT EL POZO\n".dataUsingEncoding(encoding), height: 2)
+        builder.appendData(withMultipleHeight: "BAR RESTAURANT EL POZO\n".data(using: encoding), height: 2)
         
-        builder.appendData((
+        builder.append((
             "C/.ROCAFORT 187 08029 BARCELONA\n" +
-            "NIF :X-3856907Z  TEL :934199465\n").dataUsingEncoding(encoding))
+            "NIF :X-3856907Z  TEL :934199465\n").data(using: encoding))
         
-        builder.appendAlignment(SCBAlignmentPosition.Left)
+        builder.appendAlignment(SCBAlignmentPosition.left)
         
-        builder.appendData((
+        builder.append((
             "------------------------------------------\n" +
             "MESA: 100 P: - FECHA: YYYY-MM-DD\n" +
             "CAN P/U DESCRIPCION  SUMA\n" +
             "------------------------------------------\n" +
-            " 4 3,00 JARRA  CERVESA               12,00\n" +
-            " 1 1,60 COPA DE CERVESA               1,60\n" +
+            " 4 3,00 JARRA  CERVEZA               12,00\n" +
+            " 1 1,60 COPA DE CERVEZA               1,60\n" +
             "------------------------------------------\n" +
             " SUB TOTAL :                         13,60\n" +
             "                     TOTAL:    13,60 EUROS\n" +
             "NO: 000018851  IVA INCLUIDO\n" +
-            "------------------------------------------\n").dataUsingEncoding(encoding))
+            "------------------------------------------\n").data(using: encoding))
         
-        builder.appendAlignment(SCBAlignmentPosition.Center)
+        builder.appendAlignment(SCBAlignmentPosition.center)
         
-        builder.appendData("**** GRACIAS POR SU VISITA! ****\n".dataUsingEncoding(encoding))
+        builder.append("**** GRACIAS POR SU VISITA! ****\n".data(using: encoding))
     }
 }

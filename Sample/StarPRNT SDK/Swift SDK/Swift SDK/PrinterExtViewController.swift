@@ -25,15 +25,14 @@ class PrinterExtViewController: CommonViewController, StarIoExtManagerDelegate, 
         
         self.commentLabel.adjustsFontSizeToFitWidth = true
         
-        self.printButton.enabled           = true
-        self.printButton.backgroundColor   = UIColor.cyanColor()
-        self.printButton.layer.borderColor = UIColor.blueColor().CGColor
+        self.printButton.isEnabled           = true
+        self.printButton.backgroundColor   = UIColor.cyan
+        self.printButton.layer.borderColor = UIColor.blue.cgColor
         self.printButton.layer.borderWidth = 1.0
         
-//      self.appendRefreshButton                                  ("refreshPrinter")
         self.appendRefreshButton(#selector(PrinterExtViewController.refreshPrinter))
         
-        self.starIoExtManager = StarIoExtManager(type: StarIoExtManagerType.Standard,
+        self.starIoExtManager = StarIoExtManager(type: StarIoExtManagerType.standard,
                                              portName: AppDelegate.getPortName(),
                                          portSettings: AppDelegate.getPortSettings(),
                                       ioTimeoutMillis: 10000)                             // 10000mS!!!
@@ -50,38 +49,36 @@ class PrinterExtViewController: CommonViewController, StarIoExtManagerDelegate, 
         // Dispose of any resources that can be recreated.
     }
     
-    override func viewWillAppear(animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-//      NSNotificationCenter.defaultCenter().addObserver(self, selector:                                   "applicationWillResignActive", name: "UIApplicationWillResignActiveNotification", object: nil)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(PrinterExtViewController.applicationWillResignActive), name: "UIApplicationWillResignActiveNotification", object: nil)
-//      NSNotificationCenter.defaultCenter().addObserver(self, selector:                                   "applicationDidBecomeActive",  name: "UIApplicationDidBecomeActiveNotification",  object: nil)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(PrinterExtViewController.applicationDidBecomeActive),  name: "UIApplicationDidBecomeActiveNotification",  object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(PrinterExtViewController.applicationWillResignActive), name: NSNotification.Name(rawValue: "UIApplicationWillResignActiveNotification"), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(PrinterExtViewController.applicationDidBecomeActive),  name: NSNotification.Name(rawValue: "UIApplicationDidBecomeActiveNotification"),  object: nil)
         
 //      self.refreshPrinter()
     }
     
-    override func viewDidAppear(animated: Bool) {
+    override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
         self.refreshPrinter()
         
         if self.didAppear == false {
             if self.starIoExtManager.port != nil {
-                self.printButton.sendActionsForControlEvents(UIControlEvents.TouchUpInside)
+                self.printButton.sendActions(for: UIControlEvents.touchUpInside)
             }
             
             self.didAppear = true
         }
     }
     
-    override func viewWillDisappear(animated: Bool) {
+    override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         
         self.starIoExtManager.disconnect()
         
-        NSNotificationCenter.defaultCenter().removeObserver(self, name: "UIApplicationWillResignActiveNotification", object: nil)
-        NSNotificationCenter.defaultCenter().removeObserver(self, name: "UIApplicationDidBecomeActiveNotification",  object: nil)
+        NotificationCenter.default.removeObserver(self, name: NSNotification.Name(rawValue: "UIApplicationWillResignActiveNotification"), object: nil)
+        NotificationCenter.default.removeObserver(self, name: NSNotification.Name(rawValue: "UIApplicationDidBecomeActiveNotification"),  object: nil)
     }
     
     func applicationDidBecomeActive() {
@@ -94,8 +91,8 @@ class PrinterExtViewController: CommonViewController, StarIoExtManagerDelegate, 
         self.starIoExtManager.disconnect()
     }
     
-    @IBAction func touchUpInsidePrintButton(sender: UIButton) {
-        let commands: NSData
+    @IBAction func touchUpInsidePrintButton(_ sender: UIButton) {
+        let commands: Data
         
         let emulation: StarIoExtEmulation = AppDelegate.getEmulation()
         
@@ -115,10 +112,10 @@ class PrinterExtViewController: CommonViewController, StarIoExtManagerDelegate, 
         case 4 :
             commands = PrinterFunctions.createScaleRasterReceiptData(emulation, localizeReceipts: localizeReceipts, width: width, bothScale: false)
         case 5 :
-            commands = PrinterFunctions.createCouponData(emulation, localizeReceipts: localizeReceipts, width: width, rotation: SCBBitmapConverterRotation.Normal)
+            commands = PrinterFunctions.createCouponData(emulation, localizeReceipts: localizeReceipts, width: width, rotation: SCBBitmapConverterRotation.normal)
 //      case 6  :
         default :
-            commands = PrinterFunctions.createCouponData(emulation, localizeReceipts: localizeReceipts, width: width, rotation: SCBBitmapConverterRotation.Right90)
+            commands = PrinterFunctions.createCouponData(emulation, localizeReceipts: localizeReceipts, width: width, rotation: SCBBitmapConverterRotation.right90)
         }
         
         self.blind = true
@@ -129,7 +126,11 @@ class PrinterExtViewController: CommonViewController, StarIoExtManagerDelegate, 
         
         self.starIoExtManager.lock.lock()
         
-        Communication.sendCommands(commands, port: self.starIoExtManager.port)
+        _ = Communication.sendCommands(commands, port: self.starIoExtManager.port, completionHandler: { (result: Bool, title: String, message: String) in
+            let alertView: UIAlertView = UIAlertView(title: title, message: message, delegate: nil, cancelButtonTitle: "OK")
+            
+            alertView.show()
+        })
         
         self.starIoExtManager.lock.unlock()
     }
@@ -150,135 +151,135 @@ class PrinterExtViewController: CommonViewController, StarIoExtManagerDelegate, 
         }
     }
     
-    func alertView(alertView: UIAlertView, clickedButtonAtIndex buttonIndex: Int) {
+    func alertView(_ alertView: UIAlertView, clickedButtonAt buttonIndex: Int) {
         self.commentLabel.text = "Check the device. (Power and Bluetooth pairing)\nThen touch up the Refresh button."
         
-        self.commentLabel.textColor = UIColor.redColor()
+        self.commentLabel.textColor = UIColor.red
         
         self.beginAnimationCommantLabel()
     }
     
-    func didPrinterImpossible(manager: StarIoExtManager!) {
+    func didPrinterImpossible(_ manager: StarIoExtManager!) {
         NSLog("%@", MakePrettyFunction())
         
         self.commentLabel.text = "Printer Impossible."
         
-        self.commentLabel.textColor = UIColor.redColor()
+        self.commentLabel.textColor = UIColor.red
         
         self.beginAnimationCommantLabel()
     }
     
-    func didPrinterOnline(manager: StarIoExtManager!) {
+    func didPrinterOnline(_ manager: StarIoExtManager!) {
         NSLog("%@", MakePrettyFunction())
         
         self.commentLabel.text = "Printer Online."
         
-        self.commentLabel.textColor = UIColor.blueColor()
+        self.commentLabel.textColor = UIColor.blue
         
         self.beginAnimationCommantLabel()
     }
     
-    func didPrinterOffline(manager: StarIoExtManager!) {
+    func didPrinterOffline(_ manager: StarIoExtManager!) {
         NSLog("%@", MakePrettyFunction())
         
 //      self.commentLabel.text = "Printer Offline."
 //
-//      self.commentLabel.textColor = UIColor.redColor()
+//      self.commentLabel.textColor = UIColor.red
 //
 //      self.beginAnimationCommantLabel()
     }
     
-    func didPrinterPaperReady(manager: StarIoExtManager!) {
+    func didPrinterPaperReady(_ manager: StarIoExtManager!) {
         NSLog("%@", MakePrettyFunction())
         
 //      self.commentLabel.text = "Printer Paper Ready."
 //
-//      self.commentLabel.textColor = UIColor.blueColor()
+//      self.commentLabel.textColor = UIColor.blue
 //
 //      self.beginAnimationCommantLabel()
     }
     
-    func didPrinterPaperNearEmpty(manager: StarIoExtManager!) {
+    func didPrinterPaperNearEmpty(_ manager: StarIoExtManager!) {
         NSLog("%@", MakePrettyFunction())
         
         self.commentLabel.text = "Printer Paper Near Empty."
         
-        self.commentLabel.textColor = UIColor.orangeColor()
+        self.commentLabel.textColor = UIColor.orange
         
         self.beginAnimationCommantLabel()
     }
     
-    func didPrinterPaperEmpty(manager: StarIoExtManager!) {
+    func didPrinterPaperEmpty(_ manager: StarIoExtManager!) {
         NSLog("%@", MakePrettyFunction())
         
         self.commentLabel.text = "Printer Paper Empty."
         
-        self.commentLabel.textColor = UIColor.redColor()
+        self.commentLabel.textColor = UIColor.red
         
         self.beginAnimationCommantLabel()
     }
     
-    func didPrinterCoverOpen(manager: StarIoExtManager!) {
+    func didPrinterCoverOpen(_ manager: StarIoExtManager!) {
         NSLog("%@", MakePrettyFunction())
         
         self.commentLabel.text = "Printer Cover Open."
         
-        self.commentLabel.textColor = UIColor.redColor()
+        self.commentLabel.textColor = UIColor.red
         
         self.beginAnimationCommantLabel()
     }
     
-    func didPrinterCoverClose(manager: StarIoExtManager!) {
+    func didPrinterCoverClose(_ manager: StarIoExtManager!) {
         NSLog("%@", MakePrettyFunction())
         
 //      self.commentLabel.text = "Printer Cover Close."
 //
-//      self.commentLabel.textColor = UIColor.blueColor()
+//      self.commentLabel.textColor = UIColor.blue
 //
 //      self.beginAnimationCommantLabel()
     }
     
-    func didAccessoryConnectSuccess(manager: StarIoExtManager!) {
+    func didAccessoryConnectSuccess(_ manager: StarIoExtManager!) {
         NSLog("%@", MakePrettyFunction())
         
         self.commentLabel.text = "Accessory Connect Success."
         
-        self.commentLabel.textColor = UIColor.blueColor()
+        self.commentLabel.textColor = UIColor.blue
         
         self.beginAnimationCommantLabel()
     }
     
-    func didAccessoryConnectFailure(manager: StarIoExtManager!) {
+    func didAccessoryConnectFailure(_ manager: StarIoExtManager!) {
         NSLog("%@", MakePrettyFunction())
         
         self.commentLabel.text = "Accessory Connect Failure."
         
-        self.commentLabel.textColor = UIColor.redColor()
+        self.commentLabel.textColor = UIColor.red
         
         self.beginAnimationCommantLabel()
     }
     
-    func didAccessoryDisconnect(manager: StarIoExtManager!) {
+    func didAccessoryDisconnect(_ manager: StarIoExtManager!) {
         NSLog("%@", MakePrettyFunction())
         
         self.commentLabel.text = "Accessory Disconnect."
         
-        self.commentLabel.textColor = UIColor.redColor()
+        self.commentLabel.textColor = UIColor.red
         
         self.beginAnimationCommantLabel()
     }
     
-    func didStatusUpdate(manager: StarIoExtManager!, status: String!) {
+    func didStatusUpdate(_ manager: StarIoExtManager!, status: String!) {
         NSLog("%@", MakePrettyFunction())
         
 //      self.commentLabel.text = status
 //
-//      self.commentLabel.textColor = UIColor.greenColor()
+//      self.commentLabel.textColor = UIColor.green
 //
 //      self.beginAnimationCommantLabel()
     }
     
-    private func beginAnimationCommantLabel() {
+    fileprivate func beginAnimationCommantLabel() {
         UIView.beginAnimations(nil, context: nil)
         
         self.commentLabel.alpha = 0.0
@@ -287,7 +288,7 @@ class PrinterExtViewController: CommonViewController, StarIoExtManagerDelegate, 
         UIView.setAnimationDuration          (0.6)                             // 600mS!!!
         UIView.setAnimationRepeatCount       (Float(UINT32_MAX))
         UIView.setAnimationRepeatAutoreverses(true)
-        UIView.setAnimationCurve             (UIViewAnimationCurve.EaseIn)
+        UIView.setAnimationCurve             (UIViewAnimationCurve.easeIn)
         
         self.commentLabel.alpha = 1.0
         

@@ -118,13 +118,24 @@
             
             BOOL userInteractionEnabled = YES;
             
+            StarIoExtEmulation emulation = [AppDelegate getEmulation];
+            
             if ([SMCloudServices isRegistered] == NO) {
                 userInteractionEnabled = NO;
             }
             
-            if (indexPath.row == 0 ||     // Text Receipt
-                indexPath.row == 1) {     // Text Receipt (UTF8)
-                userInteractionEnabled = NO;
+            if (emulation == StarIoExtEmulationStarGraphic) {
+                if (indexPath.row == 0 ||     // Text Receipt
+                    indexPath.row == 1) {     // Text Receipt (UTF8)
+                    userInteractionEnabled = NO;
+                }
+            }
+            
+            if (emulation == StarIoExtEmulationEscPos ||
+                emulation == StarIoExtEmulationEscPosMobile) {
+                if (indexPath.row == 1) {     // Text Receipt (UTF8)
+                    userInteractionEnabled = NO;
+                }
             }
             
             if (userInteractionEnabled == YES) {
@@ -246,7 +257,7 @@
             
             customCell.delegate = self;
             
-            CGRect frame = customCell.titleLabel.frame;     // 以下,iPhone6での位置揃え実装!!!
+            CGRect frame = customCell.titleLabel.frame;
             
             UIEdgeInsets insets = self.tableView.separatorInset;
             
@@ -332,7 +343,27 @@
         
         switch (indexPath.row) {
             default :
-//          case 2  :
+//          case 0  :
+                commands = [AllReceiptsFunctions createTextReceiptData:emulation
+                                                      localizeReceipts:localizeReceipts
+                                                                  utf8:NO
+                                                                 width:width
+                                                               receipt:receipt
+                                                                  info:info
+                                                                qrCode:qrCode
+                                                            completion:completionUpload];
+                break;
+            case 1 :
+                commands = [AllReceiptsFunctions createTextReceiptData:emulation
+                                                      localizeReceipts:localizeReceipts
+                                                                  utf8:YES
+                                                                 width:width
+                                                               receipt:receipt
+                                                                  info:info
+                                                                qrCode:qrCode
+                                                            completion:completionUpload];
+                break;
+            case 2 :
                 commands = [AllReceiptsFunctions createRasterReceiptData:emulation
                                                         localizeReceipts:localizeReceipts
                                                                  receipt:receipt
@@ -365,7 +396,14 @@
         if (commands != nil) {
             self.blind = YES;
             
-            [Communication sendCommands:commands portName:[AppDelegate getPortName] portSettings:[AppDelegate getPortSettings] timeout:10000];     // 10000mS!!!
+            NSString *portName     = [AppDelegate getPortName];
+            NSString *portSettings = [AppDelegate getPortSettings];
+            
+            [Communication sendCommands:commands portName:portName portSettings:portSettings timeout:10000 completionHandler:^(BOOL result, NSString *title, NSString *message) {     // 10000mS!!!
+                UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:title message:message delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+                
+                [alertView show];
+            }];
             
             self.blind = NO;
         }

@@ -9,7 +9,7 @@
 import Foundation
 
 class CashDrawerFunctions {
-    static func createData(emulation: StarIoExtEmulation, channel: SCBPeripheralChannel) -> NSData {
+    static func createData(_ emulation: StarIoExtEmulation, channel: SCBPeripheralChannel) -> Data {
         let builder: ISCBBuilder = StarIoExt.createCommandBuilder(emulation)
         
         builder.beginDocument()
@@ -18,6 +18,6 @@ class CashDrawerFunctions {
         
         builder.endDocument()
         
-        return builder.commands.copy() as! NSData
+        return builder.commands.copy() as! Data
     }
 }
