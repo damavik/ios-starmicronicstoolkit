@@ -1,16 +1,22 @@
+## 5.4.0
+2017/08/16
+
+*** Support OS ***
+* Supported OS version: 8.0 or later.
+
+*** StarIO ***
+* Improved communication reliability with SM-T300DW.
+
+*** StarIO_Extension.framework ***
+* Added API for Scale, Display control
+* Added graphic data compression function for SM-L series.
+
 ## 5.3.0
 2017/06/15
 
 *** StarIO ***
 * Added support of TSP100IIIU and SM-L300(Bluetooth Low Energy).
 * The performance when the getPort method failed on Ethernet was improved.
-
-*** Objective-C SDK and Swift SDK ***
-* Add Sample Code.
-* Implementation of BlackMark and PageMode.
-
-*** Swift SDK ***
-* Supported Swift3.
 
 ## 5.0.2
 2016/08/25
